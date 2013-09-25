@@ -1,0 +1,25 @@
+/*
+ * Configurable variables for modules
+ */
+$responsive-media-col-expand: 480px; // for 'base_modules/_responsive'
+
+/*
+ * globally-available modules
+ */
+@import 'base_modules/all';
+
+
+/*
+ * if we need the partials found on normal, non-app-based pages, we can include them.
+ */
+@import 'common/globals';
+@import 'common/header';
+@import 'common/footer';
+
+/*
+ * 'app' modules for this single-page app
+ */
+@import 'app/variables';
+@import 'app/globals';
+@import 'app/scooby_cards';
+@import 'app/reattach';

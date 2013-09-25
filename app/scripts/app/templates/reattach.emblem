@@ -1,0 +1,3 @@
+p: b I am a view that will be reattached to a different parentView. Check the console and code for details.
+
+p Click me to hide my parent view and show it again after a delay, to check the isVisible property on both this view and the parentView.

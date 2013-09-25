@@ -1,0 +1,23 @@
+{
+  "name": "wishlist",
+  "version": "0.0.0",
+  "dependencies": {
+    "requirejs": "~2.1.5",
+    "modernizr": "~2.6.2",
+    "jquery": "~1.10.2",
+    "json3": "~3.2.5",
+    "sinon-chai": "~2.4.0",
+    "chai": "~1.7.1",
+    "has": "latest",
+    "sinonjs": "~1.7.1",
+    "handlebars": "~1.0.0",
+    "normalize-css": "~2.1.2",
+    "respond": "~1.2.0",
+    "ember": "1.0.0",
+    "ember-data-latest.js": "http://builds.emberjs.com/beta/ember-data.js",
+    "ember-data-latest-min.js": "http://builds.emberjs.com/beta/ember-data.min.js",
+    "ember-mocha-adapter": "~0.1.2",
+    "emblem": "~0.3.2"
+  },
+  "devDependencies": {}
+}

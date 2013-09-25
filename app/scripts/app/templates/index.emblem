@@ -1,0 +1,10 @@
+ul.cards
+  each
+    linkTo 'scooby_card' this
+      li.card
+        div class={ :sprite lowercaseName }
+        b.name = name
+
+.instructions
+  p Click the glowing header to update the cast with fresh server data.
+  p Click a portrait to see it in its own view with its own URL.

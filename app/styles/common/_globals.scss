@@ -1,0 +1,10 @@
+// `html` is needed for specificity over normalize.css
+// http://coding.smashingmagazine.com/2007/07/27/css-specificity-things-you-should-know/
+* {
+  @include box-sizing(border-box);
+}
+
+// flexible images/media
+img, embed, object, video {
+  max-width: 100%;
+}

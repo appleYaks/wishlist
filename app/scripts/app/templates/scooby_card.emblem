@@ -1,0 +1,14 @@
+.single.card
+  div class={ :sprite lowercaseName }
+  b.name = name
+
+.change-name
+  label Name:
+  = input type="text" value=name
+  button click="saveMe" Save
+
+.instructions
+  p Double-click the portrait to save its data to the database (check the console).
+  p Click it and check the console to see how the eventManager override works.
+
+App.ReattachView

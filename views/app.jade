@@ -1,0 +1,49 @@
+extends layout
+
+block title
+  title My Awesome App!
+
+block append css
+  <!-- build:css(.tmp) styles/app.css -->
+  <link rel="stylesheet" href="/styles/app.css">
+  <!-- endbuild -->
+
+block append top-script
+
+
+block prepend main
+  //- these are examples to show that you can also use Jade partials,
+      although generally it may be better to keep all markup in one place, i.e. Ember templates
+  //- .container
+  //-   include includes/header
+
+  //-   .content
+
+  //-   include includes/footer
+  //-     div.attribution.
+  //-       Photo by:
+  //-       Colin Smith [<a href="http://creativecommons.org/licenses/by-sa/2.0">CC-BY-SA-2.0</a>], <a href="https://commons.wikimedia.org/wiki/File%3AScooby_Dooby_Doo_-_geograph.org.uk_-_1385012.jpg">via Wikimedia Commons</a>
+
+block append bottom-script
+  script!= bootstrap
+
+  - if (dev)
+    //- has.js is used to branch requirejs modules' returned values in a test environment like mocha.
+        since the modules themselves contain has() tests, we need to include them in the dev environment.
+        during a build, r.js will optimize out the has() tests, so has.js is not needed in production.
+    script(src='/bower_components/has/has.js')
+
+    //- Scripts are included here because Ember doesn't currently support AMD
+    //- This method also works with Ember Chrome Extension (https://github.com/tildeio/ember-extension/issues/55)
+    script(src='/bower_components/jquery/jquery.js')
+    script(src='/bower_components/handlebars/handlebars.runtime.js')
+    script(src='/bower_components/ember/ember.js')
+    script(src='/bower_components/ember-data-latest.js/index.js')
+  - else
+    //- A normal HTML <script> tag means grunt-rev will be able to find it
+        and update the filename reference automatically. Using normal Jade syntax won't do that.
+    <script src='/scripts/vendor/ember-environment.js'></script>
+
+  <!-- build:js(app) scripts/app/main.js -->
+  <script data-main="/scripts/app/main" src="/bower_components/requirejs/require.js"></script>
+  <!-- endbuild -->

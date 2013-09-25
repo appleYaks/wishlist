@@ -1,0 +1,11 @@
+/*
+ * globally-available modules
+ */
+@import 'base_modules/all';
+
+/*
+ * Common modules for all (or nearly-all) pages
+ */
+@import 'common/globals';
+@import 'common/header';
+@import 'common/footer';
