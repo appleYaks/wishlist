@@ -240,15 +240,15 @@ module.exports = function (grunt) {
         // but still available if needed
         concat: {
             dist: {
-                files: {
-                    // compile the dependencies for and with Ember and Ember-Data
-                    '<%= yeoman.dist %>/<%= yeoman.app %>/scripts/vendor/ember-environment.js': [
-                        '<%= yeoman.app %>/bower_components/jquery/jquery.min.js',
-                        '<%= yeoman.app %>/bower_components/handlebars/handlebars.runtime.js',
-                        '<%= yeoman.app %>/bower_components/ember/ember.min.js',
-                        '<%= yeoman.app %>/bower_components/ember-data-latest-min.js/index.js',
-                    ],
-                },
+                // files: {
+                //     // compile the dependencies for and with Ember and Ember-Data
+                //     '<%= yeoman.dist %>/<%= yeoman.app %>/scripts/vendor/ember-environment.js': [
+                //         '<%= yeoman.app %>/bower_components/jquery/jquery.min.js',
+                //         '<%= yeoman.app %>/bower_components/handlebars/handlebars.runtime.js',
+                //         '<%= yeoman.app %>/bower_components/ember/ember.min.js',
+                //         '<%= yeoman.app %>/bower_components/ember-data-latest-min.js/index.js',
+                //     ],
+                // },
             }
         },
         requirejs: {
