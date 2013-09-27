@@ -17,6 +17,9 @@ module.exports = function(config) {
       'app/bower_components/has/has.js',
 
       'app/bower_components/jquery/jquery.js',
+      'app/bower_components/jquery-ui/ui/jquery-ui.js',
+      'app/bower_components/jquery-ui-touch-punch/jquery.ui.touch-punch.js',
+      'app/bower_components/hammerjs/dist/jquery.hammer.js',
       'app/bower_components/handlebars/handlebars.runtime.js',
       'app/bower_components/ember/ember.js',
       'app/bower_components/ember-data-latest.js/index.js',
