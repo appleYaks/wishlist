@@ -14,6 +14,7 @@ function (JSON, Em) {
   //       be sure to call this._super() in your overridden didInsertElement.
   //
   // http://mavilein.github.io/javascript/2013/08/01/Ember-JS-After-Render-Event/
+  // http://emberjs.com/api/classes/Ember.run.html#method_next
   Em.View.reopen({
     didInsertElement : function(){
       this._super();
