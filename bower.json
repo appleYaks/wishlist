@@ -17,7 +17,10 @@
     "ember-data-latest.js": "http://builds.emberjs.com/beta/ember-data.js",
     "ember-data-latest-min.js": "http://builds.emberjs.com/beta/ember-data.min.js",
     "ember-mocha-adapter": "~0.1.2",
-    "emblem": "~0.3.2"
+    "emblem": "~0.3.2",
+    "hammerjs": "~1.0.5",
+    "jquery-ui-touch-punch": "*",
+    "jquery-ui": "~1.10.3"
   },
   "devDependencies": {}
 }
