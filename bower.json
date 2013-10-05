@@ -20,7 +20,8 @@
     "emblem": "~0.3.2",
     "hammerjs": "~1.0.5",
     "jquery-ui-touch-punch": "*",
-    "jquery-ui": "~1.10.3"
+    "jquery-ui": "~1.10.3",
+    "bootstrap": "~3.0.0"
   },
   "devDependencies": {}
 }
