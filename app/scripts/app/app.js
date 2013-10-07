@@ -22,11 +22,6 @@ define([
   'controllers/Index',
   'routes/Index',
 
-  'views/ScoobyCard',
-  'routes/ScoobyCard',
-
-  'views/Reattach',
-
   'router',
 ],
 
@@ -54,11 +49,6 @@ function(
   IndexController,
   IndexRoute,
 
-  ScoobyCardView,
-  ScoobyCardRoute,
-
-  ReattachView,
-
   Router
 ){
   'use strict';
@@ -72,8 +62,6 @@ function(
     ApplicationView: ApplicationView,
     GroupsView: GroupsView,
     ItemsView: ItemsView,
-    ScoobyCardView: ScoobyCardView,
-    ReattachView: ReattachView,
 
     // controllers
     ApplicationController: ApplicationController,
@@ -87,7 +75,6 @@ function(
     GroupsRoute: GroupsRoute,
     ItemsRoute: ItemsRoute,
     ItemRoute: ItemRoute,
-    ScoobyCardRoute: ScoobyCardRoute,
 
     // router
     Router: Router,
