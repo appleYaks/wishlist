@@ -2,11 +2,22 @@ define([
   'core/config',
   'ember-data',
 
-  'models/Person',
+  'models/Group',
+  'models/Item',
 
   'views/Application',
   'controllers/Application',
   'routes/Application',
+
+  'views/Groups',
+  'controllers/Groups',
+  'routes/Groups',
+
+  'views/Items',
+  'controllers/Items',
+  'routes/Items',
+
+  'routes/Item',
 
   'controllers/Index',
   'routes/Index',
@@ -23,11 +34,22 @@ function(
   Config,
   DS,
 
-  Person,
+  Group,
+  Item,
 
   ApplicationView,
   ApplicationController,
   ApplicationRoute,
+
+  GroupsView,
+  GroupsController,
+  GroupsRoute,
+
+  ItemsView,
+  ItemsController,
+  ItemsRoute,
+
+  ItemRoute,
 
   IndexController,
   IndexRoute,
@@ -43,20 +65,28 @@ function(
 
   var App = {
     // models
-    Person: Person,
+    Group: Group,
+    Item: Item,
 
     // views
     ApplicationView: ApplicationView,
+    GroupsView: GroupsView,
+    ItemsView: ItemsView,
     ScoobyCardView: ScoobyCardView,
     ReattachView: ReattachView,
 
     // controllers
     ApplicationController: ApplicationController,
     IndexController: IndexController,
+    GroupsController: GroupsController,
+    ItemsController: ItemsController,
 
     // routes
     ApplicationRoute: ApplicationRoute,
     IndexRoute: IndexRoute,
+    GroupsRoute: GroupsRoute,
+    ItemsRoute: ItemsRoute,
+    ItemRoute: ItemRoute,
     ScoobyCardRoute: ScoobyCardRoute,
 
     // router
