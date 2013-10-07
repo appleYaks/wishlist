@@ -10,8 +10,16 @@ function (Em) {
   });
 
   Router.map(function () {
-    this.route('index', {path: '/'});
-    this.resource('scooby_card', {path: '/person/:name'});
+    this.resource('groups', {path: '/groups'}, function () {
+      this.resource('group', {path: '/:group_id'}, function () {
+        this.route('edit');
+      });
+      this.resource('items', {path: '/:group_id/items'}, function () {
+        this.resource('item', {path: '/:group_id/item/:item_id'}, function () {
+          this.route('edit');
+        });
+      });
+    });
   });
 
   return Router;
