@@ -224,41 +224,57 @@ app.use(function(err, req, res, next) {
 /*
  * Routes
  */
-app.get('/', function(req, res, next) {
-  // we use a direct database connection here
-  // because the API would have sent JSON itself
-  app.db.getPeople(function (err, people) {
-    if (err) {
-      return next(err);
-    }
+function renderApp (req, res) {
+  return res.render('app');
+}
 
-    // keep one item off so the client can reload "new" data dynamically
-    var allButLast = people.slice(0, people.length-1);
+// app.get('/', function(req, res, next) {
+//   // we use a direct database connection here
+//   // because the API would have sent JSON itself
+//   app.db.getPeople(function (err, people) {
+//     if (err) {
+//       return next(err);
+//     }
 
-    res.render('app', {
-      bootstrap: 'var bootstrap = ' + JSON.stringify(allButLast) + ';',
-    });
-  });
-});
+//     // keep one item off so the client can reload "new" data dynamically
+//     var allButLast = people.slice(0, people.length-1);
 
-app.get('/person/:name', function (req, res) {
-  res.render('app');
-});
+//     res.render('app', {
+//       bootstrap: 'var bootstrap = ' + JSON.stringify(allButLast) + ';',
+//     });
+//   });
+// });
+
+app.get('/', renderApp);
+
+app.get('/api/v1/groups', app.api.v1.groups.all);
+app.get('/api/v1/groups/:group_id', app.api.v1.groups.groupById);
+
+app.get('/api/v1/groups/:group_id/items', app.api.v1.items.itemsByGroup);
+app.get('/api/v1/items', app.api.v1.items.all);
+app.get('/api/v1/items/:item_id', app.api.v1.items.itemById);
+
+app.get('/groups', renderApp);
+app.get('/groups/:group_id', renderApp);
+app.get('/groups/:group_id/edit', renderApp);
+app.get('/groups/:group_id/items', renderApp);
+app.get('/groups/:group_id/items/:item_id', renderApp);
+app.get('/groups/:group_id/items/:item_id/edit', renderApp);
 
 
 app.get('/normal', function(req, res, next) {
   res.render('normal');
 });
 
-app.get('/api/v1/people', app.api.v1.people.getAll);
-app.get('/api/v1/peopleError', app.api.v1.people.getError);
+// app.get('/api/v1/people', app.api.v1.people.getAll);
+// app.get('/api/v1/peopleError', app.api.v1.people.getError);
 
-app.put('/api/v1/people/:id', function (req, res) {
-  // the database library would normally save
-  // the record and return the updated record.
-  req.body.person.id = req.params.id;
-  res.send(req.body);
-});
+// app.put('/api/v1/people/:id', function (req, res) {
+//   // the database library would normally save
+//   // the record and return the updated record.
+//   req.body.person.id = req.params.id;
+//   res.send(req.body);
+// });
 
 
 /*
