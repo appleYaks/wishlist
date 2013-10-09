@@ -11,11 +11,13 @@ var port = 9000;
 /*
  * App methods and libraries
  */
-app.db = require('./lib/database');
 app.api = require('./lib/api');
+app.classes = require('./lib/classes');
+app.db = require('./lib/database/mongoose');
 
 // propagate app instance throughout app methods
 app.api.use(app);
+app.db.use(app);
 
 
 /*
@@ -224,8 +226,18 @@ app.use(function(err, req, res, next) {
 /*
  * Routes
  */
-function renderApp (req, res) {
-  return res.render('app');
+function renderApp (req, res, next) {
+  app.db.groups.read.all(function (err, groups) {
+    if (err) {
+      return next(err);
+    }
+
+    var preload = { group: groups };
+
+    res.render('app', {
+      preloadGroups: JSON.stringify(preload)
+    });
+  });
 }
 
 // app.get('/', function(req, res, next) {
