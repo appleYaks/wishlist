@@ -20,9 +20,11 @@ function (Em) {
 
       // lazy-load the group's items if (or more accurately, since) they don't exist
       // http://emberjs.com/guides/models/the-rest-adapter/#toc_relationships
-      if (!model.get('items.length')) {
-        model.get('items');
-      }
+      //
+      // this turns out to be unnecessary if {async: true} on the model
+      // if (!model.get('items.length')) {
+        // model.get('items');
+      // }
     },
 
     renderTemplate: function () {
