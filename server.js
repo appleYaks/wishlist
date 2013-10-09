@@ -240,23 +240,6 @@ function renderApp (req, res, next) {
   });
 }
 
-// app.get('/', function(req, res, next) {
-//   // we use a direct database connection here
-//   // because the API would have sent JSON itself
-//   app.db.getPeople(function (err, people) {
-//     if (err) {
-//       return next(err);
-//     }
-
-//     // keep one item off so the client can reload "new" data dynamically
-//     var allButLast = people.slice(0, people.length-1);
-
-//     res.render('app', {
-//       bootstrap: 'var bootstrap = ' + JSON.stringify(allButLast) + ';',
-//     });
-//   });
-// });
-
 app.get('/', renderApp);
 
 app.get('/api/v1/groups', app.api.v1.groups.all);
