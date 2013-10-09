@@ -83,7 +83,12 @@ function(
     ApplicationAdapter: DS.RESTAdapter.extend({
       namespace: 'api/v1',
     }),
+
     LOG_TRANSITIONS: true,
+
+    ready: function () {
+
+    },
   };
 
   return App;
