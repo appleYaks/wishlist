@@ -1,6 +1,7 @@
 /*globals define,require,describe,it,expect,should,assert,before,after,beforeEach,afterEach,sinon,has*/
 /*globals visit, find, findWithAssert, fillIn, click, keyEvent, wait */
-/*jshint expr:true */
+/*globals Ember,App */
+/*jshint expr:true,camelcase:false */
 define([  // this will give us the normal return value for the module
   'core/moduleTest'
 ],

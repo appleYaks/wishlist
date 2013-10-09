@@ -1,5 +1,7 @@
 /*globals define,require,describe,it,expect,should,assert,before,after,beforeEach,afterEach,sinon,has*/
 /*globals visit, find, findWithAssert, fillIn, click, keyEvent, wait */
+/*globals Ember,App */
+/*jshint expr:true,camelcase:false */
 
 // all require() and define() calls are
 // relative to your dev app directory
@@ -22,4 +24,6 @@ function(Em, $) {
       expect(Em.isArray([1,2,3])).to.be.ok;
     });
   });
+
+  return;
 });
