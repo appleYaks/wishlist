@@ -10,8 +10,12 @@ function (Em, DS) {
   var belongsTo = DS.belongsTo;
 
   var Item = DS.Model.extend({
-    name: attr('string'),
+    title: attr('string'),
+    rating: attr('number'),
+    complete: attr('boolean'),
     group: belongsTo('group'),
+    fields: attr(),
+
     // lowercaseName: function () {
     //   return this.get('name').dasherize();
     // }.property('name'),
@@ -20,7 +24,7 @@ function (Em, DS) {
     // https://github.com/tildeio/ember-extension
     // http://emberjs.com/api/classes/Ember.Object.html#method_toString
     toStringExtension: function() {
-      return this.get('name');
+      return this.get('title');
     }
   });
 

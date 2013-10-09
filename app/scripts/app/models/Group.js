@@ -10,17 +10,16 @@ function (Em, DS) {
   var hasMany = DS.hasMany;
 
   var Group = DS.Model.extend({
-    name: attr('string'),
+    title: attr('string'),
+    order: attr('number'),
     items: hasMany('item', {async: true}),
-    // lowercaseName: function () {
-    //   return this.get('name').dasherize();
-    // }.property('name'),
+    fields: attr('fields'),
 
     // useful for the Ember Chrome extension
     // https://github.com/tildeio/ember-extension
     // http://emberjs.com/api/classes/Ember.Object.html#method_toString
     toStringExtension: function() {
-      return this.get('name');
+      return this.get('title');
     }
   });
 
