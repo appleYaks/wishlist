@@ -5,3 +5,5 @@ dist
 coverage
 app/bower_components
 .nodemonignore
+*.sublime-project
+*.sublime-workspace
