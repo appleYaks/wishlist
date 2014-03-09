@@ -4,18 +4,17 @@
   "dependencies": {
     "requirejs": "~2.1.5",
     "modernizr": "~2.6.2",
-    "jquery": "~1.10.2",
+    "jquery": "~1.11",
     "json3": "~3.2.5",
     "sinon-chai": "~2.4.0",
     "chai": "~1.7.1",
     "has": "latest",
     "sinonjs": "~1.7.1",
-    "handlebars": "~1.0.0",
+    "handlebars": "~1.3.0",
     "normalize-css": "~2.1.2",
     "respond": "~1.2.0",
-    "ember": "1.0.0",
-    "ember-data-latest.js": "http://builds.emberjs.com/beta/ember-data.js",
-    "ember-data-latest-min.js": "http://builds.emberjs.com/beta/ember-data.min.js",
+    "ember": "~1.4.0",
+    "ember-data": "~1.0.0-beta.7",
     "ember-mocha-adapter": "~0.1.2",
     "emblem": "~0.3.2",
     "hammerjs": "~1.0.5",
@@ -23,5 +22,9 @@
     "jquery-ui": "~1.10.3",
     "bootstrap": "~3.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "resolutions": {
+    "ember": "~1.4.0",
+    "jquery": "~1.11"
+  }
 }

@@ -41,13 +41,14 @@ block append bottom-script
   //- Scripts are included here because Ember doesn't currently support AMD
   //- This method also works with Ember Chrome Extension (https://github.com/tildeio/ember-extension/issues/55)
   <!-- build:js(app) /scripts/vendor/environment.js -->
-  <script src="/bower_components/jquery/jquery.js"></script>
+  <script src="/bower_components/jquery/dist/jquery.js"></script>
   <script src="/bower_components/jquery-ui/ui/jquery-ui.js"></script>
   <script src="/bower_components/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
   <script src="/bower_components/hammerjs/dist/jquery.hammer.js"></script>
   <script src="/bower_components/handlebars/handlebars.runtime.js"></script>
   <script src="/bower_components/ember/ember.js"></script>
-  <script src="/bower_components/ember-data-latest.js/index.js"></script>
+  <script src="/bower_components/ember-data/ember-data.js"></script>
+  <script src="/scripts/misc/Ember-AnimationQ/Ember-AnimationQ.js"></script>
   <!-- endbuild -->
 
   <!-- build:js(app) /scripts/app/main.js -->
