@@ -242,12 +242,12 @@ function renderApp (req, res, next) {
 
 app.get('/', renderApp);
 
-app.get('/api/v1/groups', app.api.v1.groups.all);
-app.get('/api/v1/groups/:group_id', app.api.v1.groups.groupById);
+app.get('/api/v1/groups', app.api.v1.groups.get.all);
+app.get('/api/v1/groups/:group_id', app.api.v1.groups.get.groupById);
 
-app.get('/api/v1/groups/:group_id/items', app.api.v1.items.itemsByGroup);
-app.get('/api/v1/items', app.api.v1.items.all);
-app.get('/api/v1/items/:item_id', app.api.v1.items.itemById);
+app.get('/api/v1/groups/:group_id/items', app.api.v1.items.get.itemsByGroup);
+app.get('/api/v1/items', app.api.v1.items.get.all);
+app.get('/api/v1/items/:item_id', app.api.v1.items.get.itemById);
 
 app.get('/groups', renderApp);
 app.get('/groups/:group_id', renderApp);
