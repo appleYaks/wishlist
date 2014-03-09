@@ -1,4 +1,4 @@
-var db = source('lib/database');
+var db = source('lib/database/mongoose');
 
 describe('database tests', function () {
   it('should test getting data', function (done) {
