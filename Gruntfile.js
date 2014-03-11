@@ -497,33 +497,23 @@ module.exports = function (grunt) {
         // },
         nodemon: {
             dev: {
+                script: 'server.js',
                 options: {
-                    file: 'server.js',
                     args: ['development', karmaConfig.app.port],
-                    watchedExtensions: [
-                        'js',
-                        // This might cause an issue starting the server
-                        // See: https://github.com/appleYaks/grunt-express-workflow/issues/2
-                        // 'coffee'
-                    ],
+                    nodeArgs: ['--debug'],
+                    ext: 'js',
                     // nodemon watches the current directory recursively by default
-                    // watchedFolders: ['.'],
-                    debug: true,
-                    delayTime: 1,
-                    ignoredFiles: nodemonIgnoredFiles,
+                    // watch: ['.'], // default
+                    delay: 1,
+                    ignore: nodemonIgnoredFiles,
                 }
             },
             nodeInspector: {
+                script: 'node-inspector.js',
                 options: {
-                    file: 'node-inspector.js',
-                    watchedExtensions: [
-                        'js',
-                        // This might cause an issue starting the server
-                        // See: https://github.com/appleYaks/grunt-express-workflow/issues/2
-                        // 'coffee'
-                    ],
+                    ext: 'js',
+                    ignore: nodemonIgnoredFiles,
                     exec: 'node-inspector',
-                    ignoredFiles: nodemonIgnoredFiles,
                 },
             },
         },
