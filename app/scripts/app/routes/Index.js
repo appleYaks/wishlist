@@ -23,12 +23,8 @@ function (Em) {
       },
     },
 
-    redirect: function () {
+    beforeModel: function () {
       this.transitionTo('groups');
-    },
-
-    model: function () {
-
     },
   });
 
