@@ -11,7 +11,7 @@ function (Em, DS) {
       return value;
     },
     deserialize: function(value) {
-      return Em.Object.create(value);
+      return Em.Object.create(value || {});
     }
   });
 
