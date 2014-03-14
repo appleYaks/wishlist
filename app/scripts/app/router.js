@@ -1,5 +1,5 @@
 define([
-  'ember'
+  'ember',
 ],
 
 function (Em) {
