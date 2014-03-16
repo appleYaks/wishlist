@@ -15,7 +15,7 @@ function (Em) {
         this.route('edit');
       });
       this.resource('items', {path: ':group_id/items'}, function () {
-        this.resource('item', {path: ':group_id/item/:item_id'}, function () {
+        this.resource('item', {path: ':group_id/items/:item_id'}, function () {
           this.route('edit');
         });
       });
