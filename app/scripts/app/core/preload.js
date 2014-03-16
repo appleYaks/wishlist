@@ -11,8 +11,7 @@ function (Em, JSON, $) {
 
   Em.Application.initializer({
     name: 'preloadData',
-    // fieldsTransform is used by the Group model
-    after: ['store', 'fieldsTransform'],
+    after: ['store'],
 
     initialize: function (container, application) {
       var attributes = [

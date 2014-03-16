@@ -14,7 +14,7 @@ function (Em, DS) {
     order: attr('number'),
     date: attr('date'),
     items: hasMany('item', {async: true}),
-    fields: attr('fields'),
+    fields: attr(),
 
     // useful for the Ember Chrome extension
     // https://github.com/tildeio/ember-extension
