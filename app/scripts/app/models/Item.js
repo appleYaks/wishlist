@@ -12,6 +12,7 @@ function (Em, DS) {
   var Item = DS.Model.extend({
     title: attr('string'),
     rating: attr('number'),
+    priority: attr('number'),
     complete: attr('boolean'),
     group: belongsTo('group'),
     fields: attr(),
