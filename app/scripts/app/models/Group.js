@@ -12,6 +12,7 @@ function (Em, DS) {
   var Group = DS.Model.extend({
     title: attr('string'),
     order: attr('number'),
+    date: attr('date'),
     items: hasMany('item', {async: true}),
     fields: attr('fields'),
 
