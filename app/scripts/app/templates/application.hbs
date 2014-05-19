@@ -1,9 +1,14 @@
-{{partial 'application/_header'}}
+{{!-- {{partial 'application/_header'}} --}}
 
 <div class='content'>
-  {{outlet groups}}
-  {{outlet items}}
-  {{outlet item}}
+  {{outlet 'groups'}}    {{!-- list of groups --}}
+  {{outlet 'items'}}     {{!-- list of items from a group --}}
+
+  {{outlet 'group'}}     {{!-- itemized description of a group --}}
+  {{outlet 'item'}}      {{!-- itemized description of an item --}}
+
+  {{outlet 'groupEdit'}} {{!-- group edit view --}}
+  {{outlet 'itemEdit'}}  {{!-- item edit view --}}
 </div>
 
-{{partial 'application/_footer'}}
+{{!-- {{partial 'application/_footer'}} --}}
