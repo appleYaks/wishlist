@@ -6,3 +6,5 @@ coverage
 app/bower_components
 *.sublime-project
 *.sublime-workspace
+*.secret.json
+*.swp
