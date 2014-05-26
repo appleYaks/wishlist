@@ -1,3 +1,0 @@
-ul.items
-  each item in items
-    li: = item.name

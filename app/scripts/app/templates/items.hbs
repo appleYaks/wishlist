@@ -1,0 +1,5 @@
+<ul class="items">
+  {{#each item in items}}
+    <li {{action "doit" this}}>{{item.name}}</li> 
+  {{/each}}
+</ul>

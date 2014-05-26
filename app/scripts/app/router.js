@@ -1,31 +1,24 @@
-define([
-  'ember',
-],
+var Router = Em.Router.extend({
+  location: 'history'
+});
 
-function (Em) {
-  'use strict';
+Router.map(function () {
+  this.resource('groups', {path: '/groups'}, function () {
+    // these inner resources 'group' and 'items' are split up
+    // so that their inner views are exclusively shown on screen.
+    // also for clarity.
 
-  var Router = Em.Router.extend({
-    location: 'history'
-  });
+    this.resource('group', {path: ':group_id'}, function () {
+      this.route('edit');
+    });
 
-  Router.map(function () {
-    this.resource('groups', {path: '/groups'}, function () {
-      // these inner resources 'group' and 'items' are split up
-      // so that their inner views are exclusively shown on screen.
-      // also for clarity.
-
-      this.resource('group', {path: ':group_id'}, function () {
+    this.resource('items', {path: ':group_id/items'}, function () {
+      this.resource('item', {path: ':item_id'}, function () {
         this.route('edit');
-      });
-
-      this.resource('items', {path: ':group_id/items'}, function () {
-        this.resource('item', {path: ':item_id'}, function () {
-          this.route('edit');
-        });
       });
     });
   });
-
-  return Router;
 });
+
+export default Router;
+

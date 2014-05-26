@@ -1,19 +1,10 @@
-define([
-  'ember',
-  'json3',
-  'jquery',
-],
-
-function (Em, JSON, $) {
-  'use strict';
-
-  var head = document.head;
-
-  Em.Application.initializer({
+export default {
     name: 'preloadData',
     after: ['store'],
 
     initialize: function (container, application) {
+      var head = document.head;
+
       var attributes = [
         {
           target: 'route:groups',
@@ -39,7 +30,4 @@ function (Em, JSON, $) {
         });
       }
     }
-  });
-
-  return;
-});
+  };
