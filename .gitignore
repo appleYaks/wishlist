@@ -4,6 +4,7 @@ dist
 .sass-cache
 coverage
 app/bower_components
+bower_components
 *.sublime-project
 *.sublime-workspace
 *.secret.json
