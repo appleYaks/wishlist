@@ -16,6 +16,9 @@ block prepend main
     include includes/header
 
     .content
+      form(method='POST', action="/normal"  enctype="multipart/form-data")
+        input(type="file" name='dude' multiple="multiple" )
+        button(type='submit') Submit
 
     include includes/footer
 
