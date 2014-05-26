@@ -77,19 +77,15 @@ module.exports = function (grunt) {
                     livereload: false,
                 },
             },
-            emblemTemplates: {
-                files: [
-                    '<%= yeoman.app %>/scripts/app/templates/**/*.emblem',
-                ],
-                tasks: ['emblem:app'],
-                options: {
-                    livereload: false,
-                },
-            },
+
             scripts: {
                 files: [
-                    '{.tmp,<%= yeoman.app %>}/scripts/**/*.js',
+                    '{.tmp,<%= yeoman.app %>}/scripts/app/**/*.js',
                 ],
+                tasks: ['clean:server', 'transpile', 'emberTemplates:app', 'concat:dev-ember', 'concat_sourcemap:client'],
+                options: {
+                    livereload: false
+                }
             },
             // put all karma targets into the `tasks` array
             karma: {
@@ -203,7 +199,7 @@ module.exports = function (grunt) {
                 generatedImagesDir: '.tmp/images',
                 fontsDir: '<%= yeoman.app %>/styles/fonts',
                 javascriptsDir: '<%= yeoman.app %>/scripts',
-                importPath: '<%= yeoman.app %>/bower_components',
+                importPath: 'bower_components',
 
                 // advanced compass config necessary for spritemaps
                 // https://gist.github.com/passy/5270050
@@ -239,18 +235,38 @@ module.exports = function (grunt) {
         // Uglify task does concat,
         // but still available if needed
         concat: {
-            dist: {
-                // files: {
-                //     // compile the dependencies for and with Ember and Ember-Data
-                //     '<%= yeoman.dist %>/<%= yeoman.app %>/scripts/vendor/ember-environment.js': [
-                //         '<%= yeoman.app %>/bower_components/jquery/jquery.min.js',
-                //         '<%= yeoman.app %>/bower_components/handlebars/handlebars.runtime.js',
-                //         '<%= yeoman.app %>/bower_components/ember/ember.min.js',
-                //         '<%= yeoman.app %>/bower_components/ember-data-latest-min.js/index.js',
-                //     ],
-                // },
+            'dev-ember': {
+                files: {
+                    '.tmp/scripts/vendor/ember.js': [
+                        'app/scripts/vendor/loader.js',
+                        'bower_components/jquery/dist/jquery.js',
+                        'bower_components/jquery-ui/ui/jquery-ui.js',
+                        'bower_components/hammerjs/dist/jquery.hammer.js',
+                        'bower_components/handlebars/handlebars.js',
+                        'bower_components/jquery-ui-touch-punch/jquery.ui.touch-punch.js',
+                        'bower_components/ember/ember.js',
+                        'bower_components/ember-data/ember-data.js',
+                        'bower_components/ember-resolver/dist/ember-resolver.js',
+                        'bower_components/ember-load-initializers/ember-load-initializers.js',
+                        'bower_components/validator-js/validator.js',
+                        'bower_components/moment/moment.js',
+                    ]
+                }
             }
         },
+
+        // ### grunt-es6-module-transpiler
+        // Compiles Ember es6 modules
+        concat_sourcemap: {
+            client: {
+                src: ['.tmp/app/scripts/app/**/*.js'],
+                dest: '.tmp/scripts/dev-ember.js',
+                options: {
+                    sourcesContent: true
+                }
+            }
+        },
+
         requirejs: {
             app: {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
@@ -423,7 +439,7 @@ module.exports = function (grunt) {
             },
         },
         modernizr: {
-            devFile: '<%= yeoman.app %>/bower_components/modernizr/modernizr.js',
+            devFile: 'bower_components/modernizr/modernizr.js',
             outputFile: '<%= yeoman.dist %>/<%= yeoman.app %>/scripts/vendor/modernizr.js',
             files: [
                 '<%= yeoman.dist %>/<%= yeoman.app %>/scripts/{,*/}*.js',
@@ -448,8 +464,10 @@ module.exports = function (grunt) {
                 'compass:server',
                 'copy:styles',
                 // 'handlebars:app',
+                'transpile',
                 'emberTemplates:app',
-                'emblem:app',
+                'concat:dev-ember',
+                'concat_sourcemap:client',
             ],
             // test: [
                 // 'coffee',
@@ -459,8 +477,8 @@ module.exports = function (grunt) {
             dist: [
                 // 'coffee',
                 // 'handlebars:app',
+                'transpile',
                 'emberTemplates:app',
-                'emblem:app',
                 'copy:styles',
                 'compass:dist',
                 'svgmin',
@@ -612,44 +630,44 @@ module.exports = function (grunt) {
                 ],
             },
         },
+
+        transpile: {
+            client: {
+                type: 'amd',
+                moduleName: function (path) {
+                    return 'client' + path;
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'app/scripts/app',
+                    src: ['**/*.js'],
+                    dest: '.tmp/app/scripts/app/'
+                }]
+            }
+        },
+
         emberTemplates: {
             options: {
                 amd: true,
             },
             app: {
                 options: {
-                    templateBasePath: yeomanConfig.app + '/scripts/app/templates/',
-                },
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/scripts/app/templates/',
-                    src: ['**/*.hbs', '**/*.handlebars'],
-                    dest: '.tmp/scripts/app/templates/',
-                    ext: '.js',
-                }],
-            }
-        },
-        emblem: {
-            options: {
-                amd: true,
-            },
-            app: {
-                options: {
-                    root: yeomanConfig.app + '/scripts/app/templates/',
-                    dependencies: {
-                        jquery: 'app/bower_components/jquery/dist/jquery.js',
-                        ember: 'app/bower_components/ember/ember.js',
-                        emblem: 'app/bower_components/emblem/dist/emblem.js',
-                        handlebars: 'app/bower_components/handlebars/handlebars.js'
+                    templateBasePath: /app\/scripts\/app/,
+                    templateFileExtensions: /\.hbs/,
+                    templateRegistration: function (name, template) {
+                        return grunt.config.process("define('client/") + name + "', ['exports'], function(__exports__){ __exports__['default'] = " + template + "; });";
                     }
                 },
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/scripts/app/templates/',
-                    src: ['**/*.emblem'],
-                    dest: '.tmp/scripts/app/templates/',
-                    ext: '.js',
-                }],
+                // files: [{
+                //     expand: true,
+                //     cwd: '<%= yeoman.app %>/scripts/app/templates/',
+                //     src: ['**/*.hbs', '**/*.handlebars'],
+                //     dest: '.tmp/scripts/app/templates/',
+                //     ext: '.js',
+                // }],
+                files: {
+                    ".tmp/scripts/templates-ember.js": "app/scripts/app/templates/**/*.hbs"
+                }
             }
         },
     });
