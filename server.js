@@ -4,6 +4,7 @@
  * Express Dependencies
  */
 var express = require('express');
+var hbs = require('express-hbs');
 var app = express();
 var port = 9000;
 
@@ -45,12 +46,20 @@ if (process.env.NODE_ENV === 'test' || (process.argv.length >= 3 && process.argv
 if (/^development|test$/.test(app.get('env'))) {
   app.use(express.logger('dev'));
 
+  app.engine('hbs', hbs.express3({
+    partialsDir: __dirname + '/views/partials'
+  }));
+
   app.set('views', __dirname + '/views');
 } else if (app.get('env') === 'production') {
+  app.engine('hbs', hbs.express3({
+    partialsDir: __dirname + '/dist/views/partials'
+  }));
+
   app.set('views', __dirname + '/dist/views');
 }
 
-app.set('view engine', 'jade');
+app.set('view engine', 'hbs');
 
 // app.use(express.favicon());
 app.use(express.cookieParser(/* 'some secret key to sign cookies' */ 'keyboardcat' ));
