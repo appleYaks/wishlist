@@ -80,9 +80,9 @@ module.exports = function (grunt) {
 
             scripts: {
                 files: [
-                    '{.tmp,<%= yeoman.app %>}/scripts/app/**/*.js',
+                    '<%= yeoman.app %>/scripts/app/**/*.js',
                 ],
-                tasks: ['clean:server', 'transpile', 'emberTemplates:app', 'concat:dev-ember', 'concat_sourcemap:client'],
+                tasks: ['clean:transpiled', 'transpile', 'concat_sourcemap:client'],
                 options: {
                     livereload: false
                 }
@@ -144,14 +144,15 @@ module.exports = function (grunt) {
                     ],
                 }],
             },
-            appTemplates: {
+            transpiled: {
                 files: [{
                     src: [
-                        '.tmp/scripts/app/templates/',
+                        '.tmp/transpiled/'
                     ],
                 }],
             }
         },
+
         // jshint: {
         //     options: {
         //         jshintrc: '.jshintrc'
@@ -237,7 +238,7 @@ module.exports = function (grunt) {
         concat: {
             'dev-ember': {
                 files: {
-                    '.tmp/scripts/vendor/ember.js': [
+                    '.tmp/scripts/vendor.js': [
                         'app/scripts/vendor/loader.js',
                         'bower_components/jquery/dist/jquery.js',
                         'bower_components/jquery-ui/ui/jquery-ui.js',
@@ -259,7 +260,7 @@ module.exports = function (grunt) {
         // Compiles Ember es6 modules
         concat_sourcemap: {
             client: {
-                src: ['.tmp/app/scripts/app/**/*.js'],
+                src: ['.tmp/transpiled/**/*.js'],
                 dest: '.tmp/scripts/dev-ember.js',
                 options: {
                     sourcesContent: true
@@ -464,7 +465,6 @@ module.exports = function (grunt) {
                 'compass:server',
                 'copy:styles',
                 // 'handlebars:app',
-                'transpile',
                 'emberTemplates:app',
                 'concat:dev-ember',
                 'concat_sourcemap:client',
@@ -641,19 +641,16 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'app/scripts/app',
                     src: ['**/*.js'],
-                    dest: '.tmp/app/scripts/app/'
+                    dest: '.tmp/transpiled/'
                 }]
             }
         },
 
         emberTemplates: {
-            options: {
-                amd: true,
-            },
             app: {
                 options: {
                     templateBasePath: /app\/scripts\/app/,
-                    templateFileExtensions: /\.hbs/,
+                    templateFileExtensions: /\.hbs|\.hjs|\.handlebars/,
                     templateRegistration: function (name, template) {
                         return grunt.config.process("define('client/") + name + "', ['exports'], function(__exports__){ __exports__['default'] = " + template + "; });";
                     }
@@ -712,7 +709,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('server', [
         'clean:server',
-        'clean:appTemplates',
+        'transpile',
         'concurrent:server',
 
         // start karma server
@@ -722,7 +719,8 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('test', [
-        'clean:appTemplates',
+        'clean:server',
+        'transpile',
         'concurrent:server',
 
         // tests with coverage.
@@ -737,7 +735,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
-        'clean:appTemplates',
         'concurrent:dist',
 
         'karma:appContinuous',
