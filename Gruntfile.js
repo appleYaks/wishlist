@@ -87,6 +87,18 @@ module.exports = function (grunt) {
                     livereload: false
                 }
             },
+
+            miscScripts: {
+                files: [
+                    '<%= yeoman.app %>/scripts/misc/**/*.js',
+                    '<%= yeoman.app %>/scripts/vendor/**/*.js',
+                ],
+                tasks: ['concat:dev-ember'],
+                options: {
+                    livereload: false
+                }
+            },
+
             // put all karma targets into the `tasks` array
             karma: {
                 files: [
@@ -251,6 +263,7 @@ module.exports = function (grunt) {
                         'bower_components/ember-load-initializers/ember-load-initializers.js',
                         'bower_components/validator-js/validator.js',
                         'bower_components/moment/moment.js',
+                        'app/scripts/misc/config.js',
                     ]
                 }
             }
