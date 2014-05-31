@@ -241,7 +241,7 @@ function renderApp (req, res, next) {
       return next(err);
     }
 
-    var preload = { group: groups };
+    var preload = { groups: groups };
 
     res.render('app', {
       preloadGroups: JSON.stringify(preload)
