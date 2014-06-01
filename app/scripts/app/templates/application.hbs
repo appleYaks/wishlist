@@ -1,14 +1,17 @@
 {{!-- {{partial 'application/_header'}} --}}
 
 <div class='content'>
-  {{outlet 'groups'}}    {{!-- list of groups --}}
-  {{outlet 'items'}}     {{!-- list of items from a group --}}
+  {{outlet groups}}    {{!-- list of groups --}}
 
-  {{outlet 'group'}}     {{!-- itemized description of a group --}}
-  {{outlet 'item'}}      {{!-- itemized description of an item --}}
+  {{outlet items}}     {{!-- list of items from a group --}}
 
-  {{outlet 'groupEdit'}} {{!-- group edit view --}}
-  {{outlet 'itemEdit'}}  {{!-- item edit view --}}
+  <div class="metadata">
+    {{outlet group}}     {{!-- itemized description of a group --}}
+    {{outlet groupEdit}} {{!-- group edit view --}}
+
+    {{outlet item}}      {{!-- itemized description of an item --}}
+    {{outlet itemEdit}}  {{!-- item edit view --}}
+  </div>
 </div>
 
 {{!-- {{partial 'application/_footer'}} --}}
