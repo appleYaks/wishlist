@@ -3,24 +3,32 @@
 /*
  * Express Dependencies
  */
-var express = require('express');
-var hbs = require('express-hbs');
-var app = express();
-var port = 9000;
+var express  = require('express');
+var hbs      = require('express-hbs');
+var app      = express();
+var database = require('./lib/database/sequelize');
+var port     = 9000;
 
 
 /*
  * App methods and libraries
  */
+app.config = require('./config.js');
 app.api = require('./lib/api');
 app.classes = require('./lib/classes');
-app.db = require('./lib/database/mongoose');
+app.db = database.db;
 
 // propagate app instance throughout app methods
 app.api.use(app);
-app.db.use(app);
 
+database.init(app).then(function () {
+  console.log('database initialized!');
+}).catch(function (err) {
+  console.log('database initialization failed due to:', err);
+  process.exit(1);
+});
 
+return;
 /*
  * Set app settings depending on environment mode.
  * Express automatically sets the environment to 'development'
