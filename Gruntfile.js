@@ -100,30 +100,31 @@ module.exports = function (grunt) {
             },
 
             // put all karma targets into the `tasks` array
-            karma: {
-                files: [
-                    '{.tmp,<%= yeoman.app %>}/scripts/**/*.js',
-                    'test/frontend/**/*.js',
-                ],
-                tasks: ['karma:app:run'],
-                options: {
-                    livereload: false,
-                },
-            },
-            coverageBackend: {
-                files: [
-                    '!Gruntfile.js',
-                    '!node-inspector.js',
-                    '!karma.conf.js',
-                    '*.js',
-                    'lib/**/*.js',
-                    'test/backend/**/*.js',
-                ],
-                tasks: ['coverageBackend'],
-                options: {
-                    livereload: false,
-                },
-            },
+            // karma: {
+            //     files: [
+            //         '{.tmp,<%= yeoman.app %>}/scripts/**/*.js',
+            //         'test/frontend/**/*.js',
+            //     ],
+            //     tasks: ['karma:app:run'],
+            //     options: {
+            //         livereload: false,
+            //     },
+            // },
+            // coverageBackend: {
+            //     files: [
+            //         '!Gruntfile.js',
+            //         '!node-inspector.js',
+            //         '!karma.conf.js',
+            //         '*.js',
+            //         'lib/**/*.js',
+            //         'test/backend/**/*.js',
+            //     ],
+            //     tasks: ['coverageBackend'],
+            //     options: {
+            //         livereload: false,
+            //     },
+            // },
+
             css: {
                 files: [
                     '{.tmp,<%= yeoman.app %>}/styles/**/*.css',
