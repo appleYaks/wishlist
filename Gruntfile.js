@@ -533,7 +533,8 @@ module.exports = function (grunt) {
                 options: {
                     args: ['development', karmaConfig.app.port],
                     nodeArgs: ['--debug'],
-                    ext: 'js',
+                    // ext: 'js',
+                    ext: 'dontRestart',
                     // nodemon watches the current directory recursively by default
                     // watch: ['.'], // default
                     delay: 1,
@@ -543,7 +544,8 @@ module.exports = function (grunt) {
             nodeInspector: {
                 script: 'node-inspector.js',
                 options: {
-                    ext: 'js',
+                    // ext: 'js',
+                    ext: 'dontRestart',
                     ignore: nodemonIgnoredFiles,
                     exec: 'node-inspector',
                 },
