@@ -18,6 +18,7 @@ app.config = require('./config.js');
 app.api = require('./lib/api');
 app.classes = require('./lib/classes');
 app.db = database.db;
+app.db.raw = database.raw;
 
 // propagate app instance throughout app methods
 app.api.use(app);
@@ -129,11 +130,7 @@ database.init(app).then(function () {
   * Routes
   */
   function renderApp (req, res, next) {
-    app.db.groups.read.all(function (err, groups) {
-      if (err) {
-        return next(err);
-      }
-
+    app.db.groups.browse().then(function (groups) {
       var preload = { groups: groups };
 
       res.render('app', {
