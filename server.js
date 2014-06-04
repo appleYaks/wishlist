@@ -6,13 +6,14 @@
 var express  = require('express');
 var app      = express();
 var database = require('./lib/database/sequelize');
-var boostrap = require('./lib/bootstrap');
+var bootstrap = require('./lib/bootstrap');
 var port     = 9000;
 
 
 /*
  * App methods and libraries
  */
+app.root = __dirname;
 app.config = require('./config.js');
 app.api = require('./lib/api');
 app.classes = require('./lib/classes');
@@ -27,6 +28,8 @@ database.init(app).then(function () {
   console.log('database initialization failed due to:', databaseErr);
   process.exit(2);
 }).then(function () {
+  bootstrap(app);
+
   // "app.router" positions our routes
   // above the middleware defined below,
   // this means that Express will attempt
