@@ -252,7 +252,7 @@ module.exports = function (grunt) {
             'dev-ember': {
                 files: {
                     '.tmp/scripts/vendor.js': [
-                        'app/scripts/vendor/loader.js',
+                        'bower_components/loader.js/loader.js',
                         'bower_components/jquery/dist/jquery.js',
                         'bower_components/jquery-ui/ui/jquery-ui.js',
                         'bower_components/hammerjs/dist/jquery.hammer.js',
