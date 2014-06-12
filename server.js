@@ -21,7 +21,7 @@ app.db = database.db;
 app.db.raw = database.raw;
 
 // propagate app instance throughout app methods
-app.api.use(app);
+app.api.init(app);
 
 database.init(app).then(function () {
   console.log('database initialized!');
@@ -141,8 +141,8 @@ database.init(app).then(function () {
 
   app.get('/', renderApp);
 
-  app.get('/api/v1/groups', app.api.v1.groups.get.all);
-  app.get('/api/v1/groups/:group_id', app.api.v1.groups.get.groupById);
+  app.get('/api/v1/groups', app.api.v1.groups.browse);
+  app.get('/api/v1/groups/:group_id', app.api.v1.groups.read);
 
   app.get('/api/v1/groups/:group_id/items', app.api.v1.items.get.itemsByGroup);
   app.get('/api/v1/items', app.api.v1.items.get.all);
