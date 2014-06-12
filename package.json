@@ -28,7 +28,7 @@
     "grunt-bower-requirejs": "~0.7.0",
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-imagemin": "~0.2.0",
-    "grunt-contrib-watch": "~0.5.2",
+    "grunt-contrib-watch": "~0.6.1",
     "grunt-rev": "~0.1.0",
     "grunt-contrib-handlebars": "~0.5.8",
     "grunt-usemin": "~0.1.10",
@@ -42,7 +42,7 @@
     "grunt-simple-mocha": "~0.4.0",
     "grunt-karma": "~0.6.2",
     "karma-firefox-launcher": "~0.1.0",
-    "karma-coverage": "~0.1.0",
+    "karma-coverage": "~0.2.0",
     "karma-mocha": "~0.1.0",
     "mocha": "*",
     "chai": "*",
@@ -50,7 +50,8 @@
     "sinon-chai": "~2.4.0",
     "grunt-ember-templates": "~0.4.14",
     "grunt-es6-module-transpiler": "~0.6.0",
-    "grunt-concat-sourcemap": "~0.4.1"
+    "grunt-concat-sourcemap": "~0.4.1",
+    "grunt-express-server": "~0.4.17"
   },
   "engines": {
     "node": ">=0.8.0"

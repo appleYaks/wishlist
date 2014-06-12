@@ -7,7 +7,7 @@ var express  = require('express');
 var app      = express();
 var database = require('./lib/database/sequelize');
 var bootstrap = require('./lib/bootstrap');
-var port     = 9000;
+var port     = process.env.PORT || 9000;
 
 
 /*

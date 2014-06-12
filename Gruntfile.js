@@ -135,7 +135,38 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/images/**/*.{png,jpg,jpeg,webp}'
                 ],
             },
+            express: {
+                files:  ['server.js', 'lib/**/*.js'],
+                tasks:  ['express:dev'],
+                options: {
+                    // **Note:** Without this option specified express won't be reloaded
+                    spawn: false
+                }
+            }
         },
+
+        // ### grunt-express-server
+        // Start a Ghost expess server for use in development and testing
+        express: {
+            options: {
+            },
+            dev: {
+                options: {
+                    script: 'server.js',
+                    output: 'Express started on port*',
+                    opts: ['--debug'],
+                    args: ['development', karmaConfig.app.port],
+                    node_env: 'development',
+                    port: 9000
+                }
+            },
+            test: {
+                options: {
+                    node_env: 'testing'
+                }
+            }
+        },
+
         clean: {
             dist: {
                 files: [{
@@ -183,26 +214,6 @@ module.exports = function (grunt) {
         //             run: true,
         //             // urls: ['http://localhost:<%= connect.options.port %>/index.html']
         //         }
-        //     }
-        // },
-        // coffee: {
-        //     dist: {
-        //         files: [{
-        //             expand: true,
-        //             cwd: '<%= yeoman.app %>/scripts',
-        //             src: '{,*/}*.coffee',
-        //             dest: '.tmp/app/scripts',
-        //             ext: '.js'
-        //         }]
-        //     },
-        //     test: {
-        //         files: [{
-        //             expand: true,
-        //             cwd: 'test/spec',
-        //             src: '{,*/}*.coffee',
-        //             dest: '.tmp/spec',
-        //             ext: '.js'
-        //         }]
         //     }
         // },
         compass: {
@@ -282,63 +293,6 @@ module.exports = function (grunt) {
             }
         },
 
-        requirejs: {
-            app: {
-                // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
-                options: {
-                    baseUrl: 'app/scripts/app',
-                    // notifies the optimizer that has() test branches with this/these variables can be optimized out
-                    // http://requirejs.org/docs/optimization.html#hasjs
-                    has: {
-                        // a has() assignment only for unit testing. RequireJS modules are able to
-                        // return different values when unit tests set this variable to true
-                        //
-                        // http://arvelocity.com/2013/07/02/running-an-express-server-with-grunt-and-yeoman-part-3/
-                        internalTest: false,
-                    },
-                    // since usemin uses our development requirejs config file, this will
-                    // apply the relevant portions of the config, except where they differ. in this case,
-                    // the path is left intact except for the JST path, which is replaced for the build.
-                    paths: {
-                        JST: '../../../.tmp/scripts/app/templates',
-                    },
-                    shim: {
-                        handlebars: {
-                            deps: [],
-                            exports: 'Handlebars',
-                        },
-                        underscore: {
-                            deps: [],
-                            exports: '_',
-                            // remove the global reference to _
-                            // and make it internal to RequireJS
-                            init: function () {
-                                return this._.noConflict();
-                            },
-                        },
-                        backbone: {
-                            deps: ['jquery', 'underscore'],
-                            exports: 'Backbone',
-                            // remove the global reference to Backbone
-                            // and make it internal to RequireJS
-                            init: function (jquery, underscore) {
-                                return this.Backbone.noConflict();
-                            },
-                        },
-                    },
-                    //uglify2: {} // https://github.com/mishoo/UglifyJS2
-                    // optimize: 'uglify2',
-                    // TODO: Figure out how to make sourcemaps work with grunt-usemin
-                    // https://github.com/yeoman/grunt-usemin/issues/30
-                    //generateSourceMaps: true,
-                    // required to support SourceMaps
-                    // http://requirejs.org/docs/errors.html#sourcemapcomments
-                    preserveLicenseComments: false,
-                    useStrict: true,
-                    wrap: true,
-                }
-            },
-        },
         rev: {
             dist: {
                 files: {
@@ -464,6 +418,15 @@ module.exports = function (grunt) {
             uglify: true
         },
         concurrent: {
+            nodeInspector: {
+                options: {
+                    logConcurrentOutput: true,
+                },
+                tasks: [
+                    'nodemon:nodeInspector',
+                    'watch'
+                ]
+            },
             nodemon: {
                 options: {
                     logConcurrentOutput: true,
@@ -548,6 +511,7 @@ module.exports = function (grunt) {
                     ext: 'dontRestart',
                     ignore: nodemonIgnoredFiles,
                     exec: 'node-inspector',
+                    delay: 3
                 },
             },
         },
@@ -731,7 +695,8 @@ module.exports = function (grunt) {
         // start karma server
         'karma:app',
 
-        'concurrent:nodemon',
+        'express:dev',
+        'concurrent:nodeInspector',
     ]);
 
     grunt.registerTask('test', [
