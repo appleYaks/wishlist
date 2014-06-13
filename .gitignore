@@ -9,3 +9,21 @@ bower_components
 *.sublime-workspace
 *.secret.json
 *.swp
+
+# vim-related
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+.vimrc
+*~
+
+# TernJS
+.tern-project
+
+# Sqlite3 DB file
+*.db
+*.db-journal
+
+/content/data/*
