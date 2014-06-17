@@ -8,7 +8,7 @@ var app      = express();
 var database = require('./lib/database/sequelize');
 var bootstrap = require('./lib/bootstrap');
 var port     = process.env.PORT || 9000;
-
+var api;
 
 /*
  * App methods and libraries
@@ -22,6 +22,9 @@ app.db.raw = database.raw;
 
 // propagate app instance throughout app methods
 app.api.init(app);
+
+// make some shorthand
+api = app.api.v1;
 
 database.init(app).then(function () {
   console.log('database initialized!');
@@ -141,12 +144,12 @@ database.init(app).then(function () {
 
   app.get('/', renderApp);
 
-  app.get('/api/v1/groups', app.api.v1.groups.browse);
-  app.get('/api/v1/groups/:group_id', app.api.v1.groups.read);
+  app.get('/api/v1/groups', api.groups.browse);
+  app.get('/api/v1/groups/:group_id', api.groups.read);
 
-  app.get('/api/v1/groups/:group_id/items', app.api.v1.items.get.itemsByGroup);
-  app.get('/api/v1/items', app.api.v1.items.get.all);
-  app.get('/api/v1/items/:item_id', app.api.v1.items.get.itemById);
+  app.get('/api/v1/groups/:group_id/items', api.items.browse);
+  app.get('/api/v1/items', api.items.browse);
+  app.get('/api/v1/items/:item_id', api.items.read);
 
   app.get('/groups', renderApp);
   app.get('/groups/:group_id', renderApp);
