@@ -169,17 +169,6 @@ database.init(app).then(function () {
     res.send(200);
   });
 
-  // app.get('/api/v1/people', app.api.v1.people.getAll);
-  // app.get('/api/v1/peopleError', app.api.v1.people.getError);
-
-  // app.put('/api/v1/people/:id', function (req, res) {
-  //   // the database library would normally save
-  //   // the record and return the updated record.
-  //   req.body.person.id = req.params.id;
-  //   res.send(req.body);
-  // });
-
-
   /*
   * Status Code pages
   */
