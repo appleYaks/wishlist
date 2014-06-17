@@ -27,3 +27,4 @@ Session.vim
 *.db-journal
 
 /content/data/*
+/config.js
