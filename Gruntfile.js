@@ -693,7 +693,7 @@ module.exports = function (grunt) {
         'concurrent:server',
 
         // start karma server
-        'karma:app',
+        // 'karma:app',
 
         'express:dev',
         'concurrent:nodeInspector',
