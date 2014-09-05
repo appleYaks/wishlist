@@ -1,7 +1,30 @@
 // `html` is needed for specificity over normalize.css
 // http://coding.smashingmagazine.com/2007/07/27/css-specificity-things-you-should-know/
-* {
-  @include box-sizing(border-box);
+*, *:before, *:after {
+    @include box-sizing(border-box);
+}
+
+// style placeholder text on inputs (color too light, can't read it)
+// ref: http://stackoverflow.com/questions/2610497/change-an-inputs-html5-placeholder-color-with-css
+::-webkit-input-placeholder {
+    color: #555;
+}
+:-moz-placeholder {
+    color: #555;
+    opacity: 1;
+}
+::-moz-placeholder {
+    color: #555;
+    opacity: 1;
+}
+:-ms-input-placeholder {
+    color: #555;
+}
+input[type=search],
+textarea {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 // flexible images/media
