@@ -26,9 +26,5 @@
     "moment": "~2.6.0",
     "loader.js": "~1.0.0"
   },
-  "devDependencies": {},
-  "resolutions": {
-    "ember": "~1.5.0",
-    "jquery": "~1.11"
-  }
+  "devDependencies": {}
 }
