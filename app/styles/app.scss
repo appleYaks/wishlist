@@ -7,14 +7,7 @@
  * globally-available modules
  */
 @import 'base_modules/all';
-
-
-/*
- * if we need the partials found on normal, non-app-based pages, we can include them.
- */
-@import 'common/globals';
-@import 'common/header';
-@import 'common/footer';
+@import 'base';
 
 /*
  * 'app' modules for this single-page app
