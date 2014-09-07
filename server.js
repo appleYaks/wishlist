@@ -158,18 +158,8 @@ database.init(app).then(function () {
   app.get('/groups/:group_id/items/:item_id', renderApp);
   app.get('/groups/:group_id/items/:item_id/edit', renderApp);
 
-
-  app.get('/normal', function(req, res, next) {
-    res.render('normal');
-  });
-
   app.get('/index', function (req, res) {
     res.send(200, require('fs').readFileSync('index.html', {encoding: 'utf8'}));
-  });
-
-  app.post('/normal', function (req, res) {
-    console.log('picture was', req.body, req.files);
-    res.send(200);
   });
 
   /*
