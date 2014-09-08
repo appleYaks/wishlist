@@ -1,5 +1,6 @@
 import Resolver from 'ember/resolver';
 import loadInitializers from 'ember/load-initializers';
+import afterRender from 'client/utils/after-render';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
