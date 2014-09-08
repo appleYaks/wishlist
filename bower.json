@@ -4,26 +4,20 @@
   "dependencies": {
     "modernizr": "~2.6.2",
     "jquery": "~1.11",
-    "json3": "~3.2.5",
-    "sinon-chai": "~2.4.0",
-    "chai": "~1.7.1",
-    "has": "latest",
-    "sinonjs": "~1.7.1",
     "handlebars": "~1.3.0",
-    "normalize-css": "~2.1.2",
-    "respond": "~1.2.0",
     "ember": "~1.5.0",
     "ember-resolver": "git://github.com/stefanpenner/ember-jj-abrams-resolver.git#181251821cf513bb58d3e192faa13245a816f75e",
     "ember-load-initializers": "git://github.com/stefanpenner/ember-load-initializers.git#0.0.1",
     "ember-mocha-adapter": "~0.1.2",
-    "emblem": "~0.3.16",
     "hammerjs": "~1.0.5",
-    "jquery-ui-touch-punch": "*",
-    "jquery-ui": "~1.10.3",
-    "bootstrap": "~3.0.0",
+    "bootstrap": "~3.2.0",
     "validator-js": "~3.12.0",
     "moment": "~2.6.0",
-    "loader.js": "~1.0.0"
+    "loader.js": "~1.0.0",
+    "font-awesome": "~4.2.0",
+    "normalize-scss": "~3.0.1",
+    "breakpoint-sass": "~2.5.0",
+    "susy": "~2.1.3"
   },
   "devDependencies": {}
 }
