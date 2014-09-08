@@ -1,11 +1,19 @@
 <div class="content">
-  {{outlet groups}}    {{!-- list of groups --}}
+  <div class="groups-wrapper">
+    {{outlet groups}}    {{!-- list of groups --}}
+  </div>
 
-  {{outlet items}}     {{!-- list of items from a group --}}
+  <div class="items-wrapper">
+    {{outlet items}}     {{!-- list of items from a group --}}
+  </div>
 
-  {{outlet group}}     {{!-- itemized description of a group --}}
-  {{outlet groupEdit}} {{!-- group edit view --}}
+  <div class="group-wrapper">
+    {{outlet group}}     {{!-- itemized description of a group --}}
+    {{outlet groupEdit}} {{!-- group edit view --}}
+  </div>
 
-  {{outlet item}}      {{!-- itemized description of an item --}}
-  {{outlet itemEdit}}  {{!-- item edit view --}}
+  <div class="item-wrapper">
+    {{outlet item}}      {{!-- itemized description of an item --}}
+    {{outlet itemEdit}}  {{!-- item edit view --}}
+  </div>
 </div>
