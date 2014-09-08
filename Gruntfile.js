@@ -48,23 +48,9 @@ module.exports = function (grunt) {
     grunt.initConfig({
         yeoman: yeomanConfig,
         watch: {
-            // coffee: {
-            //     files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
-            //     tasks: ['coffee:dist']
-            // },
-            // coffeeTest: {
-            //     files: ['test/spec/{,*/}*.coffee'],
-            //     tasks: ['coffee:test']
-            // },
-            options: {
-                livereload: true
-            },
             compass: {
                 files: ['<%= yeoman.app %>/styles/**/*.{scss,sass}'],
                 tasks: ['compass:server'],
-                options: {
-                    livereload: false,
-                },
             },
             emberTemplates: {
                 files: [
@@ -73,9 +59,6 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/scripts/app/templates/**/*.handlebars',
                 ],
                 tasks: ['emberTemplates:app'],
-                options: {
-                    livereload: false,
-                },
             },
 
             scripts: {
@@ -83,9 +66,6 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/scripts/app/**/*.js',
                 ],
                 tasks: ['clean:transpiled', 'transpile', 'concat_sourcemap:client'],
-                options: {
-                    livereload: false
-                }
             },
 
             miscScripts: {
@@ -94,46 +74,26 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/scripts/vendor/**/*.js',
                 ],
                 tasks: ['concat:dev-ember'],
-                options: {
-                    livereload: false
-                }
             },
-
-            // put all karma targets into the `tasks` array
-            // karma: {
-            //     files: [
-            //         '{.tmp,<%= yeoman.app %>}/scripts/**/*.js',
-            //         'test/frontend/**/*.js',
-            //     ],
-            //     tasks: ['karma:app:run'],
-            //     options: {
-            //         livereload: false,
-            //     },
-            // },
-            // coverageBackend: {
-            //     files: [
-            //         '!Gruntfile.js',
-            //         '!node-inspector.js',
-            //         '!karma.conf.js',
-            //         '*.js',
-            //         'lib/**/*.js',
-            //         'test/backend/**/*.js',
-            //     ],
-            //     tasks: ['coverageBackend'],
-            //     options: {
-            //         livereload: false,
-            //     },
-            // },
-
             css: {
                 files: [
                     '{.tmp,<%= yeoman.app %>}/styles/**/*.css',
                 ],
+                options: {
+                    livereload: {
+                        port: 1337
+                    },
+                },
             },
             images: {
                 files: [
                     '<%= yeoman.app %>/images/**/*.{png,jpg,jpeg,webp}'
                 ],
+                options: {
+                    livereload: {
+                        port: 1337
+                    }
+                },
             },
             express: {
                 files:  ['server.js', 'lib/**/*.js'],
@@ -696,7 +656,8 @@ module.exports = function (grunt) {
         // 'karma:app',
 
         'express:dev',
-        'concurrent:nodeInspector',
+        'watch',
+        // 'concurrent:nodeInspector',
     ]);
 
     grunt.registerTask('test', [
