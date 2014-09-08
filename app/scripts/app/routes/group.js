@@ -1,6 +1,6 @@
 var GroupRoute = Ember.Route.extend({
   model: function (params) {
-    return this.store.find('group', params.group_id);
+    return $.getJSON('/api/v1/groups/' + params.group_id);
   },
 
   renderTemplate: function () {

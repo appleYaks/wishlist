@@ -7,7 +7,7 @@ var GroupsRoute = Em.Route.extend({
       return this.store.all('group');
     }
 
-    return this.store.find('group');
+    return $.getJSON('/api/v1/groups');
   },
 
   renderTemplate: function () {
