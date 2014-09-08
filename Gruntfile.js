@@ -230,7 +230,6 @@ module.exports = function (grunt) {
                         'bower_components/handlebars/handlebars.js',
                         'bower_components/jquery-ui-touch-punch/jquery.ui.touch-punch.js',
                         'bower_components/ember/ember.js',
-                        'bower_components/ember-data/ember-data.js',
                         'bower_components/ember-resolver/dist/ember-resolver.js',
                         'bower_components/ember-load-initializers/ember-load-initializers.js',
                         'bower_components/validator-js/validator.js',

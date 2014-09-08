@@ -1,6 +1,5 @@
 export default {
     name: 'preloadData',
-    after: ['store'],
 
     initialize: function (container, application) {
       var head = document.head;
@@ -21,8 +20,7 @@ export default {
         attributes.forEach(function (obj) {
           var data = JSON.parse(obj.content);
 
-          store.pushPayload(obj.type, data);
-          container.lookup(obj.target).set('preload', true);
+          container.lookup(obj.target).set('preload', data);
 
           // this would be useful for sending the data to the route
           // application.register('preload:groups', data, { instantiate: false });

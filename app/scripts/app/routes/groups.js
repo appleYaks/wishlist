@@ -4,7 +4,7 @@ var GroupsRoute = Em.Route.extend({
 
     if (preload) {
       this.set('preload', null);
-      return this.store.all('group');
+      return preload.groups;
     }
 
     return $.getJSON('/api/v1/groups');
