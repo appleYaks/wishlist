@@ -3,10 +3,6 @@ var ItemsRoute = Em.Route.extend({
     return $.getJSON('/api/v1/groups/' + params.group_id + '/items');
   },
 
-  setupController: function (controller, model) {
-    controller.set('model', model);
-  },
-
   renderTemplate: function () {
     this.render('items', {
       into: 'application',

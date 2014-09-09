@@ -1,4 +1,4 @@
-var ItemsController = Em.ObjectController.extend({
+var ItemsController = Em.ArrayController.extend({
   actions: {
     doit: function (item) {
 
