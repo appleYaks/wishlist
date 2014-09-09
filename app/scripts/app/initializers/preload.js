@@ -15,8 +15,6 @@ export default {
       var hasData = !Em.isEmpty(attributes);
 
       if (hasData) {
-        var store = container.lookup('store:main');
-
         attributes.forEach(function (obj) {
           var data = JSON.parse(obj.content);
 
