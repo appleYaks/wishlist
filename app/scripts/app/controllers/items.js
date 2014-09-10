@@ -1,7 +1,7 @@
 var ItemsController = Em.ArrayController.extend({
   actions: {
-    doit: function (item) {
-
+    deleteItem: function (item) {
+      console.log('deleting item: ', item);
     },
   }
 });

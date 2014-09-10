@@ -1,5 +1,11 @@
 <ul class="items">
   {{#each}}
-    <li {{action "doit" this}}>{{title}}</li>
+  <li>
+    {{view Ember.Checkbox checked=complete}}
+    {{#link-to 'item' this}}
+      {{title}}
+    {{/link-to}}
+    <button {{action 'deleteItem' this}}></button>
+  </li>
   {{/each}}
 </ul>
