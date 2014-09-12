@@ -87,7 +87,7 @@ module.exports = function (grunt) {
                 ],
                 options: {
                     livereload: {
-                        port: 1337
+                        port: 35729
                     },
                 },
             },
@@ -97,7 +97,7 @@ module.exports = function (grunt) {
                 ],
                 options: {
                     livereload: {
-                        port: 1337
+                        port: 35729
                     }
                 },
             },
