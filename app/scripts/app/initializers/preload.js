@@ -1,9 +1,9 @@
-import { fetch, parseFields } from 'client/utils/api-fetch';
-
 export default {
     name: 'preloadData',
+    after: ['data-store'],
 
     initialize: function (container, application) {
+      var store = container.lookup('store:main');
       var head = document.head;
 
       var attributes = [
@@ -21,10 +21,10 @@ export default {
           var data = JSON.parse(obj.content);
 
           if (obj.target === 'route:groups') {
-            parseFields(data);
+            store.load('groups', data);
           }
 
-          container.lookup(obj.target).set('preload', data);
+          container.lookup(obj.target).set('preload', true);
 
           // this would be useful for sending the data to the route
           // application.register('preload:groups', data, { instantiate: false });

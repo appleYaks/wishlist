@@ -1,15 +1,13 @@
-import apiFetch from 'client/utils/api-fetch';
-
 var GroupsRoute = Em.Route.extend({
   model: function () {
     var preload = this.get('preload');
 
     if (preload) {
       this.set('preload', null);
-      return preload;
+      return this.store.all('groups');
     }
 
-    return apiFetch('groups');
+    return this.api.findAll('groups');
   },
 
   renderTemplate: function () {
