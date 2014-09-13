@@ -1,17 +1,23 @@
 var apiFetch = Ember.Object.extend({
   init: function () {
     this._super();
+    // a transform will take the prefixName and prefixVal,
+    // and return a set accepted by DataStore#all to filter by key/value
     this.keyTransforms = {
       // noop
-      defalt: function (type, prefixName, prefixVal) { return [type, prefixName, prefixVal];
-    }};
+      defalt: function (type, prefixName, prefixVal) {
+        return [type, prefixName, prefixVal];
+      }
+    };
   },
 
   find: function (type, id) {
     var self = this,
         model;
 
-    if (model = this.store.findById(type, id)) {
+    model = this.store.findById(type, id);
+
+    if (model) {
       return model;
     }
 
@@ -21,6 +27,12 @@ var apiFetch = Ember.Object.extend({
     });
   },
 
+  // allows getting all of a nested type,
+  // i.e. /api/v1/prefixName/prefixVal/type
+  // e.g. /api/v1/groups/1/items
+  //
+  // the transform will take the prefixName and prefixVal,
+  // and return a set accepted by DataStore#all to filter by key/value
   findAll: function (type, prefixName, prefixVal, transform) {
     var self = this;
 
