@@ -1,8 +1,6 @@
-import apiFetch from 'client/utils/api-fetch';
-
 var GroupRoute = Ember.Route.extend({
   model: function (params) {
-    return apiFetch('groups/' + params.group_id);
+    return this.api.find('groups', params.group_id);
   },
 
   renderTemplate: function () {

@@ -1,8 +1,6 @@
-import apiFetch from 'client/utils/api-fetch';
-
 var ItemRoute = Em.Route.extend({
   model: function (params) {
-    return apiFetch('items/' + params.item_id);
+    return this.api.find('items', params.item_id);
   },
 
   renderTemplate: function () {

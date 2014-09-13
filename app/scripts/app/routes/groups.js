@@ -4,7 +4,7 @@ var GroupsRoute = Em.Route.extend({
 
     if (preload) {
       this.set('preload', null);
-      return this.store.all('groups');
+      // return this.store.all('groups');
     }
 
     return this.api.findAll('groups');
