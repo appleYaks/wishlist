@@ -1,3 +1,5 @@
+import { fetch, parseFields } from 'client/utils/api-fetch';
+
 export default {
     name: 'preloadData',
 
@@ -17,6 +19,10 @@ export default {
       if (hasData) {
         attributes.forEach(function (obj) {
           var data = JSON.parse(obj.content);
+
+          if (obj.target === 'route:groups') {
+            parseFields(data);
+          }
 
           container.lookup(obj.target).set('preload', data);
 

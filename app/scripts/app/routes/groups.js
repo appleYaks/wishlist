@@ -1,3 +1,5 @@
+import apiFetch from 'client/utils/api-fetch';
+
 var GroupsRoute = Em.Route.extend({
   model: function () {
     var preload = this.get('preload');
@@ -7,7 +9,7 @@ var GroupsRoute = Em.Route.extend({
       return preload;
     }
 
-    return $.getJSON('/api/v1/groups');
+    return apiFetch('groups');
   },
 
   renderTemplate: function () {
