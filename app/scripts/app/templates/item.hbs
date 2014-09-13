@@ -1,5 +1,8 @@
 <div class="item">
-  {{#link-to 'item.edit' this}}Edit{{/link-to}}
+  <div class="actions">
+    {{#link-to 'items'}}Close{{/link-to}}
+    {{#link-to 'item.edit' this}}Edit{{/link-to}}
+  </div>
 
   <div class="item-metadata">
     <p class="title">{{title}}</p>
@@ -8,4 +11,10 @@
     <p class="priority">{{priority}}</p>
     <p class="complete">{{complete}}</p>
   </div>
+
+  <ul class="fields">
+    {{#each fields}}
+    <li class="item-field">{{key}} : {{val}}</li>
+    {{/each}}
+  </ul>
 </div>

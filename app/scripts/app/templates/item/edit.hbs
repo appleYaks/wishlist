@@ -1,0 +1,27 @@
+<div class="item-edit">
+  <div class="actions">
+    {{#link-to 'items' this}}Close{{/link-to}}
+  </div>
+
+  <label for="title">
+    <span>Title: {{title}}</span>
+  </label>
+
+  <ul class="fields">
+    {{#each fields}}
+    <label>
+      <span>{{key}}:</span>
+      {{input type="text" value=value}}
+    </label>
+    {{/each}}
+
+    <div class="new-field">
+      {{input type="text" value=newFieldValue}}
+    </div>
+  </ul>
+
+  <div class="edit-actions">
+    <button {{action 'cancel'}}>Cancel</button>
+    <button {{action 'save'}}>Save</button>
+  </div>
+</div>
