@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Ember Tests</title>
+    <link rel="stylesheet" href="/mocha.css" />
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <div id="testRoot"></div>
+    <script src="/scripts/vendor.js"></script>
+    <script src="/scripts/templates-ember.js"></script>
+    <script src="/scripts/dev-ember.js"></script>
+    <script src="/mocha.js"></script>
+    <script src="/ember-mocha-adapter.js"></script>
+    <script src="/expect.js"></script>
+    <script>
+      window.ENV = {
+        APP: {}
+      };
+
+      window.App = require('client/app')['default'].create(window.ENV.APP);
+      App.rootElement = '#testRoot';
+      App.setupForTesting();
+      App.injectTestHelpers();
+
+      App.Router.reopen({
+        location: 'none'
+      });
+
+      describe('Testing test', function () {
+        beforeEach(function () {
+          visit('groups');
+        });
+
+        afterEach(function () {
+          App.reset();
+        });
+
+        it('should redirect to /groups', function () {
+          expect(1).to.equal(1);
+        });
+      });
+
+      Ember.$(function () {
+        mocha.run();
+      });
+    </script>
+  </body>
+</html>
