@@ -16,20 +16,40 @@
     <script src="/ember-mocha-adapter.js"></script>
     <script src="/expect.js"></script>
     <script>
+      var router = require('client/router')['default'];
+      router.reopen({
+        location: 'none'
+      });
+
       window.ENV = {
         APP: {}
       };
 
       window.App = require('client/app')['default'].create(window.ENV.APP);
+      App.deferReadiness();
       App.rootElement = '#testRoot';
-      App.setupForTesting();
       App.injectTestHelpers();
-
-      App.Router.reopen({
-        location: 'none'
-      });
+      App.advanceReadiness();
 
       describe('Testing test', function () {
+        beforeEach(function () {
+          visit('/');
+        });
+
+        afterEach(function () {
+          App.reset();
+        });
+
+        it('should redirect to /groups', function () {
+          expect(currentURL()).to.equal('/groups');
+        });
+
+        it('should test something', function () {
+          expect(2).to.equal(2);
+        });
+      });
+
+      describe('Testing test 2', function () {
         beforeEach(function () {
           visit('groups');
         });
@@ -38,7 +58,7 @@
           App.reset();
         });
 
-        it('should redirect to /groups', function () {
+        it('should test something else', function () {
           expect(1).to.equal(1);
         });
       });
