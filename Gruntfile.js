@@ -108,6 +108,10 @@ module.exports = function (grunt) {
                     // **Note:** Without this option specified express won't be reloaded
                     spawn: false
                 }
+            },
+            tests: {
+                files: ['test/frontend/**/*.js'],
+                tasks: ['concat:tests']
             }
         },
 
@@ -205,6 +209,11 @@ module.exports = function (grunt) {
                         'app/scripts/misc/ms-device-width.js',
                     ]
                 }
+            },
+            tests: {
+                files: {
+                    '.tmp/scripts/tests.js': 'test/frontend/**/*.js'
+                }
             }
         },
 
@@ -247,6 +256,7 @@ module.exports = function (grunt) {
         concurrent: {
             server: [
                 'sass:dev',
+                'concat:tests',
                 'emberTemplates:app',
                 'concat:dev-ember',
                 'concat_sourcemap:client',
@@ -339,6 +349,7 @@ module.exports = function (grunt) {
         // 'jshint',
         'clean:server',
         'transpile',
+        'concat:tests',
         'concurrent:server',
     ]);
 
