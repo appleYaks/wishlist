@@ -15,6 +15,7 @@
     <script src="/mocha.js"></script>
     <script src="/ember-mocha-adapter.js"></script>
     <script src="/chai.js"></script>
+    <script src="/tests.js"></script>
     <script>
       var expect = chai.expect;
       var should = chai.should();
@@ -28,46 +29,24 @@
         APP: {}
       };
 
-      window.App = require('client/app')['default'].create(window.ENV.APP);
-      App.deferReadiness();
-      App.rootElement = '#testRoot';
-      App.injectTestHelpers();
-      App.advanceReadiness();
-
-      describe('Testing test', function () {
-        beforeEach(function () {
-          visit('/');
-        });
-
-        afterEach(function () {
-          App.reset();
-        });
-
-        it('should redirect to /groups', function () {
-          expect(currentURL()).to.equal('/groups');
-        });
-
-        it('should test something', function () {
-          expect(2).to.equal(2);
-        });
-      });
-
-      describe('Testing test 2', function () {
-        beforeEach(function () {
-          visit('groups');
-        });
-
-        afterEach(function () {
-          App.reset();
-        });
-
-        it('should test something else', function () {
-          expect(1).to.equal(1);
-        });
-      });
-
       Ember.$(function () {
-        mocha.run();
+        Ember.run(function () {
+          window.App = require('client/app')['default'].create(window.ENV.APP);
+
+          // Don't clutter console with too many logs
+          App.LOG_ACTIVE_GENERATION = false;
+          App.LOG_MODULE_RESOLVER = false;
+          App.LOG_TRANSITIONS = false;
+          App.LOG_TRANSITIONS_INTERNAL = false;
+          App.LOG_VIEW_LOOKUPS = false;
+
+          App.deferReadiness();
+          App.rootElement = '#testRoot';
+          App.injectTestHelpers();
+          App.advanceReadiness();
+
+          mocha.run();
+        });
       });
     </script>
   </body>
