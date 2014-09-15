@@ -14,8 +14,11 @@
     <script src="/scripts/dev-ember.js"></script>
     <script src="/mocha.js"></script>
     <script src="/ember-mocha-adapter.js"></script>
-    <script src="/expect.js"></script>
+    <script src="/chai.js"></script>
     <script>
+      var expect = chai.expect;
+      var should = chai.should();
+
       var router = require('client/router')['default'];
       router.reopen({
         location: 'none'
