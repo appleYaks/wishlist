@@ -1,6 +1,4 @@
 describe('DataStore', function () {
-  var store;
-
   beforeEach(function () {
     visit('/');
   });
@@ -10,7 +8,6 @@ describe('DataStore', function () {
   });
 
   it('should push preloaded data into the store', function() {
-    var allGroups, testGroup;
     var now = new Date();
     var groups = [{
         id: 999,
@@ -31,19 +28,16 @@ describe('DataStore', function () {
       App.reset();
     });
 
-    visit('groups');
+    document.head.removeChild(meta);
 
     andThen(function () {
-      store = App.__container__.lookup('store:main');
-      allGroups = store.all('groups');
-      testGroup = allGroups.objectAt(0);
+      var store = App.__container__.lookup('store:main'),
+          testGroup = store.findById('groups', 999);
 
-      window.b = testGroup;
-      expect(allGroups.get('length')).to.equal(1);
+      assertDataStoreCount('groups', 1);
+
       expect(testGroup).to.exist;
-      expect(testGroup.title).to.equal(groups[0].title);
-      expect(testGroup.id).to.equal(groups[0].id);
-      document.head.removeChild(meta);
+      testGroup.title.should.equal(groups[0].title);
     });
   });
 });
