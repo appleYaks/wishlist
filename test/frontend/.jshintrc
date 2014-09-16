@@ -22,7 +22,9 @@
     "onevar": true,
     "white": true,
     "quotmark": "single",
+    "expr": true,
     "globals": {
+        "console": true,
         "Ember": true,
         "Em": true,
         "$": true,
@@ -33,6 +35,8 @@
         "should": true,
         "describe": true,
         "it": true,
+        "before": true,
+        "after": true,
         "beforeEach": true,
         "afterEach": true,
         "visit": true,
@@ -44,6 +48,8 @@
         "currentPath": true,
         "currentRouteName": true,
         "currentURL": true,
-        "andThen": true
+        "andThen": true,
+        "clearDataStore": true,
+        "assertDataStoreCount": true
     }
 }
