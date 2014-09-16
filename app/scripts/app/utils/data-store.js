@@ -3,15 +3,15 @@ import parseFields from 'client/utils/parse-fields-metadata';
 var DataStore = Ember.Object.extend({
   init: function () {
     this._super();
-    this.set('store', Ember.Object.create());
+    this.set('_store', Ember.Object.create());
   },
 
   addType: function (type) {
-    this.store[type] = Ember.ArrayProxy.create({ content: Ember.A() });
+    this._store[type] = Ember.ArrayProxy.create({ content: Ember.A() });
   },
 
   load: function (type, payload) {
-    if (!this.store[type]) {
+    if (!this._store[type]) {
       throw new Error('There is no model of type ' + type + ' in the datastore!');
     }
 
@@ -22,13 +22,13 @@ var DataStore = Ember.Object.extend({
     // turn `fields` metadata field from a string like "[]" into a JSON object
     parseFields(payload);
 
-    if (!this.store[type].length) {
-      this.store[type].pushObjects(payload);
+    if (!this._store[type].length) {
+      this._store[type].pushObjects(payload);
       return;
     }
 
-    if (!Array.isArray(payload) && !this.store[type].findBy('id', payload.id)) {
-      this.store[type].pushObject(payload);
+    if (!Array.isArray(payload) && !this._store[type].findBy('id', payload.id)) {
+      this._store[type].pushObject(payload);
       return;
     }
 
@@ -42,7 +42,7 @@ var DataStore = Ember.Object.extend({
   },
 
   all: function (type, key, val) {
-    var modelType = this.store[type];
+    var modelType = this._store[type];
 
     if (!modelType) {
       throw new Error('There is no model of type ' + type + ' in the datastore!');
@@ -56,7 +56,7 @@ var DataStore = Ember.Object.extend({
   },
 
   findById: function (type, id) {
-    var modelType = this.store[type];
+    var modelType = this._store[type];
 
     if (!modelType) {
       throw new Error('There is no model of type ' + type + ' in the datastore!');
@@ -66,7 +66,7 @@ var DataStore = Ember.Object.extend({
   },
 
   findByKey: function (type, keyName, val) {
-    var modelType = this.store[type];
+    var modelType = this._store[type];
 
     if (!modelType) {
       throw new Error('There is no model of type ' + type + ' in the datastore!');
