@@ -13,6 +13,5 @@ export default {
       store = container.lookup('store:main');
       store.addType('groups');
       store.addType('items');
-      window.s = store;
     }
 };

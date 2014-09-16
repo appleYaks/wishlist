@@ -25,6 +25,15 @@
         location: 'none'
       });
 
+      Ember.Test.registerHelper('clearDataStore', function (app) {
+        app.__container__.lookup('store:main').clear();
+      });
+
+      Ember.Test.registerHelper('assertDataStoreCount', function (app, selector, n) {
+        var store = app.__container__.lookup('store:main');
+        expect(store.all(selector).get('length')).to.equal(n);
+      });
+
       window.ENV = {
         APP: {}
       };
