@@ -6,6 +6,14 @@ var DataStore = Ember.Object.extend({
     this.set('_store', Ember.Object.create());
   },
 
+  clear: function () {
+    for (var type in this._store) {
+      if (this._store.hasOwnProperty(type) && typeof this._store[type] === 'object') {
+        this._store[type].clear();
+      }
+    }
+  },
+
   addType: function (type) {
     this._store[type] = Ember.ArrayProxy.create({ content: Ember.A() });
   },
