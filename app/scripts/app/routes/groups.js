@@ -7,7 +7,7 @@ var GroupsRoute = Em.Route.extend({
       return this.store.all('groups');
     }
 
-    return this.api.findAll('groups');
+    return this.api.fetchAll('groups');
   },
 
   renderTemplate: function () {

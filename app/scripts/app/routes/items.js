@@ -1,6 +1,6 @@
 var ItemsRoute = Em.Route.extend({
   model: function (params) {
-    return this.api.findAll('items', 'groups', params.group_id);
+    return this.api.fetchAll('items', 'groups', params.group_id);
   },
 
   renderTemplate: function () {

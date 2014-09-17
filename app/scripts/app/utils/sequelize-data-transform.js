@@ -3,7 +3,7 @@ function sequelizeTransform (type, prefix, id) {
     throw new Error('Tried to get all of a prefixed type, but the id was not in a proper format!', id);
   }
 
-  id = +id;
+  id = parseInt(id, 10);
 
   // change prefix to fit Sequelize property name style
   // original type is like 'groups', need 'GroupId'

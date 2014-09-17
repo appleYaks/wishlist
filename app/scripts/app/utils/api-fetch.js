@@ -12,14 +12,7 @@ var apiFetch = Ember.Object.extend({
   },
 
   find: function (type, id) {
-    var self = this,
-        model;
-
-    model = this.store.find(type, id);
-
-    if (model) {
-      return model;
-    }
+    var self = this;
 
     return $.getJSON('/api/v1/' + type + '/' + id).then(function (payload) {
       self.store.load(type, payload);
@@ -33,24 +26,26 @@ var apiFetch = Ember.Object.extend({
   //
   // the transform will take the prefixName and prefixVal,
   // and return a set accepted by DataStore#all to filter by key/value
-  findAll: function (type, prefixName, prefixVal, transform) {
+  fetchAll: function (type, prefixName, prefixVal, transform) {
     var self = this;
 
-    transform = transform || this.get('keyTransforms.defalt');
-
-    if (typeof transform !== 'function') {
+    if (typeof transform === 'string') {
+      transform = this.get('keyTransforms.' + transform);
+    } else if (typeof transform === 'undefined') {
+      transform = this.get('keyTransforms.defalt');
+    } else if (typeof transform !== 'function') {
       throw new Error('Type of keyTransform was not a function!');
     }
 
-    if (!prefixVal) {
+    if (typeof prefixVal === 'undefined') {
       return $.getJSON('/api/v1/' + type).then(function (payload) {
         self.store.load(type, payload);
         return self.store.all(type);
       });
     }
 
-    if (!prefixName) {
-      throw new Error('Tried to search for all of a type, but got no postfix!');
+    if (typeof prefixName !== 'string' || prefixName === '') {
+      throw new Error('Tried to search for all of a type, but got no prefix!');
     }
 
     return $.getJSON('/api/v1/' + prefixName + '/' + prefixVal + '/' + type).then(function (payload) {
