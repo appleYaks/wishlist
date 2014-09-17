@@ -102,8 +102,8 @@ var DataStore = Ember.Object.extend({
   * Since the arrays are always sorted by id, searching by id offers significant speedup.
   * Uses `<` to determine whether one object's property is before another.
   *
-  * @param type {String|modelType} A string name of the internal array representation of model data of a certain type, or the array itself.
-  * @param key {String} A key name to sort by. Defaults to 'id'.
+  * @param {(String|modelType)} type A string name of the internal array representation of model data of a certain type, or the array itself.
+  * @param {String} [key=id] A key name to sort by. Defaults to 'id'.
   * @return {Array} A copy of the array, but sorted by `key`.
   */
   _sortBy: function (type, key) {
@@ -127,9 +127,9 @@ var DataStore = Ember.Object.extend({
   /**
   * Search the internal model array (already sorted by `key`), for an object with type `value` in that `key`.
   *
-  * @param sortedArray {Array} An array that has already been sorted by `key`.
-  * @param value {String|Number|Date} The value to check on the current object's `key`. Anything that can be compared with `<`.
-  * @param key {String} The key to search objects by within sortedArray. Defaults to 'id'.
+  * @param {Array} sortedArray An array that has already been sorted by `key`.
+  * @param {(String|Number|Date)} value The value to check on the current object's `key`. Anything that can be compared with `<`.
+  * @param {String} [key=id] The key to search objects by within sortedArray. Defaults to 'id'.
   * @return {Object} The found object or undefined.
   */
   _binarySearch: function (sortedArray, value, key) {
@@ -171,9 +171,9 @@ var DataStore = Ember.Object.extend({
   * `key` is optional; searches `id` key by default if given two arguments.
   * `val` is optional; returns all models if not given.
   *
-  * @param type {String} The name of the modelType you wish to search through.
-  * @param key {String} Optional key to search modelType. Defaults to `id` if not given.
-  * @param val {Number|String|Date} Optional value you're looking for in `key`.
+  * @param {String} type The name of the modelType you wish to search through.
+  * @param {String} [key=id] Optional key to search modelType. Defaults to `id` if not given.
+  * @param {(Number|String|Date)} val Optional value you're looking for in `key`.
   * @returns {Array} Returns an array with any objects that matched.
   */
   all: function (type, key, val) {
@@ -202,10 +202,10 @@ var DataStore = Ember.Object.extend({
   * Finds the first model in modelType with key === val.
   * `key` is optional; searches `id` key by default if given two arguments.
   *
-  * @param type {String} The name of the modelType you wish to search through.
-  * @param key {String} Optional key to search modelType. Defaults to `id` if not given.
-  * @param val {Number|String|Date} The value you're looking for in `key`.
-  * @returns {Object|undefined} Returns the object or undefined if it wasn't found.
+  * @param {String} type The name of the modelType you wish to search through.
+  * @param {String} [key=id] Optional key to search modelType. Defaults to `id` if not given.
+  * @param {(Number|String|Date)} val The value you're looking for in `key`.
+  * @returns {(Object|undefined)} Returns the object or undefined if it wasn't found.
   */
   find: function (type, key, val) {
     var modelType = this._store[type];
