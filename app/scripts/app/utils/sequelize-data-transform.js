@@ -1,5 +1,5 @@
 function sequelizeTransform (type, prefix, id) {
-  if (typeof id !== 'number' && isNaN(+id)) {
+  if (typeof id !== 'number' && isNaN(parseInt(id, 10))) {
     throw new Error('Tried to get all of a prefixed type, but the id was not in a proper format!', id);
   }
 

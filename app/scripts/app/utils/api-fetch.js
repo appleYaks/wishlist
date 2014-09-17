@@ -15,7 +15,7 @@ var apiFetch = Ember.Object.extend({
     var self = this,
         model;
 
-    model = this.store.findById(type, id);
+    model = this.store.find(type, id);
 
     if (model) {
       return model;
@@ -23,7 +23,7 @@ var apiFetch = Ember.Object.extend({
 
     return $.getJSON('/api/v1/' + type + '/' + id).then(function (payload) {
       self.store.load(type, payload);
-      return self.store.findById(type, id);
+      return self.store.find(type, id);
     });
   },
 

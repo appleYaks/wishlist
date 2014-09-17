@@ -9,7 +9,7 @@ var DataStore = Ember.Object.extend({
   clear: function () {
     for (var type in this._store) {
       if (this._store.hasOwnProperty(type) && typeof this._store[type] === 'object') {
-        this._store[type].clear();
+        this._store[type].get('model').clear();
       }
     }
   },
@@ -34,6 +34,10 @@ var DataStore = Ember.Object.extend({
 
     if (typeof payload !== 'object') {
       throw new Error('Payload for type ' + type + ' was not an object!', payload);
+    }
+
+    if (Array.isArray(payload) && payload.length === 0) {
+      return;
     }
 
     // turn `fields` metadata field from a string like "[]" into a JSON object
@@ -162,6 +166,16 @@ var DataStore = Ember.Object.extend({
     return checkedItem;
   },
 
+  /**
+  * Finds all models in modelType with key === val.
+  * `key` is optional; searches `id` key by default if given two arguments.
+  * `val` is optional; returns all models if not given.
+  *
+  * @param type {String} The name of the modelType you wish to search through.
+  * @param key {String} Optional key to search modelType. Defaults to `id` if not given.
+  * @param val {Number|String|Date} Optional value you're looking for in `key`.
+  * @returns {Array} Returns an array with any objects that matched.
+  */
   all: function (type, key, val) {
     var modelType = this._store[type];
 
@@ -169,31 +183,43 @@ var DataStore = Ember.Object.extend({
       throw new Error('There is no model of type ' + type + ' in the datastore!');
     }
 
-    if (!key || !val) {
-      return modelType;
+    if (typeof val === 'undefined') {
+      if (typeof key === 'undefined') {
+        return modelType;
+      } else if (typeof key === 'number' || !isNaN(parseInt(key, 10))) {
+        // we're searching by id, leverage the fact that it's already sorted
+        return [this._binarySearch(type, parseInt(key, 10))];
+      }
+
+      // no idea what we're trying to search, but it's not an number id
+      return [];
     }
 
     return modelType.filterBy(key, val);
   },
 
-  findById: function (type, id) {
+  /**
+  * Finds the first model in modelType with key === val.
+  * `key` is optional; searches `id` key by default if given two arguments.
+  *
+  * @param type {String} The name of the modelType you wish to search through.
+  * @param key {String} Optional key to search modelType. Defaults to `id` if not given.
+  * @param val {Number|String|Date} The value you're looking for in `key`.
+  * @returns {Object|undefined} Returns the object or undefined if it wasn't found.
+  */
+  find: function (type, key, val) {
     var modelType = this._store[type];
 
     if (!modelType) {
       throw new Error('There is no model of type ' + type + ' in the datastore!');
     }
 
-    return modelType.findBy('id', id);
-  },
-
-  findByKey: function (type, keyName, val) {
-    var modelType = this._store[type];
-
-    if (!modelType) {
-      throw new Error('There is no model of type ' + type + ' in the datastore!');
+    // we're searching by id, leverage the fact that it's already sorted
+    if (typeof val === 'undefined' && !isNaN(parseInt(key, 10))) {
+      return this._binarySearch(modelType, parseInt(key, 10));
     }
 
-    return modelType.filterBy(keyName, val);
+    return modelType.findBy(key, val);
   },
 });
 

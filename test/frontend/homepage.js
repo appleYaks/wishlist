@@ -7,11 +7,11 @@ describe('homepage', function () {
     App.reset();
   });
 
-  it('should redirect to /groups', function () {
+  it('redirects to /groups', function () {
     expect(currentURL()).to.equal('/groups');
   });
 
-  it('should push preloaded data into the store', function() {
+  it('pushes preloaded data into the store', function() {
     var now = new Date();
     var groups = [{
         id: 999,
@@ -36,7 +36,7 @@ describe('homepage', function () {
 
     andThen(function () {
       var store = App.__container__.lookup('store:main'),
-          testGroup = store.findById('groups', 999);
+          testGroup = store.find('groups', 999);
 
       assertDataStoreCount('groups', 1);
 
