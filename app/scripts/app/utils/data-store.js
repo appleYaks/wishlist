@@ -188,7 +188,7 @@ var DataStore = Ember.Object.extend({
         return modelType;
       } else if (typeof key === 'number' || !isNaN(parseInt(key, 10))) {
         // we're searching by id, leverage the fact that it's already sorted
-        return [this._binarySearch(type, parseInt(key, 10))];
+        return [this._binarySearch(modelType, parseInt(key, 10))];
       }
 
       // no idea what we're trying to search, but it's not an number id
@@ -215,8 +215,12 @@ var DataStore = Ember.Object.extend({
     }
 
     // we're searching by id, leverage the fact that it's already sorted
-    if (typeof val === 'undefined' && !isNaN(parseInt(key, 10))) {
-      return this._binarySearch(modelType, parseInt(key, 10));
+    if (typeof val === 'undefined') {
+      if (isNaN(parseInt(key, 10))) {
+        return;
+      } else {
+        return this._binarySearch(modelType, parseInt(key, 10));
+      }
     }
 
     return modelType.findBy(key, val);
