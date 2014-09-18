@@ -30,6 +30,7 @@
         "validator": true,
         "_": true,
         "App": true,
+        "sinon": true,
         "expect": true,
         "should": true,
         "describe": true,
