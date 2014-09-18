@@ -38,7 +38,7 @@ describe('homepage', function () {
       var store = App.__container__.lookup('store:main'),
           testGroup = store.find('groups', 999);
 
-      assertDataStoreCount('groups', 1);
+      store.all('groups').get('length').should.equal(1);
 
       expect(testGroup).to.exist;
       testGroup.title.should.equal(groups[0].title);

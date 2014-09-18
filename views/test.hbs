@@ -29,37 +29,28 @@
         location: 'none'
       });
 
-      Ember.Test.registerHelper('clearDataStore', function (app) {
-        app.__container__.lookup('store:main').clear();
-      });
-
-      Ember.Test.registerHelper('assertDataStoreCount', function (app, selector, n) {
-        var store = app.__container__.lookup('store:main');
-        expect(store.all(selector).get('length')).to.equal(n);
-      });
-
       window.ENV = {
         APP: {}
       };
 
+      Ember.run(function () {
+        window.App = require('client/app')['default'].create(window.ENV.APP);
+
+        // Don't clutter console with too many logs
+        App.LOG_ACTIVE_GENERATION = false;
+        App.LOG_MODULE_RESOLVER = false;
+        App.LOG_TRANSITIONS = false;
+        App.LOG_TRANSITIONS_INTERNAL = false;
+        App.LOG_VIEW_LOOKUPS = false;
+
+        App.deferReadiness();
+        App.rootElement = '#testRoot';
+        App.injectTestHelpers();
+        App.advanceReadiness();
+      });
+
       Ember.$(function () {
-        Ember.run(function () {
-          window.App = require('client/app')['default'].create(window.ENV.APP);
-
-          // Don't clutter console with too many logs
-          App.LOG_ACTIVE_GENERATION = false;
-          App.LOG_MODULE_RESOLVER = false;
-          App.LOG_TRANSITIONS = false;
-          App.LOG_TRANSITIONS_INTERNAL = false;
-          App.LOG_VIEW_LOOKUPS = false;
-
-          App.deferReadiness();
-          App.rootElement = '#testRoot';
-          App.injectTestHelpers();
-          App.advanceReadiness();
-
-          mocha.run();
-        });
+        mocha.run();
       });
     </script>
   </body>

@@ -1,21 +1,35 @@
 // these tests assume that the DataStore sorts its model types' models by id
 describe('DataStore', function () {
+  var store;
+  var type = 'testType';
+  var modelType;
+
+  before(function () {
+    // this way we bypass having to setup and teardown an Ember.Application,
+    // and we avoid doing an `App.__container__.lookup()` which would prevent us
+    // from then tearing down the application later.
+    store = require('client/utils/data-store')['default'].create();
+
+    // assumes addType works and _store exists, but the speedup of
+    // not having to create and destroy new DataStores to check is
+    // seriously worth this assumption.
+    store.addType(type);
+    modelType = store._store.get(type);
+  });
+
+  after(function () {
+    modelType = null;
+    store.clear();
+    store = null;
+  });
+
   describe('working with model types', function () {
-    var store;
-
     beforeEach(function () {
-      visit('/');
-      clearDataStore();
-      store = App.__container__.lookup('store:main');
-    });
-
-    afterEach(function () {
-      store = null;
-      App.reset();
+      store.clear();
     });
 
     it('adds a new type', function () {
-      var type = 'testType';
+      var type = 'testType2';
       store.addType(type);
       expect(store.all.bind(store, type)).to.not.throw(Error);
       store.all(type).should.exist;
@@ -26,15 +40,18 @@ describe('DataStore', function () {
     });
 
     it('clears a type of its models', function () {
-      var type = 'testType';
-      store.addType(type);
-      store.all(type).get('length').should.exist;
+      var model = {
+        id: 1
+      };
+      store.load(type, model);
+      store.all(type).get('length').should.equal(1);
+      store.clear();
+      store.all(type).get('length').should.equal(0);
     });
 
     it('sorts a modelType container by a given key', function () {
-      var type = 'testType';
       var key = 'sort';
-      var modelType, sorted;
+      var sorted;
       var models = [{
         id: 1,
         sort: 10
@@ -52,10 +69,7 @@ describe('DataStore', function () {
         sort: 6
       }];
 
-      store.addType(type);
       store.load(type, models);
-
-      modelType = store.all(type);
       modelType.get('length').should.equal(5);
 
       // returns a sorted array using a given modelType
@@ -71,28 +85,17 @@ describe('DataStore', function () {
   });
 
   describe('adding elements', function () {
-    var store;
-
     beforeEach(function () {
-      visit('/');
-      clearDataStore();
-      store = App.__container__.lookup('store:main');
-    });
-
-    afterEach(function () {
-      store = null;
-      App.reset();
+      store.clear();
     });
 
     it('adds a new model', function () {
-      var type = 'testType';
       var retrieved;
       var model = {
         id: 999,
         title: 'test title'
       };
 
-      store.addType(type);
       store.load(type, model);
       store.all(type).get('length').should.equal(1);
 
@@ -103,14 +106,12 @@ describe('DataStore', function () {
     });
 
     it('adds a new model wrapped in an array', function () {
-      var type = 'testType';
       var retrieved;
       var model = [{
         id: 999,
         title: 'test title'
       }];
 
-      store.addType(type);
       store.load(type, model);
       store.all(type).get('length').should.equal(1);
 
@@ -121,7 +122,6 @@ describe('DataStore', function () {
     });
 
     it('adds a new model when the DataStore is not empty', function () {
-      var type = 'testType';
       var retrieved;
       var fill = {
         id: 123,
@@ -132,7 +132,6 @@ describe('DataStore', function () {
         title: 'test title 2'
       };
 
-      store.addType(type);
       store.load(type, fill);
       store.all(type).get('length').should.equal(1);
 
@@ -151,7 +150,6 @@ describe('DataStore', function () {
     });
 
     it('adds a new model wrapped in an array when the DataStore is not empty', function () {
-      var type = 'testType';
       var retrieved;
       var fill = {
         id: 123,
@@ -162,7 +160,6 @@ describe('DataStore', function () {
         title: 'test title 2'
       }];
 
-      store.addType(type);
       store.load(type, fill);
       store.all(type).get('length').should.equal(1);
 
@@ -181,7 +178,6 @@ describe('DataStore', function () {
     });
 
     it('adds multiple models', function () {
-      var type = 'testType';
       var retrieved;
       var models = [{
         id: 123,
@@ -191,7 +187,6 @@ describe('DataStore', function () {
         title: 'test title 2'
       }];
 
-      store.addType(type);
       store.load(type, models);
       store.all(type).get('length').should.equal(2);
 
@@ -207,7 +202,6 @@ describe('DataStore', function () {
     });
 
     it('adds multiple models when the DataStore is not empty', function () {
-      var type = 'testType';
       var retrieved;
       var fill = {
         id: 456,
@@ -221,7 +215,6 @@ describe('DataStore', function () {
         title: 'test title 2'
       }];
 
-      store.addType(type);
       store.load(type, fill);
       store.all(type).get('length').should.equal(1);
 
@@ -245,14 +238,11 @@ describe('DataStore', function () {
     });
 
     it('does nothing with an empty array', function () {
-      var type = 'testType';
-      store.addType(type);
       store.load(type, []);
       store.all(type).get('length').should.equal(0);
     });
 
     it('merges objects when asked', function () {
-      var type = 'testType';
       var retrieved;
       var fill = {
         id: 1,
@@ -266,7 +256,6 @@ describe('DataStore', function () {
         newAttr: 'i am new here!'
       };
 
-      store.addType(type);
       store.load(type, fill);
       store.all(type).get('length').should.equal(1);
 
@@ -289,8 +278,6 @@ describe('DataStore', function () {
     });
 
     it('sorts objects based on an arbitrary key', function () {
-      var type = 'testType';
-      var modelType;
       var models = [{
         id: 1,
         sort: 10
@@ -312,33 +299,22 @@ describe('DataStore', function () {
         return [item.get('id'), item.get('sort')];
       }
 
-      store.addType(type);
       store.load(type, models);
       store.all(type).get('length').should.equal(5);
 
-      modelType = store.all(type);
       modelType.map(mapFunction).should.deep.equal([[1,10], [2,9], [3,8], [4,7], [5,6]]);
       store._sortBy(type, 'sort').map(mapFunction).should.deep.equal([[5,6], [4,7], [3, 8], [2, 9], [1,10]]);
     });
   });
 
   describe('searching for models', function () {
-    var store;
-
     beforeEach(function () {
-      visit('/');
-      clearDataStore();
-      store = App.__container__.lookup('store:main');
+      store.clear();
     });
 
-    afterEach(function () {
-      store = null;
-      App.reset();
-    });
-
-    it('searches for items using binary search', function () {
-      var type = 'testType';
-      var modelType, find, bSearch, field, i;
+    it('binary search works', function () {
+      var newSort;
+      var find, bSearch, field, i;
       var models = [{
         id: 1,
         sort: 10
@@ -356,10 +332,8 @@ describe('DataStore', function () {
         sort: 6
       }];
 
-      store.addType(type);
       store.load(type, models);
 
-      modelType = store.all(type);
       modelType.get('length').should.equal(models.length);
 
       // searching by `id`
@@ -373,21 +347,20 @@ describe('DataStore', function () {
       expect(store._binarySearch(modelType, 6)).to.not.exist;
 
       // searching by `sort`
-      modelType = modelType.sortBy('sort');
+      newSort = modelType.sortBy('sort');
 
       for (i = 6; i < 11; ++i) {
-        find = modelType.findBy('sort', field);
-        bSearch = store._binarySearch(modelType, field);
+        find = newSort.findBy('sort', field);
+        bSearch = store._binarySearch(newSort, field);
         expect(find).to.equal(bSearch);
       }
 
-      expect(store._binarySearch(modelType, 5)).to.not.exist;
-      expect(store._binarySearch(modelType, 11)).to.not.exist;
+      expect(store._binarySearch(newSort, 5)).to.not.exist;
+      expect(store._binarySearch(newSort, 11)).to.not.exist;
     });
 
     it('returns a single model using search criteria', function () {
-      var type = 'testType';
-      var modelType, find;
+      var find;
       var spy;
       var models = [{
         id: 1,
@@ -409,7 +382,6 @@ describe('DataStore', function () {
         sort: 6
       }];
 
-      store.addType(type);
       store.load(type, models);
 
       spy = sinon.spy(store, '_binarySearch');
@@ -443,8 +415,7 @@ describe('DataStore', function () {
     });
 
     it('returns all models using search criteria', function () {
-      var type = 'testType';
-      var modelType, find;
+      var find;
       var models = [{
         id: 1,
         sort: 10
@@ -465,10 +436,8 @@ describe('DataStore', function () {
         sort: 6
       }];
 
-      store.addType(type);
       store.load(type, models);
 
-      modelType = store._store.get(type);
       modelType.get('length').should.equal(models.length);
 
       // returns the modelType itself

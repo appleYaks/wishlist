@@ -29,6 +29,7 @@
         "$": true,
         "validator": true,
         "_": true,
+        "require": true,
         "App": true,
         "sinon": true,
         "expect": true,
