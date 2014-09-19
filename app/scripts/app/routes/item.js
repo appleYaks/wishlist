@@ -8,7 +8,7 @@ var ItemRoute = Em.Route.extend({
       into: 'application',
       outlet: 'item',
     });
-  }
+  },
 });
 
 export default ItemRoute;

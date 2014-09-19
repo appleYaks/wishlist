@@ -31,6 +31,7 @@ describe('DataStore', function () {
     it('adds a new type', function () {
       var type = 'testType2';
       store.addType(type);
+      expect(store._store.get(type)).to.exist;
       expect(store.all.bind(store, type)).to.not.throw(Error);
       store.all(type).should.exist;
     });

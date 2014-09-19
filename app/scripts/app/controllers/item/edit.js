@@ -1,6 +1,4 @@
 var ItemEditController = Em.ObjectController.extend({
-  needs: ['items'],
-
   newFieldName: '',
   newFieldValue: '',
 
@@ -10,6 +8,9 @@ var ItemEditController = Em.ObjectController.extend({
       // send API DELETE request with model's `id` and `GroupId`
       // tell `controllers.items` to slice out this model from its content
       // this.get('controllers.items');
+    },
+
+    cancel: function () {
     },
 
     save: function () {
