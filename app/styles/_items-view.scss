@@ -1,0 +1,26 @@
+ul.items {
+  input[type=checkbox] {
+    background: none;
+    border: 1px solide black;
+    height: 100%;
+    text-align: center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+
+    &:after {
+      content: '\2714';
+      line-height: 2em;
+      font-size: 2em;
+      color: #DDD;
+      text-shadow: 0 -1px 0 #AAA;
+    }
+
+    &:checked:after {
+      color: #85ada7;
+      text-shadow: #669991;
+    }
+  }
+}
