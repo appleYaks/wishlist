@@ -1,4 +1,27 @@
+/*  Base breakpoints  */
+$screen-small: 0px 719px;
+$screen-medium: 720px;
+$screen-large: 1024px;
+$screen-xtra-large: 1200px;
+
+/*  Media Queries  */
+$hidpi: min-resolution 1.5dppx;
+$lodpi: max-resolution 1dppx;
+$screen-portrait: (orientation portrait);
+$screen-landscape: (orientation landscape);
+$screen-small-portrait: $screen-small (orientation portrait);
+$screen-small-landscape: $screen-small (orientation landscape);
+$screen-medium-portrait: $screen-medium (orientation portrait);
+$screen-medium-landscape: $screen-medium (orientation landscape);
+$screen-large-portrait: $screen-large (orientation portrait);
+$screen-large-landscape: $screen-large (orientation landscape);
+$screen-large-landscape-hidpi: $screen-large (orientation landscape) $hidpi;
+$screen-large-lodpi: $screen-large $lodpi;
+
 /*  Libraries  */
+@import 'normalize'; // via Bower
+@import 'breakpoint'; // via Bower
+@import 'font-awesome';
 @import 'compass/support';
 @import 'compass/css3';
 @import 'compass/typography';
