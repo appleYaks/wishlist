@@ -1,8 +1,11 @@
 ul.items {
   input[type=checkbox] {
+    $checkbox-size: 1.25em;
+
     background: none;
     border: 1px solide black;
-    height: 100%;
+    height: $checkbox-size;
+    width: $checkbox-size;
     text-align: center;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -12,10 +15,15 @@ ul.items {
 
     &:after {
       content: '\2714';
-      line-height: 2em;
-      font-size: 2em;
+      line-height: $checkbox-size / 1.1;
+      font-size: $checkbox-size;
       color: #DDD;
       text-shadow: 0 -1px 0 #AAA;
+    }
+
+    &:checked {
+      border-radius: 50%;
+      background: hsla(55,100,60,1);
     }
 
     &:checked:after {
