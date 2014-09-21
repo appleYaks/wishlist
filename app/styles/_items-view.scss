@@ -1,4 +1,12 @@
 ul.items {
+  li {
+    display: flex;
+    align-items: center;
+    padding-left: 0.5em;
+
+    a { padding-left: 0.5em; }
+  }
+
   input[type=checkbox] {
     $checkbox-size: 1.25em;
 
