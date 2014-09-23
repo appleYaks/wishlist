@@ -4,6 +4,7 @@ import afterRender from 'client/utils/after-render';
 
 // helpers
 import momentCalendar from 'client/helpers/moment-calendar';
+import yesno from 'client/helpers/yesno';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
