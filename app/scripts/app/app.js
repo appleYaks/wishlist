@@ -2,6 +2,9 @@ import Resolver from 'ember/resolver';
 import loadInitializers from 'ember/load-initializers';
 import afterRender from 'client/utils/after-render';
 
+// helpers
+import momentCalendar from 'client/helpers/moment-calendar';
+
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
 var App = Ember.Application.extend({
