@@ -1,11 +1,11 @@
 <ul class="items">
   {{#each}}
   <li>
-    {{view Ember.Checkbox checked=complete}}
+    {{input type="checkbox" checked=complete}}
     {{#link-to 'item' this}}
       {{title}}
     {{/link-to}}
-    <button {{action 'deleteItem' this}}></button>
+    <button {{action 'deleteItem' this}}><i class="fa fa-close"></i></button>
   </li>
   {{/each}}
 </ul>
