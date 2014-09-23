@@ -5,16 +5,16 @@
   </div>
 
   <div class="item-metadata">
-    <p class="title">{{title}}</p>
-    <p class="rating">{{rating}}</p>
-    <p class="date">{{date}}</p>
-    <p class="priority">{{priority}}</p>
-    <p class="complete">{{complete}}</p>
+    <p class="title"><label>Title:<label> {{title}}</p>
+    <p class="rating"><label>Rating:</label> {{rating}}</p>
+    <p class="date"><label>Date:</label> {{moment-calendar date}}</p>
+    <p class="priority"><label>Priority:</label> {{priority}}</p>
+    <p class="complete"><label>Completed:</label> {{yesno complete}}</p>
   </div>
 
   <ul class="fields">
     {{#each fields}}
-    <li class="item-field">{{key}} : {{val}}</li>
+    <li class="item-field"><label>{{key}}</label>: {{val}}</li>
     {{/each}}
   </ul>
 </div>
