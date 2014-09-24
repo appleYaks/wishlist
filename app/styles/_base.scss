@@ -2,6 +2,8 @@
 // http://coding.smashingmagazine.com/2007/07/27/css-specificity-things-you-should-know/
 *, *:before, *:after {
     @include box-sizing(border-box);
+    @include word-break(break-all);
+    @include hyphens(auto);
 }
 
 // style placeholder text on inputs (color too light, can't read it)
