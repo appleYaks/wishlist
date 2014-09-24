@@ -1,6 +1,13 @@
 var ItemEditController = Em.ObjectController.extend({
-  newFieldName: '',
-  newFieldValue: '',
+  complete: function () {
+    var complete = this.get('canonicalModel.complete');
+
+    if (complete) {
+      return 'Yes';
+    }
+
+    return 'No';
+  }.property('canonicalModel.complete'),
 
   actions: {
     deleteItem: function (item) {

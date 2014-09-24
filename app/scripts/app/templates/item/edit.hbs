@@ -1,11 +1,19 @@
 <div class="item-edit">
   <div class="actions">
-    {{#link-to 'item'}}Close{{/link-to}}
+    <button {{action 'cancel'}}>Cancel</button>
+    <button {{action 'save'}}>Save</button>
   </div>
 
-  <label for="title">
-    <span>Title: {{title}}</span>
-  </label>
+  <label for="title">Title:</label>
+  {{input id="title" value=title}}
+  <label for="rating">Rating:</label>
+  {{input id="rating" value=rating}}
+  <label for="date">Date:</label>
+  {{input id="date" value=date}}
+  <label for="priority">Priority:</label>
+  {{input id="priority" value=priority}}
+  <label for="complete">Complete:</label>
+  {{input id="complete" value=complete}}
 
   <ul class="fields">
     {{#each fields}}
@@ -19,9 +27,4 @@
       {{input value=newFieldValue}}
     </div>
   </ul>
-
-  <div class="edit-actions">
-    <button {{action 'cancel'}}>Cancel</button>
-    <button {{action 'save'}}>Save</button>
-  </div>
 </div>
