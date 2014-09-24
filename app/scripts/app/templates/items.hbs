@@ -5,8 +5,10 @@
     {{#link-to 'item' this}}
       {{title}}
     {{/link-to}}
-    <button {{action 'edit' this}}><i class="fa fa-pencil"></i></button>
-    <button {{action 'delete' this}}><i class="fa fa-close"></i></button>
+    <div class="controls">
+      <button {{action 'edit' this}}><i class="fa fa-pencil"></i></button>
+      <button {{action 'delete' this}}><i class="fa fa-close"></i></button>
+    </div>
   </li>
   {{/each}}
 </ul>

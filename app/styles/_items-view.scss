@@ -3,18 +3,19 @@ ul.items li {
   $checkbox-size: 1.25em;
 
   position: relative;
-  display: flex;
+  @include display-flex;
   align-items: center;
-  padding-left: $checkbox-left * 2 + $checkbox-size;
+  justify-content: space-between;
 
   input[type=checkbox] {
-    position: absolute;
-    top: nth($list-link-padding, 1);
-    left: $checkbox-left;
+    align-self: flex-start;
+    flex-shrink: 0;
 
-    background: none;
+    margin-top: nth($list-link-padding, 1);
+    margin-right: nth($list-link-padding, 1);
     height: $checkbox-size;
     width: $checkbox-size;
+    background: none;
     text-align: center;
     @include appearance(none);
     outline: none;
@@ -38,13 +39,22 @@ ul.items li {
       text-shadow: #669991;
     }
   }
+}
 
-  button {
-    display: none;
-    margin-left: 0.5em;
-  }
-
-  &:hover button, button.visible {
-    display: block;
+ul.items li {
+  &:hover .controls, .controls.visible {
+    @include display-flex;
   }
 }
+
+ul.items li .controls {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+
+  &, button:last-child {
+    margin-left: 0.25em;
+  }
+}
+

@@ -2,7 +2,8 @@
 // http://coding.smashingmagazine.com/2007/07/27/css-specificity-things-you-should-know/
 *, *:before, *:after {
     @include box-sizing(border-box);
-    @include word-break(break-all);
+    // can use break-all to break really long words... but probably not needed with `hypehns`
+    @include word-break(normal);
     @include hyphens(auto);
 }
 
@@ -24,9 +25,7 @@
 }
 input[type=search],
 textarea {
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
-    appearance: textfield;
+  @include appearance(textfield);
 }
 
 // flexible images/media
