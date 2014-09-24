@@ -1,23 +1,22 @@
-ul.items {
-  li {
-    display: flex;
-    align-items: center;
-    padding-left: 0.5em;
+ul.items li {
+  $checkbox-left: nth($list-link-padding, 1);
+  $checkbox-size: 1.25em;
 
-    a { padding-left: 0.5em; }
-  }
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: $checkbox-left * 2 + $checkbox-size;
 
   input[type=checkbox] {
-    $checkbox-size: 1.25em;
+    position: absolute;
+    top: nth($list-link-padding, 1);
+    left: $checkbox-left;
 
     background: none;
-    border: 1px solide black;
     height: $checkbox-size;
     width: $checkbox-size;
     text-align: center;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+    @include appearance(none);
     outline: none;
     cursor: pointer;
 
@@ -38,5 +37,14 @@ ul.items {
       color: #85ada7;
       text-shadow: #669991;
     }
+  }
+
+  button {
+    display: none;
+    margin-left: 0.5em;
+  }
+
+  &:hover button, button.visible {
+    display: block;
   }
 }

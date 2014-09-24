@@ -15,14 +15,14 @@ $groups-list-width-screen-large: 20%;
 
 .content > div,
 .content > ul:not(.groups) {
-  @include breakpoint($screen-large-lodpi) {
+  @include breakpoint($screen-large) {
     width: ((100% - $groups-list-width-screen-large) / 2);
     margin-left: 10px;
   }
 }
 
 ul.groups {
-  @include breakpoint($screen-large-lodpi) {
+  @include breakpoint($screen-large) {
     width: $groups-list-width-screen-large;
   }
 }
@@ -46,11 +46,11 @@ ul.groups {
 
   li a {
     display: inline-block;
-    padding: 0.5em 0;
+    padding: $list-link-padding;
     width: 100%;
   }
 
-  @include breakpoint($screen-large-lodpi) {
+  @include breakpoint($screen-large) {
     li:hover { background-color: red; }
     li:nth-of-type(7n-5):hover { background-color: orange; }
     li:nth-of-type(7n-4):hover { background-color: yellow; }

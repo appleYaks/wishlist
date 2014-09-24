@@ -18,6 +18,9 @@ $screen-large-landscape: $screen-large (orientation landscape);
 $screen-large-landscape-hidpi: $screen-large (orientation landscape) $hidpi;
 $screen-large-lodpi: $screen-large $lodpi;
 
+// globals
+$list-link-padding: 0.5em 0;
+
 /*  Libraries  */
 @import 'normalize'; // via Bower
 @import 'breakpoint'; // via Bower
