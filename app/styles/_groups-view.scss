@@ -1,0 +1,21 @@
+ul.groups li {
+  position: relative;
+  @include display-flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:hover .controls, .controls.visible {
+    @include display-flex;
+  }
+}
+
+ul.groups li .controls {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+
+  &, button:last-child {
+    margin-left: 0.25em;
+  }
+}

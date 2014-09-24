@@ -1,5 +1,13 @@
 <ul class="groups">
   {{#each}}
-    <li>{{#link-to 'items' id}}{{title}}{{/link-to}}</li>
+    <li>
+      {{#link-to 'items' id}}
+        {{title}}
+      {{/link-to}}
+      <div class="controls">
+        <button {{action 'edit' this}}><i class="fa fa-pencil"></i></button>
+        <button {{action 'delete' this}}><i class="fa fa-close"></i></button>
+      </div>
+    </li>
   {{/each}}
 </ul>
