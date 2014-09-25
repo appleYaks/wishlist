@@ -1,6 +1,7 @@
 import Resolver from 'ember/resolver';
 import loadInitializers from 'ember/load-initializers';
 import afterRender from 'client/utils/after-render';
+import FastClickInit from 'client/utils/fastclick';
 
 // helpers
 import momentCalendar from 'client/helpers/moment-calendar';
@@ -22,5 +23,6 @@ var App = Ember.Application.extend({
 });
 
 loadInitializers(App, 'client');
+FastClickInit();
 
 export default App;

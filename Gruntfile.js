@@ -206,6 +206,7 @@ module.exports = function (grunt) {
                         'bower_components/ember-load-initializers/ember-load-initializers.js',
                         'bower_components/validator-js/validator.js',
                         'bower_components/moment/moment.js',
+                        'bower_components/fastclick/lib/fastclick.js',
                         'app/scripts/misc/ms-device-width.js',
                     ]
                 }
