@@ -1,4 +1,4 @@
-var fields = ['fields', 'date'];
+var fields = ['date'];
 
 function parseFields (payload) {
   var i;
@@ -16,8 +16,6 @@ function parseFields (payload) {
     if (payload.hasOwnProperty(fields[i])) {
       if (fields[i] === 'date') {
         payload[fields[i]] = new Date(payload[fields[i]]);
-      } else {
-        payload[fields[i]] = JSON.parse(payload[fields[i]]);
       }
     }
   }
