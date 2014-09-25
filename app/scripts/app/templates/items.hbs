@@ -1,14 +1,21 @@
-<ul class="items">
-  {{#each}}
-  <li>
-    {{input type="checkbox" checked=complete}}
-    {{#link-to 'item' this}}
-      {{title}}
-    {{/link-to}}
-    <div class="controls">
-      <button {{action 'edit' this}}><i class="fa fa-pencil"></i></button>
-      <button {{action 'delete' this}}><i class="fa fa-close"></i></button>
-    </div>
-  </li>
-  {{/each}}
-</ul>
+<div class="items">
+  <header>
+    <span class="title">Items</span>
+    <button {{action 'add'}}>+</button>
+  </header>
+
+  <ul class="items-list">
+    {{#each}}
+    <li>
+      {{input type="checkbox" checked=complete}}
+      {{#link-to 'item' this}}
+        {{title}}
+      {{/link-to}}
+      <div class="controls">
+        <button {{action 'edit' this}}><i class="fa fa-pencil"></i></button>
+        <button {{action 'delete' this}}><i class="fa fa-trash"></i></button>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+</div>

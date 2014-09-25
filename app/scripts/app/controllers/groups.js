@@ -1,5 +1,11 @@
 var GroupsController = Em.ArrayController.extend({
+  isSortedAlphaAsc: false,
+
   actions: {
+    add: function () {
+
+    },
+
     delete: function (group) {
       console.log('deleting group: ', group);
       // warn user!!!! get confirmation

@@ -1,4 +1,10 @@
-<ul class="groups">
+<div class="groups">
+  <header>
+    <span class="title">Groups</span>
+    <button {{action 'add'}}>+</button>
+  </header>
+
+  <ul class="groups-list">
   {{#each}}
     <li>
       {{#link-to 'items' id}}
@@ -6,8 +12,17 @@
       {{/link-to}}
       <div class="controls">
         <button {{action 'edit' this}}><i class="fa fa-pencil"></i></button>
-        <button {{action 'delete' this}}><i class="fa fa-close"></i></button>
+        <button {{action 'delete' this}}><i class="fa fa-trash"></i></button>
       </div>
     </li>
   {{/each}}
-</ul>
+  </ul>
+
+  <footer>
+    {{#if isSortedAlphaAsc}}
+      <button><i class="fa fa-sort-alpha-asc"></i></button>
+    {{else}}
+      <button><i class="fa fa-sort-alpha-desc"></i></button>
+    {{/if}}
+  </footer>
+</div>

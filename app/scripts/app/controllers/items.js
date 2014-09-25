@@ -1,5 +1,9 @@
 var ItemsController = Em.ArrayController.extend({
   actions: {
+    add: function () {
+
+    },
+
     delete: function (item) {
       console.log('deleting item: ', item);
       // send API DELETE request with model's `id` and `GroupId`
