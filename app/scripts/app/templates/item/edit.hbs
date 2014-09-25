@@ -4,16 +4,24 @@
     <button {{action 'save'}}>Save</button>
   </div>
 
-  <label for="title">Title:</label>
-  {{input id="title" value=title}}
-  <label for="rating">Rating:</label>
-  {{input id="rating" value=rating}}
-  <label for="date">Date:</label>
-  {{input id="date" value=date}}
-  <label for="priority">Priority:</label>
-  {{input id="priority" value=priority}}
-  <label for="complete">Complete:</label>
-  {{input id="complete" value=complete}}
+  <label for="title">Title:
+    {{input id="title" value=title}}
+  </label>
+  <label for="title">Description:
+    {{input id="description" value=description}}
+  </label>
+  <label for="rating">Rating:
+    {{input id="rating" value=rating}}
+  </label>
+  <label for="date">Date:
+    {{input id="date" value=date}}
+  </label>
+  <label for="priority">Priority:
+    {{input id="priority" value=priority}}
+  </label>
+  <label for="complete">Complete:
+    {{input id="complete" value=complete}}
+  </label>
 
   <ul class="fields">
     {{#each fields}}
