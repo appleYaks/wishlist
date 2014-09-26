@@ -1,61 +1,68 @@
-$groups-list-width-screen-large: 20%;
+html, body, .application {
+  height: 100%;
+}
+
+body {
+  background: url('/images/bg.png');
+}
 
 .content {
-  @include display-flex;
-  @include justify-content(flex-start);
-  margin: 0 auto;
-  border-radius: 10px;
-  font-size: 1.5em;
+  @include breakpoint($screen-large-lodpi) {
+    @include display-flex;
+    @include justify-content(flex-start);
+    margin: 0 auto;
+    border-radius: 10px;
+    font-size: 1.5em;
+  }
 }
 
-.content a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.content > div,
-.content > ul:not(.groups) {
-  @include breakpoint($screen-large) {
-    width: ((100% - $groups-list-width-screen-large) / 2);
+.content > div {
+  @include breakpoint($screen-large-lodpi) {
+    width: 33%;
     margin-left: 10px;
+
+    &:last-of-type {
+      margin-right: 10px;
+    }
   }
 }
 
-ul.groups {
-  @include breakpoint($screen-large) {
-    width: $groups-list-width-screen-large;
+header {
+  @include display-flex;
+  @include justify-content(space-between);
+  padding: 20px;
+}
+
+footer {
+  @include breakpoint($screen-large-lodpi) {
+    @include display-flex;
+    @include justify-content(space-around);
+    padding: 20px 0;
+    background: hsla(0,0,0, 0.2);
+    border-bottom-left-radius: $container-border-radius;
+    border-bottom-right-radius: $container-border-radius;
   }
 }
 
-
-.content > ul:first-of-type {
-  margin-left: 0;
-}
-
-.content ul {
+ul {
   margin: 0;
   padding: 0;
   list-style: none;
+}
 
-  li {
-    margin: 0;
-    padding: 0 1em;
+li {
+  margin: 0;
+  padding: 0 1em;
+
+  @include breakpoint($screen-large-lodpi) {
     border-radius: 7px;
-    border: 1px solid black;
+    margin-bottom: 10px;
   }
 
-  li a {
+  a {
     padding: $list-link-padding;
     width: 100%;
-  }
-
-  @include breakpoint($screen-large) {
-    li:hover { background-color: red; }
-    li:nth-of-type(7n-5):hover { background-color: orange; }
-    li:nth-of-type(7n-4):hover { background-color: yellow; }
-    li:nth-of-type(7n-3):hover { background-color: green; }
-    li:nth-of-type(7n-2):hover { background-color: blue; }
-    li:nth-of-type(7n-1):hover { background-color: indigo; }
-    li:nth-of-type(7n) { background-color: violet; }
+    text-decoration: none;
+    color: inherit;
   }
 }

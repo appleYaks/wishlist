@@ -1,7 +1,12 @@
-div.item {
-  padding: 15px;
+.item {
+  @include breakpoint($screen-large-lodpi) {
+    background: hsla(280, 45, 60, 1);
+    margin: 20px;
+    padding: 15px;
+    border-radius: $container-border-radius;
+  }
 }
 
-div.item .actions a {
+.item .actions a {
   padding-right: 5px;
 }

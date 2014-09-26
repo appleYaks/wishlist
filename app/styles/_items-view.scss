@@ -1,4 +1,16 @@
-ul.items li {
+.items {
+  @include breakpoint($screen-large-lodpi) {
+    background: hsla(20, 70, 50, 1);
+    margin: 20px;
+    border-radius: $container-border-radius;
+  }
+}
+
+.items-list {
+  padding: 0 20px;
+}
+
+.items-list li {
   $checkbox-left: nth($list-link-padding, 1);
   $checkbox-size: 1.25em;
 
@@ -6,6 +18,7 @@ ul.items li {
   @include display-flex;
   align-items: center;
   justify-content: space-between;
+  background: hsla(40, 80, 100, 1);
 
   input[type=checkbox] {
     align-self: flex-start;
@@ -41,13 +54,13 @@ ul.items li {
   }
 }
 
-ul.items li {
+.items-list li {
   &:hover .controls, .controls.visible {
     @include display-flex;
   }
 }
 
-ul.items li .controls {
+.items-list li .controls {
   display: none;
   align-items: center;
   justify-content: space-between;
@@ -57,4 +70,3 @@ ul.items li .controls {
     margin-left: 0.25em;
   }
 }
-

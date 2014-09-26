@@ -1,15 +1,29 @@
-ul.groups li {
+.groups {
+  @include breakpoint($screen-large-lodpi) {
+    background: hsla(100, 50, 50, 1);
+    margin: 20px;
+    border-radius: $container-border-radius;
+  }
+}
+
+.groups-list {
+  padding: 0 20px;
+}
+
+.groups-list li {
   position: relative;
   @include display-flex;
   align-items: center;
   justify-content: space-between;
+  background: hsla(90, 80, 30, 1);
+  color: white;
 
   &:hover .controls, .controls.visible {
     @include display-flex;
   }
 }
 
-ul.groups li .controls {
+.groups-list li .controls {
   display: none;
   align-items: center;
   justify-content: space-between;
