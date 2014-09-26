@@ -1,5 +1,8 @@
 .items {
   @include breakpoint($screen-large-lodpi) {
+    @include display-flex;
+    @include flex-direction(column);
+    @include justify-content(space-between);
     background: hsla(20, 70, 50, 1);
     margin: 20px;
     border-radius: $container-border-radius;
