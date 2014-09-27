@@ -35,7 +35,14 @@ header {
   padding: 20px;
 
   .link-text { @include squish-text; }
-  .fa { margin-right: 5px; }
+
+  .fa {
+    margin-right: 5px;
+    padding: 5px;
+    background: hsla(100, 0, 100, 0.5);
+    color: black;
+    border-radius: 5px;
+  }
 }
 
 footer {
