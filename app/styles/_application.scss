@@ -20,6 +20,7 @@ body {
   @include breakpoint($screen-large-lodpi) {
     width: 33%;
     margin-left: 10px;
+    padding-bottom: $footer-outer-height;
 
     &:last-of-type {
       margin-right: 10px;
@@ -30,17 +31,32 @@ body {
 header {
   @include display-flex;
   @include justify-content(space-between);
+  @include align-items(center);
   padding: 20px;
+
+  .link-text { @include squish-text; }
+  .fa { margin-right: 5px; }
 }
 
 footer {
   @include breakpoint($screen-large-lodpi) {
     @include display-flex;
-    @include justify-content(space-around);
-    padding: 20px 0;
+    @include justify-content(center);
+    @include align-items(center);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: $footer-outer-height;
     background: hsla(0,0,0, 0.2);
     border-bottom-left-radius: $container-border-radius;
     border-bottom-right-radius: $container-border-radius;
+  }
+
+  button {
+    @include breakpoint($screen-large-lodpi) {
+      margin-right: 5px;
+      &:last-of-type { margin-right: 0; }
+    }
   }
 }
 

@@ -1,8 +1,10 @@
 .groups {
+  position: relative;
+
   @include breakpoint($screen-large-lodpi) {
     @include display-flex;
     @include flex-direction(column);
-    @include justify-content(space-between);
+    @include justify-content(flex-start);
     background: hsla(100, 50, 50, 1);
     margin: 20px;
     border-radius: $container-border-radius;
@@ -23,6 +25,7 @@
 
   &:hover .controls, .controls.visible {
     @include display-flex;
+    color: black;
   }
 }
 

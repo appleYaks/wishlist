@@ -1,8 +1,10 @@
 .items {
+  position: relative;
+
   @include breakpoint($screen-large-lodpi) {
     @include display-flex;
     @include flex-direction(column);
-    @include justify-content(space-between);
+    @include justify-content(flex-start);
     background: hsla(20, 70, 50, 1);
     margin: 20px;
     border-radius: $container-border-radius;
@@ -47,12 +49,14 @@
 
     &:checked {
       border-radius: 50%;
-      background: hsla(55,100,60,1);
+      // background: hsla(55,100,60,1);
     }
 
     &:checked:after {
-      color: #85ada7;
-      text-shadow: #669991;
+      color: green;
+      text-shadow: 0 1px 0 black;
+      // color: #85ada7;
+      // text-shadow: 0 1px 0 #669991;
     }
   }
 }
