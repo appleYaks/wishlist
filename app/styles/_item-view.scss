@@ -2,11 +2,33 @@
   @include breakpoint($screen-large-lodpi) {
     background: hsla(280, 45, 60, 1);
     margin: 20px;
-    padding: 15px;
+    padding: 0 20px;
     border-radius: $container-border-radius;
   }
 }
 
-.item .actions a {
-  padding-right: 5px;
+.item-metadata {
+  @include breakpoint($screen-large-lodpi) {
+    padding: 15px;
+    background: hsla(280, 45, 40, 1);
+    color: hsla(100, 100, 100, 0.9);
+    border-radius: $container-border-radius;
+
+    label {
+      display: block;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .title {
+      font-size: 1.2em;
+      margin-bottom: 5px;
+    }
+
+    .description {
+      font-size: 0.9em;
+      margin-top: 8px;
+      text-indent: 1em;
+    }
+  }
 }
