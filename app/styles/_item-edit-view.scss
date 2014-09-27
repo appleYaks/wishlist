@@ -2,9 +2,17 @@
   @include breakpoint($screen-large-lodpi) {
     background: hsla(200, 50, 50, 1);
     margin: 20px;
+    padding: 0 20px;
     border-radius: $container-border-radius;
   }
 
   label, input { display: block; }
   input { margin-bottom: 10px; }
+}
+
+.item-edit .item-metadata {
+  @include breakpoint($screen-large-lodpi) {
+    background: hsla(210, 55, 40, 1);
+    border: 3px dashed black;
+  }
 }

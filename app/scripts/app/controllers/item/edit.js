@@ -1,4 +1,16 @@
+var stringType = { type: 'String', string: true };
+var numberType = { type: 'Number', number: true };
+var dateType   = { type: 'Date', date: true };
+
 var ItemEditController = Em.ObjectController.extend({
+  fieldKeyTypes: [
+    stringType,
+    numberType,
+    dateType
+  ],
+
+  selectedKeyType: null,
+
   complete: function () {
     var complete = this.get('canonicalModel.complete');
 
