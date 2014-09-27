@@ -1,6 +1,7 @@
-<div class="items">
+<section class="items">
   <header>
-    <span class="title">Items</span>
+    {{#link-to 'groups'}}<i class="fa fa-tasks"></i><span class="link-text">Groups</span>{{/link-to}}
+    <h1 class="title">Items</h1>
     <button {{action 'add'}}>+</button>
   </header>
 
@@ -27,4 +28,4 @@
     <button><i class="fa fa-sort-numeric-asc"></i>Rating</button>
     <button><i class="fa fa-sort-numeric-desc"></i>Rating</button>
   </footer>
-</div>
+</section>

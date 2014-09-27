@@ -16,7 +16,7 @@ body {
   }
 }
 
-.content > div {
+.content > section {
   @include breakpoint($screen-large-lodpi) {
     width: 33%;
     margin-left: 10px;
@@ -33,6 +33,11 @@ header {
   @include justify-content(space-between);
   @include align-items(center);
   padding: 20px;
+
+  h1 {
+    font-size: 1.1em;
+    font-weight: normal;
+  }
 
   .link-text { @include squish-text; }
 
