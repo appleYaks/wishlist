@@ -1,45 +1,41 @@
 <section class="item-edit">
   <header>
-    <button {{action 'cancel'}}>Cancel</button>
+    <button class="icon" {{action 'cancel'}}><i class="fa fa-close"></i><span class="button-text">Cancel</span></button>
     <h1 class="title">Edit Item</h1>
-    <button {{action 'save'}}>Save</button>
+    <button class="icon" {{action 'save'}}><i class="fa fa-floppy-o"></i><span class="button-text">Save</span></button>
   </header>
 
   <div class="item-metadata">
-    <label for="title">Title:
-      {{input id="title" value=title}}
-    </label>
-    <label for="title">Description:
-      {{input id="description" value=description}}
-    </label>
-    <label for="rating">Rating:
-      {{input id="rating" value=rating}}
-    </label>
-    <label for="date">Date:
-      {{input id="date" value=date}}
-    </label>
-    <label for="priority">Priority:
-      {{input id="priority" value=priority}}
-    </label>
-    <label for="complete">Complete:
-      {{input id="complete" value=complete}}
-    </label>
+    <label for="title">Title:</label>
+    {{input id="title" value=title}}
+
+    <label for="description">Description:</label>
+    {{input id="description" value=description}}
+
+    <label for="rating">Rating:</label>
+    {{input id="rating" value=rating}}
+
+    <label for="date">Date:</label>
+    {{input id="date" value=date}}
+
+    <label for="priority">Priority:</label>
+    {{input id="priority" value=priority}}
+
+    <label for="complete">Complete:</label>
+    {{input id="complete" value=complete}}
 
     <ul class="fields">
       {{#each fields}}
       <label>
         <span>{{key}}:</span>
-        {{input value=value}}
       </label>
+      {{input value=value}}
       {{/each}}
     </ul>
   </div>
 
-  <div class="new-field">
-    <p>Add a new Field!</p>
-    <label for="newFieldKey">Name:
-      {{input id="newFieldKey" value=newFieldKey}}
-    </label>
+  <aside class="new-field">
+    <h1>Add a new Field!</h1>
 
     {{view Ember.Select
       content=fieldKeyTypes
@@ -49,18 +45,29 @@
       selection=selectedKeyType
     }}
 
+    {{#if selectedKeyType}}
+      <label for="newFieldKey">Name the field with a single word:</label>
+      {{input id="newFieldKey" value=newFieldKey}}
+    {{/if}}
+
+    {{#if selectedKeyType}}
+      <label for="newFieldValue">What value should the field have?</label>
+    {{/if}}
+
     {{#if selectedKeyType.string}}
-      {{input value=newFieldValue placeholder="Words go here!"}}
+      {{input id="newFieldValue" value=newFieldValue placeholder="Words go here!"}}
     {{/if}}
 
     {{#if selectedKeyType.number}}
-      {{input value=newFieldValue placeholder="0"}}
+      {{input id="newFieldValue" value=newFieldValue placeholder="0"}}
     {{/if}}
 
     {{#if selectedKeyType.date}}
       <p>Date!</p>
     {{/if}}
 
-    <button {{action 'addField'}}>Add</button>
-  </div>
+    {{#if selectedKeyType}}
+      <button {{action 'addField'}}>Add</button>
+    {{/if}}
+  </aside>
 </section>
