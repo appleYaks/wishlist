@@ -7,6 +7,10 @@ var DataStore = Ember.Object.extend({
     this.set('_factories', Ember.Object.create());
   },
 
+  /**
+  * Empty out all data records from each internal model store. All models (but not their factories) are lost.
+  * @return
+  */
   clear: function () {
     for (var type in this._store) {
       if (this._store.hasOwnProperty(type) && typeof this._store[type] === 'object') {
@@ -15,6 +19,11 @@ var DataStore = Ember.Object.extend({
     }
   },
 
+  /**
+  * Add a storage unit that will contain models of a given named type. It is initialized empty.
+  * @param {String} type A string name of the internal array representation of model data of a certain type.
+  * @return
+  */
   addType: function (type) {
     // using ArrayController to sort it now makes later binary search easier
     this._store[type] = Ember.ArrayController.create({
@@ -24,7 +33,13 @@ var DataStore = Ember.Object.extend({
     });
   },
 
-  registerModelFactory: function (type, model) {
+  /**
+  * Keeps a reference of the given model factory internally under the given named type. New models with that named type created from JSON or extended from an existing Ember object-type will be created from this factory, or by default, from `Ember.Object.create()`.
+  * @param {String} type A string name representing the model type and its factory type.
+  * @param {(Function|Object|Ember.Object)} factory An existing function, object, or Ember.Object that will create a new object of its type when its `.create()` method is invoked. `factory.create()` MUST exist.
+  * @return
+  */
+  registerModelFactory: function (type, factory) {
     if (!this._store[type]) {
       throw new Error('There is no model type ' + type + ' in the datastore!');
     }
@@ -33,30 +48,38 @@ var DataStore = Ember.Object.extend({
       throw new Error ('There is already a registered model factory of type ' + type + ' in the datastore!');
     }
 
-    if (typeof model !== 'function' || typeof model.create === 'undefined') {
+    if (typeof factory !== 'function' || typeof factory.create === 'undefined') {
       throw new Error ('The model factory of type ' + type + 'you are trying to register is not of the proper datatype!');
     }
 
-    this._factories.set(type, model);
+    this._factories.set(type, factory);
   },
 
+  /**
+  * Create a new model using its factory, or if one doesn't exist, `Ember.Object.create()`. Can be extended from a deep clone of another object or `Ember.Object`. The factory's `.create()` method **MUST** exist.
+  * @param {String} type A string name representing the model type and its factory type.
+  * @param {(Object|Ember.Object)} model An optional existing object or Ember.Object to extend from, using a deep clone.
+  * @return {Ember.Object} The new object.
+  */
   createModelOfType: function (type, object) {
-    var factory = this._factories.get(type),
+    var factory = this._factories.get(type) || Ember.Object,
         model;
 
-    if (factory) {
-      model = factory.create();
-      this._mergeObject(model, object);
-      return model;
+    if (factory === Ember.Object) {
+      console.log('WARNING: A model was created of type "' + type + '" even though there was no registered model factory associated with it.');
     }
 
-    console.log('WARNING: A model was created of type "' + type + '" even though there was no registered model factory associated with it.');
-
-    model =  Ember.Object.create(object);
+    model = factory.create();
     this._mergeObject(model, object);
     return model;
   },
 
+  /**
+  * Load new models into the internal data storage unit of the named model type. New models will be created using a previously-registered factory of that type if it exists. The payload can be an object or an array of objects.
+  * @param {String} type A string name representing the model type, and if its factory was registered, its factory type.
+  * @param {(Object|Array)} payload An object or array of objects to load into internal model storage.
+  * @return
+  */
   load: function (type, payload) {
     var modelType = this._store[type],
         emberizedItems = [],
