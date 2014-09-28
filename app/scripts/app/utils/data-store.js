@@ -76,7 +76,7 @@ var DataStore = Ember.Object.extend({
       foundItem = this._binarySearch(modelType, payload.id);
 
       if (foundItem) {
-        this._mergeObject(modelType, foundItem, payload);
+        this._mergeObject(foundItem, payload);
       } else {
         modelType.pushObject(this._createModel(type, payload));
       }
@@ -100,7 +100,7 @@ var DataStore = Ember.Object.extend({
       foundItem = this._binarySearch(modelType, item.id);
 
       if (foundItem) {
-        this._mergeObject(modelType, foundItem, item);
+        this._mergeObject(foundItem, item);
       } else {
         emberizedItems.push(this._createModel(type, item));
       }
@@ -113,8 +113,8 @@ var DataStore = Ember.Object.extend({
   * Use the containing array to update the properties of an object it contains and notify observers.
   * @return
   */
-  _mergeObject: function (modelType, obj) {
-    var args = [].slice.call(arguments, 2);
+  _mergeObject: function (obj) {
+    var args = [].slice.call(arguments, 1);
     var i, prop, curr;
 
     for (i = 0; i !== args.length; ++i) {
