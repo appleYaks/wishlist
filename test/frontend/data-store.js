@@ -1,21 +1,98 @@
 // this will test certain functions that are assumed to work in following test categories
 describe('DataStore Prelim Tests', function () {
-  var store;
+  describe('internal store functions', function () {
+    var store;
 
-  beforeEach(function () {
-    store = require('client/utils/data-store')['default'].create();
+    beforeEach(function () {
+      store = require('client/utils/data-store')['default'].create();
+    });
+
+    it('has the private variable, _store', function () {
+      expect(store.get('_store')).to.exist;
+    });
+
+    it('adds a datatype to the store', function () {
+      var type = 'testType';
+      expect(store.get('_store.' + type)).to.not.exist;
+      expect(store.addType).to.be.a('function');
+      store.addType(type);
+      expect(store.get('_store.' + type)).to.exist;
+    });
   });
 
-  it('has the private variable, _store', function () {
-    expect(store.get('_store')).to.exist;
-  });
-
-  it('adds a datatype to the store', function () {
+  describe('registering model factories', function () {
+    var store;
     var type = 'testType';
-    expect(store.get('_store.' + type)).to.not.exist;
-    expect(store.addType).to.be.a('function');
-    store.addType(type);
-    expect(store.get('_store.' + type)).to.exist;
+    var factory = Ember.Object.extend();
+
+    beforeEach(function () {
+      store = require('client/utils/data-store')['default'].create();
+    });
+
+    it('has a private variable, _models', function () {
+      expect(store.get('_models')).to.exist;
+    });
+
+    it('fails to register a model factory for a non-existent type', function () {
+      expect(store.registerModel.bind(store, 'noExist', factory)).to.throw(Error);
+    });
+
+    it('fails to register a model factory if one already exists', function () {
+      store.addType(type);
+      // register it once
+      store.registerModel(type, factory);
+      // try to register it again
+      expect(store.registerModel.bind(store, type, factory)).to.throw(Error);
+    });
+
+    it('fails to register a model factory if the factory is not correct', function () {
+      var bad = function () {};
+      store.addType(type);
+      expect(store.registerModel.bind(store, type, 'oops!')).to.throw(Error);
+      expect(store.registerModel.bind(store, type, bad)).to.throw(Error);
+    });
+
+    it('registers a new model factory', function () {
+      var bad = Ember.Object.extend();
+
+      store.addType(type);
+      expect(store.registerModel.bind(store, type, factory)).to.not.throw(Error);
+      expect(store._models.get(type)).to.exist;
+      expect(factory.detect(store._models.get(type))).to.be.ok;
+      expect(bad.detect(store._models.get(type))).to.not.be.ok;
+    });
+
+    it('returns an object of that factory type', function () {
+      var bad = Ember.Object.extend();
+      var model;
+
+      store.addType(type);
+      expect(store.registerModel.bind(store, type, factory)).to.not.throw(Error);
+      expect(store._models.get(type)).to.exist;
+
+      expect(store._createModel).to.be.a('function');
+
+      model = store._createModel(type, { testing: '123' });
+      expect(Ember.Object.detectInstance(model)).to.be.ok;
+      expect(factory.detectInstance(model)).to.be.ok;
+      expect(bad.detectInstance(model)).to.not.be.ok;
+    });
+
+    it('returns an Ember.Object if that factory type does not exist', function () {
+      var bad = Ember.Object.extend();
+      var model;
+
+      store.addType(type);
+      expect(store.registerModel.bind(store, type, factory)).to.not.throw(Error);
+      expect(store._models.get(type)).to.exist;
+
+      expect(store._createModel).to.be.a('function');
+
+      model = store._createModel('noExist', { testing: '123' });
+      expect(Ember.Object.detectInstance(model)).to.be.ok;
+      expect(factory.detectInstance(model)).to.not.be.ok;
+      expect(bad.detectInstance(model)).to.not.be.ok;
+    });
   });
 });
 
@@ -264,7 +341,7 @@ describe('DataStore', function () {
       store.all(type).get('length').should.equal(0);
     });
 
-    it('merges objects when asked', function () {
+    it('merges plain objects when asked', function () {
       var retrieved;
       var fill = {
         id: 1,
@@ -297,6 +374,41 @@ describe('DataStore', function () {
       retrieved.get('title').should.equal(duplicate.title);
       retrieved.get('myAttr').should.equal(duplicate.myAttr);
       retrieved.get('newAttr').should.equal(duplicate.newAttr);
+    });
+
+    it('merges Ember.Objects when asked', function () {
+      var retrieved;
+      var fill = {
+        id: 1,
+        title: 'title 1',
+        myAttr: 'old'
+      };
+      var duplicate = Ember.Object.create({
+        id: 1,
+        title: 'new title',
+        myAttr: 'new',
+        newAttr: 'i am new here!'
+      });
+
+      store.load(type, fill);
+      store.all(type).get('length').should.equal(1);
+
+      retrieved = store.all(type).objectAt(0);
+      expect(retrieved).to.exist;
+      retrieved.get('id').should.equal(fill.id);
+      retrieved.get('title').should.equal(fill.title);
+      retrieved.get('myAttr').should.equal(fill.myAttr);
+      expect(retrieved.get('newAttr')).to.not.exist;
+
+      expect(store._mergeObject).to.be.a('function');
+      store._mergeObject(retrieved, duplicate);
+
+      retrieved = store.all(type).objectAt(0);
+      expect(retrieved).to.exist;
+      retrieved.get('id').should.equal(duplicate.get('id'));
+      retrieved.get('title').should.equal(duplicate.get('title'));
+      retrieved.get('myAttr').should.equal(duplicate.get('myAttr'));
+      retrieved.get('newAttr').should.equal(duplicate.get('newAttr'));
     });
 
     it('sorts objects based on an arbitrary key', function () {
