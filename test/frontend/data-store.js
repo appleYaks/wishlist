@@ -29,37 +29,37 @@ describe('DataStore Prelim Tests', function () {
       store = require('client/utils/data-store')['default'].create();
     });
 
-    it('has a private variable, _models', function () {
-      expect(store.get('_models')).to.exist;
+    it('has a private variable, _factories', function () {
+      expect(store.get('_factories')).to.exist;
     });
 
     it('fails to register a model factory for a non-existent type', function () {
-      expect(store.registerModel.bind(store, 'noExist', factory)).to.throw(Error);
+      expect(store.registerModelFactory.bind(store, 'noExist', factory)).to.throw(Error);
     });
 
     it('fails to register a model factory if one already exists', function () {
       store.addType(type);
       // register it once
-      store.registerModel(type, factory);
+      store.registerModelFactory(type, factory);
       // try to register it again
-      expect(store.registerModel.bind(store, type, factory)).to.throw(Error);
+      expect(store.registerModelFactory.bind(store, type, factory)).to.throw(Error);
     });
 
     it('fails to register a model factory if the factory is not correct', function () {
       var bad = function () {};
       store.addType(type);
-      expect(store.registerModel.bind(store, type, 'oops!')).to.throw(Error);
-      expect(store.registerModel.bind(store, type, bad)).to.throw(Error);
+      expect(store.registerModelFactory.bind(store, type, 'oops!')).to.throw(Error);
+      expect(store.registerModelFactory.bind(store, type, bad)).to.throw(Error);
     });
 
     it('registers a new model factory', function () {
       var bad = Ember.Object.extend();
 
       store.addType(type);
-      expect(store.registerModel.bind(store, type, factory)).to.not.throw(Error);
-      expect(store._models.get(type)).to.exist;
-      expect(factory.detect(store._models.get(type))).to.be.ok;
-      expect(bad.detect(store._models.get(type))).to.not.be.ok;
+      expect(store.registerModelFactory.bind(store, type, factory)).to.not.throw(Error);
+      expect(store._factories.get(type)).to.exist;
+      expect(factory.detect(store._factories.get(type))).to.be.ok;
+      expect(bad.detect(store._factories.get(type))).to.not.be.ok;
     });
 
     it('returns an object of that factory type', function () {
@@ -67,12 +67,12 @@ describe('DataStore Prelim Tests', function () {
       var model;
 
       store.addType(type);
-      expect(store.registerModel.bind(store, type, factory)).to.not.throw(Error);
-      expect(store._models.get(type)).to.exist;
+      expect(store.registerModelFactory.bind(store, type, factory)).to.not.throw(Error);
+      expect(store._factories.get(type)).to.exist;
 
-      expect(store._createModel).to.be.a('function');
+      expect(store.createModelOfType).to.be.a('function');
 
-      model = store._createModel(type, { testing: '123' });
+      model = store.createModelOfType(type, { testing: '123' });
       expect(Ember.Object.detectInstance(model)).to.be.ok;
       expect(factory.detectInstance(model)).to.be.ok;
       expect(bad.detectInstance(model)).to.not.be.ok;
@@ -83,12 +83,12 @@ describe('DataStore Prelim Tests', function () {
       var model;
 
       store.addType(type);
-      expect(store.registerModel.bind(store, type, factory)).to.not.throw(Error);
-      expect(store._models.get(type)).to.exist;
+      expect(store.registerModelFactory.bind(store, type, factory)).to.not.throw(Error);
+      expect(store._factories.get(type)).to.exist;
 
-      expect(store._createModel).to.be.a('function');
+      expect(store.createModelOfType).to.be.a('function');
 
-      model = store._createModel('noExist', { testing: '123' });
+      model = store.createModelOfType('noExist', { testing: '123' });
       expect(Ember.Object.detectInstance(model)).to.be.ok;
       expect(factory.detectInstance(model)).to.not.be.ok;
       expect(bad.detectInstance(model)).to.not.be.ok;

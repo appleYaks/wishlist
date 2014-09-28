@@ -14,8 +14,8 @@ export default {
       // add basic model types to the store so they can accept models
       store = container.lookup('store:main');
       store.addType('groups');
-      store.registerModel('groups', GroupModel);
+      store.registerModelFactory('groups', GroupModel);
       store.addType('items');
-      store.registerModel('items', ItemModel);
+      store.registerModelFactory('items', ItemModel);
     }
 };

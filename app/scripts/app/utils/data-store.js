@@ -4,7 +4,7 @@ var DataStore = Ember.Object.extend({
   init: function () {
     this._super();
     this.set('_store', Ember.Object.create());
-    this.set('_models', Ember.Object.create());
+    this.set('_factories', Ember.Object.create());
   },
 
   clear: function () {
@@ -24,32 +24,37 @@ var DataStore = Ember.Object.extend({
     });
   },
 
-  registerModel: function (type, model) {
+  registerModelFactory: function (type, model) {
     if (!this._store[type]) {
-      throw new Error('There is no model of type ' + type + ' in the datastore!');
+      throw new Error('There is no model type ' + type + ' in the datastore!');
     }
 
-    if (typeof this._models.get(type) !== 'undefined') {
-      throw new Error ('There is already a registered model of type ' + type + ' in the datastore!');
+    if (typeof this._factories.get(type) !== 'undefined') {
+      throw new Error ('There is already a registered model factory of type ' + type + ' in the datastore!');
     }
 
     if (typeof model !== 'function' || typeof model.create === 'undefined') {
-      throw new Error ('The model of type ' + type + 'you are trying to register is not of the proper datatype!');
+      throw new Error ('The model factory of type ' + type + 'you are trying to register is not of the proper datatype!');
     }
 
-    this._models.set(type, model);
+    this._factories.set(type, model);
   },
 
-  _createModel: function (type, object) {
-    var model = this._models.get(type);
+  createModelOfType: function (type, object) {
+    var factory = this._factories.get(type),
+        model;
 
-    if (model) {
-      return model.create(object);
+    if (factory) {
+      model = factory.create();
+      this._mergeObject(model, object);
+      return model;
     }
 
     console.log('WARNING: A model was created of type "' + type + '" even though there was no registered model factory associated with it.');
 
-    return Ember.Object.create(object);
+    model =  Ember.Object.create(object);
+    this._mergeObject(model, object);
+    return model;
   },
 
   load: function (type, payload) {
@@ -78,7 +83,7 @@ var DataStore = Ember.Object.extend({
       if (foundItem) {
         this._mergeObject(foundItem, payload);
       } else {
-        modelType.pushObject(this._createModel(type, payload));
+        modelType.pushObject(this.createModelOfType(type, payload));
       }
 
       return;
@@ -86,7 +91,7 @@ var DataStore = Ember.Object.extend({
 
     if (!modelType.get('length')) {
       emberizedItems = payload.map(function (obj) {
-        return this._createModel(type, obj);
+        return this.createModelOfType(type, obj);
       }, this);
 
       this._store[type].pushObjects(emberizedItems);
@@ -102,7 +107,7 @@ var DataStore = Ember.Object.extend({
       if (foundItem) {
         this._mergeObject(foundItem, item);
       } else {
-        emberizedItems.push(this._createModel(type, item));
+        emberizedItems.push(this.createModelOfType(type, item));
       }
     }, this);
 
