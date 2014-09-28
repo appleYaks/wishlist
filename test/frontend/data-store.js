@@ -1,3 +1,24 @@
+// this will test certain functions that are assumed to work in following test categories
+describe('DataStore Prelim Tests', function () {
+  var store;
+
+  beforeEach(function () {
+    store = require('client/utils/data-store')['default'].create();
+  });
+
+  it('has the private variable, _store', function () {
+    expect(store.get('_store')).to.exist;
+  });
+
+  it('adds a datatype to the store', function () {
+    var type = 'testType';
+    expect(store.get('_store.' + type)).to.not.exist;
+    expect(store.addType).to.be.a('function');
+    store.addType(type);
+    expect(store.get('_store.' + type)).to.exist;
+  });
+});
+
 // these tests assume that the DataStore sorts its model types' models by id
 describe('DataStore', function () {
   var store;
