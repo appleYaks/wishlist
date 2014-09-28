@@ -2,14 +2,14 @@
   @include breakpoint($screen-large-lodpi) {
     background: hsla(280, 45, 60, 1);
     margin: 20px;
-    padding: 0 20px;
     border-radius: $container-border-radius;
   }
 }
 
 .item-metadata {
   @include breakpoint($screen-large-lodpi) {
-    padding: 15px;
+    margin: 0 20px;
+    padding: 5px 20px;
     background: hsla(280, 45, 40, 1);
     color: hsla(100, 100, 100, 0.9);
     border-radius: $container-border-radius;

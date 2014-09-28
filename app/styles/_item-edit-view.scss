@@ -2,17 +2,43 @@
   @include breakpoint($screen-large-lodpi) {
     background: hsla(200, 50, 50, 1);
     margin: 20px;
-    padding: 0 20px;
+    // override specificity of .content > div
+    padding-bottom: 0 !important;
     border-radius: $container-border-radius;
   }
 
   label, input { display: block; }
-  input { margin-bottom: 10px; }
+  input {
+    margin-top: 0.2em;
+    margin-bottom: 0.5em;
+    padding: 5px;
+    border: 0;
+    color: black;
+    border-radius: 5px;
+  }
 }
 
 .item-edit .item-metadata {
   @include breakpoint($screen-large-lodpi) {
-    background: hsla(210, 55, 40, 1);
     border: 3px dashed black;
+    background: hsla(210, 55, 40, 1);
   }
+}
+
+.new-field {
+  @include breakpoint($screen-large-lodpi) {
+    margin: 1em 20px;
+    padding:  20px;
+    border: 3px dashed black;
+    background: hsla(210, 55, 40, 1);
+    border-radius: $container-border-radius;
+  }
+
+  h1 {
+    margin-top: 0;
+    font-size: 1.1em;
+    color: white;
+  }
+
+  select { margin-bottom: 0.5em; }
 }
