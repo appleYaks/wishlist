@@ -4,6 +4,7 @@ var DataStore = Ember.Object.extend({
   init: function () {
     this._super();
     this.set('_store', Ember.Object.create());
+    this.set('_models', Ember.Object.create());
   },
 
   clear: function () {
@@ -21,6 +22,34 @@ var DataStore = Ember.Object.extend({
       sortProperties: ['id'],
       sortAscending: true,
     });
+  },
+
+  registerModel: function (type, model) {
+    if (!this._store[type]) {
+      throw new Error('There is no model of type ' + type + ' in the datastore!');
+    }
+
+    if (typeof this._models.get(type) !== 'undefined') {
+      throw new Error ('There is already a registered model of type ' + type + ' in the datastore!');
+    }
+
+    if (typeof model !== 'function' || typeof model.create === 'undefined') {
+      throw new Error ('The model of type ' + type + 'you are trying to register is not of the proper datatype!');
+    }
+
+    this._models.set(type, model);
+  },
+
+  _createModel: function (type, object) {
+    var model = this._models.get(type);
+
+    if (model) {
+      return model.create(object);
+    }
+
+    console.log('WARNING: A model was created of type "' + type + '" even though there was no registered model factory associated with it.');
+
+    return Ember.Object.create(object);
   },
 
   load: function (type, payload) {
@@ -49,7 +78,7 @@ var DataStore = Ember.Object.extend({
       if (foundItem) {
         this._mergeObject(modelType, foundItem, payload);
       } else {
-        modelType.pushObject(Ember.Object.create(payload));
+        modelType.pushObject(this._createModel(type, payload));
       }
 
       return;
@@ -57,8 +86,8 @@ var DataStore = Ember.Object.extend({
 
     if (!modelType.get('length')) {
       emberizedItems = payload.map(function (obj) {
-        return Ember.Object.create(obj);
-      });
+        return this._createModel(type, obj);
+      }, this);
 
       this._store[type].pushObjects(emberizedItems);
       return;
@@ -73,7 +102,7 @@ var DataStore = Ember.Object.extend({
       if (foundItem) {
         this._mergeObject(modelType, foundItem, item);
       } else {
-        emberizedItems.push(Ember.Object.create(item));
+        emberizedItems.push(this._createModel(type, item));
       }
     }, this);
 
@@ -86,12 +115,19 @@ var DataStore = Ember.Object.extend({
   */
   _mergeObject: function (modelType, obj) {
     var args = [].slice.call(arguments, 2);
-    var i, prop;
+    var i, prop, curr;
 
     for (i = 0; i !== args.length; ++i) {
-      for (prop in args[i]) {
-        if (args[i].hasOwnProperty(prop)) {
-          obj.set(prop, args[i][prop]);
+      if (Ember.Object.detectInstance(args[i])) {
+        // currently the only way I know how to return an Ember.Object to vanilla (POJO)
+        curr = JSON.parse(JSON.stringify(args[i]));
+      } else {
+        curr = args[i];
+      }
+
+      for (prop in curr) {
+        if (curr.hasOwnProperty(prop)) {
+          obj.set(prop, curr[prop]);
         }
       }
     }
