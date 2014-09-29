@@ -25,6 +25,10 @@ var DataStore = Ember.Object.extend({
   * @return
   */
   addType: function (type) {
+    if (typeof this._store[type] !== 'undefined') {
+      throw new Error('A model type of type "' + type + '" already exists! Cannot add it again.');
+    }
+
     // using ArrayController to sort it now makes later binary search easier
     this._store[type] = Ember.ArrayController.create({
       model: Ember.A(),
@@ -139,6 +143,7 @@ var DataStore = Ember.Object.extend({
 
   /**
   * Use the containing array to update the properties of an object it contains and notify observers.
+  * @param {Object} obj The object you want the following arguments' object properties to be merged into.
   * @return
   */
   _mergeObject: function (obj) {
@@ -146,12 +151,12 @@ var DataStore = Ember.Object.extend({
     var i, prop, curr;
 
     for (i = 0; i !== args.length; ++i) {
-      if (Ember.Object.detectInstance(args[i])) {
-        // currently the only way I know how to return an Ember.Object to vanilla (POJO)
-        curr = JSON.parse(JSON.stringify(args[i]));
-      } else {
-        curr = args[i];
+      if (typeof obj !== 'object' || Array.isArray(obj)) {
+        continue;
       }
+
+      // easily create a deep clone of an object.
+      curr = JSON.parse(JSON.stringify(args[i]));
 
       for (prop in curr) {
         if (curr.hasOwnProperty(prop)) {
