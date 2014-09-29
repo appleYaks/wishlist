@@ -1,6 +1,7 @@
 // this will test certain functions that are assumed to work in following test categories
 describe('DataStore Prelim Tests', function () {
   describe('internal store functions', function () {
+    var type = 'testType';
     var store;
 
     beforeEach(function () {
@@ -12,11 +13,15 @@ describe('DataStore Prelim Tests', function () {
     });
 
     it('adds a datatype to the store', function () {
-      var type = 'testType';
       expect(store.get('_store.' + type)).to.not.exist;
       expect(store.addType).to.be.a('function');
       store.addType(type);
       expect(store.get('_store.' + type)).to.exist;
+    });
+
+    it('does not allow a datatype to be added twice', function () {
+      expect(store.addType.bind(store, type)).to.not.throw(Error);
+      expect(store.addType.bind(store, type)).to.throw(Error);
     });
   });
 
@@ -183,6 +188,45 @@ describe('DataStore', function () {
     });
   });
 
+  describe('making a copy of another object', function () {
+    it('returns a deep copy of a newly-created item based off of a plain object', function () {
+      var toCopy = { test: [{deep: 'copy'}] },
+          newModel;
+
+      newModel = store.createModelOfType(type, toCopy);
+
+      expect(Ember.Object.detectInstance(newModel)).to.be.ok;
+      expect(newModel).to.have.property('test');
+      expect(newModel.get('test')).to.be.an('array');
+      expect(newModel.get('test.firstObject')).to.be.an('object');
+      expect(newModel.get('test.firstObject.deep')).to.be.a('string');
+      expect(newModel.get('test.firstObject.deep')).to.equal('copy');
+      expect(newModel.get('test')).to.not.equal(toCopy.test);
+    });
+
+    it('returns a deep copy of a newly-created item based off of an Ember.Object', function () {
+      var toCopy = Ember.Object.create({ test: [{deep: 'copy'}] }),
+          newModel;
+
+      newModel = store.createModelOfType(type, toCopy);
+
+      expect(Ember.Object.detectInstance(newModel)).to.be.ok;
+      expect(newModel).to.have.property('test');
+      expect(newModel.get('test')).to.be.an('array');
+      expect(newModel.get('test.firstObject')).to.be.an('object');
+      expect(newModel.get('test.firstObject.deep')).to.be.a('string');
+      expect(newModel.get('test.firstObject.deep')).to.equal('copy');
+      expect(newModel.get('test')).to.not.equal(toCopy.test);
+    });
+
+    it('ignores non-objects when copying properties to another object', function () {
+      var newModel = store.createModelOfType(type, 'adnonda', [], { test: 1 });
+      expect(newModel).to.be.an('object');
+      expect(Ember.Object.detectInstance(newModel)).to.be.ok;
+      expect(newModel.get('test')).to.be.a('number');
+    });
+  });
+
   describe('adding elements', function () {
     beforeEach(function () {
       store.clear();
@@ -336,7 +380,7 @@ describe('DataStore', function () {
       retrieved.get('title').should.equal(models[1].title);
     });
 
-    it('does nothing with an empty array', function () {
+    it('does nothing when adding an empty array', function () {
       store.load(type, []);
       store.all(type).get('length').should.equal(0);
     });
