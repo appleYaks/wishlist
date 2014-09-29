@@ -62,11 +62,12 @@ var DataStore = Ember.Object.extend({
   /**
   * Create a new model using its factory, or if one doesn't exist, `Ember.Object.create()`. Can be extended from a deep clone of another object or `Ember.Object`. The factory's `.create()` method **MUST** exist.
   * @param {String} type A string name representing the model type and its factory type.
-  * @param {(Object|Ember.Object)} model An optional existing object or Ember.Object to extend from, using a deep clone.
+  * @param {...(Object|Ember.Object)} model Optional existing objects or Ember.Objects to extend from, using a deep clone.
   * @return {Ember.Object} The new object.
   */
-  createModelOfType: function (type, object) {
-    var factory = this._factories.get(type) || Ember.Object,
+  createModelOfType: function (type) {
+    var args = [].slice.call(arguments, 1),
+        factory = this._factories.get(type) || Ember.Object,
         model;
 
     if (factory === Ember.Object) {
@@ -74,7 +75,7 @@ var DataStore = Ember.Object.extend({
     }
 
     model = factory.create();
-    this._mergeObject(model, object);
+    this._mergeObject.apply(this, [model].concat(args));
     return model;
   },
 
@@ -144,6 +145,7 @@ var DataStore = Ember.Object.extend({
   /**
   * Use the containing array to update the properties of an object it contains and notify observers.
   * @param {Object} obj The object you want the following arguments' object properties to be merged into.
+  * @param {...(Object|Ember.Object)} model Optional existing objects or Ember.Objects to extend from, using a deep clone.
   * @return
   */
   _mergeObject: function (obj) {
