@@ -1,4 +1,20 @@
 var ItemsController = Em.ArrayController.extend({
+  // various sort orders
+  sortTitleAsc: Ember.computed.equal('userSorted', 'title-asc'),
+  sortPriorityAsc: Ember.computed.equal('userSorted', 'priority-asc'),
+  sortRatingAsc: Ember.computed.equal('userSorted', 'rating-asc'),
+
+  userSorted: function () {
+    var which = this.get('sortProperties.firstObject');
+
+    if (which) {
+      which += this.get('sortAscending') ? '-asc' : '-desc';
+    }
+
+    return which;
+  }.property('sortProperties', 'sortAscending'),
+
+
   actions: {
     add: function () {
 
@@ -13,7 +29,25 @@ var ItemsController = Em.ArrayController.extend({
 
     edit: function (item) {
       this.transitionToRoute('item.edit', item);
-    }
+    },
+
+    sortByTitle: function () {
+      var direction = this.get('userSorted') === 'title-asc' ? false : true;
+      this.set('sortProperties', ['title']);
+      this.set('sortAscending', direction);
+    },
+
+    sortByPriority: function () {
+      var direction = this.get('userSorted') === 'priority-asc' ? false : true;
+      this.set('sortProperties', ['priority']);
+      this.set('sortAscending', direction);
+    },
+
+    sortByRating: function () {
+      var direction = this.get('userSorted') === 'rating-asc' ? false : true;
+      this.set('sortProperties', ['rating']);
+      this.set('sortAscending', direction);
+    },
   }
 });
 
