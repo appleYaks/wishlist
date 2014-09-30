@@ -11,14 +11,12 @@ var ItemEditController = Em.ObjectController.extend({
 
   selectedKeyType: null,
 
-  complete: function () {
-    var complete = this.get('canonicalModel.complete');
-
-    if (complete) {
-      return 'Yes';
+  complete: function (key, value) {
+    if (arguments.length > 1) {
+      return value;
     }
 
-    return 'No';
+    return this.get('canonicalModel.complete');
   }.property('canonicalModel.complete'),
 
   actions: {

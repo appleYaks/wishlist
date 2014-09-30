@@ -1,0 +1,38 @@
+// checkbox with checkmark appearance
+.checkmark {
+  $checkbox-left: nth($list-link-padding, 1);
+  $checkbox-size: 1.25em;
+
+  align-self: flex-start;
+  flex-shrink: 0;
+
+  margin-top: nth($list-link-padding, 1);
+  margin-right: nth($list-link-padding, 1);
+  height: $checkbox-size;
+  width: $checkbox-size;
+  background: none;
+  text-align: center;
+  @include appearance(none);
+  outline: none;
+  cursor: pointer;
+
+  &:after {
+    content: '\2714';
+    line-height: $checkbox-size / 1.1;
+    font-size: $checkbox-size;
+    color: #DDD;
+    text-shadow: 0 -1px 0 #AAA;
+  }
+
+  &:checked {
+    border-radius: 50%;
+    // background: hsla(55,100,60,1);
+  }
+
+  &:checked:after {
+    color: green;
+    text-shadow: 0 1px 0 black;
+    // color: #85ada7;
+    // text-shadow: 0 1px 0 #669991;
+  }
+}
