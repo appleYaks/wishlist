@@ -1,0 +1,20 @@
+<p> {{modelDate}} </p>
+<p> {{momentDate}} </p>
+
+{{view Ember.Select
+    change=selectChanged
+    content=months
+    optionValuePath="content.val"
+    optionLabelPath="content.name"
+    selection=selectedMonth
+}}
+{{view Ember.Select
+    change=selectChanged
+    content=days
+    selection=selectedDay
+}}
+{{view Ember.Select
+    change=selectChanged
+    content=years
+    selection=selectedYear
+}}
