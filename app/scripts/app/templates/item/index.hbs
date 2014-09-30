@@ -12,7 +12,10 @@
     <p class="rating"><label>Rating</label> {{rating}}</p>
     <p class="date"><label>Date</label> {{moment-calendar date}}</p>
     <p class="priority"><label>Priority</label> {{priority}}</p>
-    <p class="complete"><label>Completed</label> {{yesno complete}}</p>
+    <p class="complete">
+      <label>Completed</label>
+      {{input type="checkbox" class="checkmark" disabled="disabled" checked=complete}}
+    </p>
 
     <ul class="fields">
       {{#each fields}}

@@ -21,6 +21,10 @@
   align-items: center;
   justify-content: space-between;
   background: hsla(40, 80, 100, 1);
+
+  .checkmark {
+    margin-top: nth($list-link-padding, 1);
+  }
 }
 
 .items-list li {
