@@ -11,6 +11,12 @@ var ItemEditRoute = Em.Route.extend({
       into: 'application',
       outlet: 'item',
     });
+  },
+
+  actions: {
+    willTransition: function () {
+      this.get('controller.model').destroy();
+    }
   }
 });
 

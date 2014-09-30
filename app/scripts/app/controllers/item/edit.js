@@ -28,6 +28,8 @@ var ItemEditController = Em.ObjectController.extend({
     },
 
     cancel: function () {
+      this.get('model').destroy();
+      this.transitionToRoute('items');
     },
 
     save: function () {
