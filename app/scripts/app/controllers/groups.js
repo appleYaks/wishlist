@@ -1,5 +1,8 @@
-var GroupsController = Em.ArrayController.extend({
-  isSortedAlphaAsc: false,
+import SortableControllerMixin from 'client/mixins/sortable-controller';
+
+var GroupsController = Em.ArrayController.extend(SortableControllerMixin, {
+  // user-controlled sort order
+  sortedTitleAsc: Ember.computed.equal('userSorted', 'title-asc'),
 
   actions: {
     add: function () {
@@ -15,6 +18,12 @@ var GroupsController = Em.ArrayController.extend({
 
     edit: function (group) {
       this.transitionToRoute('group.edit', group);
+    },
+
+    sortByTitle: function () {
+      var direction = this.get('userSorted') === 'title-asc' ? false : true;
+      this.set('sortProperties', ['title']);
+      this.set('sortAscending', direction);
     }
   }
 });

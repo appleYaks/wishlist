@@ -1,19 +1,10 @@
-var ItemsController = Em.ArrayController.extend({
+import SortableControllerMixin from 'client/mixins/sortable-controller';
+
+var ItemsController = Em.ArrayController.extend(SortableControllerMixin, {
   // various sort orders
-  sortTitleAsc: Ember.computed.equal('userSorted', 'title-asc'),
-  sortPriorityAsc: Ember.computed.equal('userSorted', 'priority-asc'),
-  sortRatingAsc: Ember.computed.equal('userSorted', 'rating-asc'),
-
-  userSorted: function () {
-    var which = this.get('sortProperties.firstObject');
-
-    if (which) {
-      which += this.get('sortAscending') ? '-asc' : '-desc';
-    }
-
-    return which;
-  }.property('sortProperties', 'sortAscending'),
-
+  sortedTitleAsc: Ember.computed.equal('userSorted', 'title-asc'),
+  sortedPriorityAsc: Ember.computed.equal('userSorted', 'priority-asc'),
+  sortedRatingAsc: Ember.computed.equal('userSorted', 'rating-asc'),
 
   actions: {
     add: function () {

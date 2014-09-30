@@ -19,8 +19,7 @@
   {{/each}}
   </ul>
 
-  <footer>
-    <button><i class="fa fa-sort-alpha-asc"></i></button>
-    <button><i class="fa fa-sort-alpha-desc"></i></button>
+  <footer {{bind-attr class=userSorted}}>
+    <button class="title" {{action 'sortByTitle'}}><i {{bind-attr class=":fa sortedTitleAsc:fa-sort-alpha-desc:fa-sort-alpha-asc"}}></i></button>
   </footer>
 </section>
