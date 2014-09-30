@@ -1,5 +1,3 @@
-import parseFields from 'client/utils/parse-fields-metadata';
-
 var DataStore = Ember.Object.extend({
   init: function () {
     this._super();
@@ -101,9 +99,6 @@ var DataStore = Ember.Object.extend({
     if (Array.isArray(payload) && payload.length === 0) {
       return;
     }
-
-    // turn `fields` metadata field from a string like "[]" into a JSON object
-    parseFields(payload);
 
     if (!Array.isArray(payload) || (payload.length === 1 && (payload = payload[0]))) {
       foundItem = this._binarySearch(modelType, payload.id);
