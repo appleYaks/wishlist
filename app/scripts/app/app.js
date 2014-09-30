@@ -5,7 +5,6 @@ import FastClickInit from 'client/utils/fastclick';
 
 // helpers
 import momentCalendar from 'client/helpers/moment-calendar';
-import yesno from 'client/helpers/yesno';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
