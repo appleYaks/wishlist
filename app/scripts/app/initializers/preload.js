@@ -9,8 +9,12 @@ export default {
       var attributes = [
         {
           target: 'route:groups',
-          type: 'group',
+          type: 'groups',
           content: $('meta[name="preload-groups"]', head).attr('content')
+        },
+        {
+          type: 'items',
+          content: $('meta[name="preload-items"]', head).attr('content')
         }
       ].filterBy('content');
 
@@ -20,15 +24,17 @@ export default {
         attributes.forEach(function (obj) {
           var data = JSON.parse(obj.content);
 
-          if (obj.target === 'route:groups') {
-            store.load('groups', data);
+          if (!data) {
+            return;
           }
 
-          container.lookup(obj.target).set('preload', true);
+          if (obj.type) {
+            store.load(obj.type, data);
+          }
 
-          // this would be useful for sending the data to the route
-          // application.register('preload:groups', data, { instantiate: false });
-          // application.inject(obj.target, 'preloadData', 'preload:groups');
+          if (obj.target) {
+            container.lookup(obj.target).set('preload', true);
+          }
         });
       }
     }

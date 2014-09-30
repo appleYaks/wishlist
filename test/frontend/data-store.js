@@ -223,7 +223,7 @@ describe('DataStore', function () {
       var newModel = store.createModelOfType(type, 'adnonda', [], { test: 1 });
       expect(newModel).to.be.an('object');
       expect(Ember.Object.detectInstance(newModel)).to.be.ok;
-      expect(newModel.get('test')).to.be.a('number');
+      expect(newModel.get('test')).to.equal(1);
     });
   });
 

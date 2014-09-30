@@ -11,6 +11,23 @@ var apiFetch = Ember.Object.extend({
     };
   },
 
+  // provide a fake API in the case of a static site with preloaded model data
+  fakeIt: function () {
+    this.set('find', function (type, id) { return this.store.find(type, id); });
+    this.set('fetchAll', function (type, prefixName, prefixVal, transform) {
+      var transformed;
+
+      if (typeof prefixVal === 'undefined') {
+        return this.store.all(type);
+      }
+
+      transform = this.getTransform(transform);
+      transformed = transform(type, prefixName, prefixVal);
+
+      return this.store.all.apply(this.store, transformed);
+    });
+  },
+
   find: function (type, id) {
     var self = this;
 
@@ -18,6 +35,18 @@ var apiFetch = Ember.Object.extend({
       self.store.load(type, payload);
       return self.store.find(type, id);
     });
+  },
+
+  getTransform: function (transform) {
+    if (typeof transform === 'string') {
+      transform = this.get('keyTransforms.' + transform);
+    } else if (typeof transform === 'undefined') {
+      transform = this.get('keyTransforms.defalt');
+    } else if (typeof transform !== 'function') {
+      throw new Error('Type of keyTransform was not a function!');
+    }
+
+    return transform;
   },
 
   // allows getting all of a nested type,
@@ -29,13 +58,7 @@ var apiFetch = Ember.Object.extend({
   fetchAll: function (type, prefixName, prefixVal, transform) {
     var self = this;
 
-    if (typeof transform === 'string') {
-      transform = this.get('keyTransforms.' + transform);
-    } else if (typeof transform === 'undefined') {
-      transform = this.get('keyTransforms.defalt');
-    } else if (typeof transform !== 'function') {
-      throw new Error('Type of keyTransform was not a function!');
-    }
+    transform = this.getTransform(transform);
 
     if (typeof prefixVal === 'undefined') {
       return $.getJSON('/api/v1/' + type).then(function (payload) {

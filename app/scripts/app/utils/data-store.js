@@ -157,7 +157,7 @@ var DataStore = Ember.Object.extend({
         continue;
       }
 
-      // easily create a deep clone of an object.
+      // easily create a deep clone of an object/Ember.Object.
       curr = JSON.parse(JSON.stringify(args[i]));
 
       for (prop in curr) {
