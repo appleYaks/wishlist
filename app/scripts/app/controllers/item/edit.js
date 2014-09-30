@@ -43,6 +43,10 @@ var ItemEditController = Em.ObjectController.extend({
       window.t = this;
       // console.log(items);
       // console.log(blah);
+    },
+
+    dateChanged: function (editedDate) {
+      this.set('date', editedDate);
     }
   }
 });

@@ -97,9 +97,38 @@ var DateTimePicker = Ember.Component.extend({
     return days;
   }.property('selectedMonth', 'selectedYear'),
 
-  selectChanged: function () {
-    alert('wooty woot!');
-  }
+  selectWasChanged: function () {
+    var year = this.get('selectedYear'),
+        month = this.get('selectedMonth'),
+        day = this.get('selectedDay'),
+        hour = this.get('selectedHour'),
+        minute = this.get('selectedMinute'),
+        ampm = this.get('selectedAMPM'),
+        ISOdate;
+
+    // compose date from its components.
+    // i guess it's kinda slow, but the use of +=
+    // should speed it up a bit over regular concatting
+    ISOdate = month;
+    ISOdate += ' ';
+    ISOdate += day;
+    ISOdate += ', ';
+    ISOdate += year;
+    ISOdate += ' ';
+    ISOdate += hour;
+    ISOdate += ':';
+    ISOdate += minute;
+    ISOdate += ' ';
+    ISOdate += ampm;
+
+    // moment will only give us the format with the local hour offset at the end
+    ISOdate = moment(ISOdate, 'MMM DD, YYYY hh:mm a').format();
+
+    // I like the unified format of having 'Z' at the end to signify UTC
+    ISOdate = (new Date(ISOdate)).toISOString();
+
+    this.sendAction('action', ISOdate);
+  }.observes('selectedYear', 'selectedMonth', 'selectedDay', 'selectedHour', 'selectedMinute', 'selectedAMPM')
 });
 
 export default DateTimePicker;
