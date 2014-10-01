@@ -27,6 +27,8 @@
 }
 
 .new-field {
+  color: white;
+
   @include breakpoint($screen-large-lodpi) {
     margin: 1em 20px;
     padding:  20px;
@@ -38,8 +40,8 @@
   h1 {
     margin-top: 0;
     font-size: 1.1em;
-    color: white;
   }
 
+  select, button { color: black; }
   select { margin-bottom: 0.5em; }
 }

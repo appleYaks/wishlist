@@ -1,0 +1,65 @@
+<div class="item-metadata">
+<label for="title">Title:</label>
+{{input id="title" value=title}}
+
+<label for="description">Description:</label>
+{{input id="description" value=description}}
+
+<label for="rating">Rating:</label>
+{{input id="rating" value=rating}}
+
+<label for="date">Date:</label>
+{{datetime-picker id="date" class="datetime-picker" modelDate=date action="dateChanged"}}
+
+<label for="priority">Priority:</label>
+{{input id="priority" value=priority}}
+
+<label for="complete">Complete:</label>
+{{input type="checkbox" id="complete" class="checkmark" checked=complete}}
+
+<ul class="fields">
+  {{#each fields}}
+  <label>
+    <span>{{key}}:</span>
+  </label>
+  {{input value=val}}
+  {{/each}}
+</ul>
+</div>
+
+<aside class="new-field">
+  <h1>Add a new Field!</h1>
+
+  {{view Ember.Select
+  content=fieldKeyTypes
+  prompt="Please select a data type:"
+  optionValuePath="content.type"
+  optionLabelPath="content.type"
+  selection=selectedKeyType
+  }}
+
+  {{#if selectedKeyType}}
+  <label for="newFieldKey">Name the field with a single word:</label>
+  {{input id="newFieldKey" value=newFieldKey}}
+  {{/if}}
+
+  {{#if selectedKeyType}}
+  <label for="newFieldValue">What value should the field have?</label>
+  {{/if}}
+
+  {{#if selectedKeyType.string}}
+  {{input id="newFieldValue" value=newFieldValue placeholder="Words go here!"}}
+  {{/if}}
+
+  {{#if selectedKeyType.number}}
+  {{input id="newFieldValue" value=newFieldValue placeholder="0"}}
+  {{/if}}
+
+  {{#if selectedKeyType.date}}
+  <p>Date!</p>
+  {{/if}}
+
+  {{#if selectedKeyType}}
+  <button {{action 'addField'}}>Add</button>
+  {{/if}}
+</aside>

@@ -16,6 +16,7 @@ Router.map(function () {
       this.resource('item', {path: ':item_id'}, function () {
         this.route('edit');
       });
+      this.route('new');
     });
   });
 });
