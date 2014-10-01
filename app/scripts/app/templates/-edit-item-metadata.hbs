@@ -28,11 +28,11 @@
   <h1>Add a new Field!</h1>
 
   {{view Ember.Select
-  content=fieldKeyTypes
-  prompt="Please select a data type:"
-  optionValuePath="content.type"
-  optionLabelPath="content.type"
-  selection=selectedKeyType
+    content=fieldKeyTypes
+    prompt="Please select a data type:"
+    optionValuePath="content.type"
+    optionLabelPath="content.type"
+    selection=selectedKeyType
   }}
 
   {{#if selectedKeyType}}
@@ -40,15 +40,13 @@
   {{input id="newFieldKey" value=newFieldKey}}
   {{/if}}
 
-  {{#if selectedKeyType}}
-  <label for="newFieldValue">What value should the field have?</label>
-  {{/if}}
-
   {{#if selectedKeyType.string}}
+  <label for="newFieldValue">What should it say?</label>
   {{input id="newFieldValue" value=newFieldValue placeholder="Words go here!"}}
   {{/if}}
 
   {{#if selectedKeyType.number}}
+  <label for="newFieldValue">What number should it have?</label>
   {{input id="newFieldValue" value=newFieldValue placeholder="0"}}
   {{/if}}
 
@@ -58,7 +56,8 @@
   {{/if}}
 
   {{#if selectedKeyType.date}}
-  <p>Date!</p>
+  <label for="newFieldValue">What date would you like?</label>
+  {{datetime-picker id="newFieldValue" class="datetime-picker" triggerActionOnStart="true" action="newFieldDateChanged"}}
   {{/if}}
 
   {{#if selectedKeyType}}

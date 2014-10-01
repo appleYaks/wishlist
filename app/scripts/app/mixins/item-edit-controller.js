@@ -12,6 +12,18 @@ var ItemEditControllerMixin = Ember.Mixin.create({
   ],
 
   selectedKeyType: null,
+  newFieldKey: null,
+  newFieldValue: null,
+
+  resetFieldValue: function () {
+    this.set('newFieldValue', null);
+  }.observes('selectedKeyType'),
+
+  actions: {
+    newFieldDateChanged: function (date) {
+      this.set('newFieldValue', date);
+    },
+  }
 });
 
 export default ItemEditControllerMixin;
