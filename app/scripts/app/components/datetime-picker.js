@@ -67,6 +67,10 @@ var DateTimePicker = Ember.Component.extend({
     this.set('selectedMinute', minutes[minute/5]);
     this.set('selectedAMPM', AMPM[ampm]);
 
+    if (this.get('triggerActionOnStart') === 'true') {
+      this.publish();
+    }
+
     // TODO: remove after testing
     this.set('momentDate', moment(modelDate).format('LLL'));
 
@@ -97,7 +101,7 @@ var DateTimePicker = Ember.Component.extend({
     return days;
   }.property('selectedMonth', 'selectedYear'),
 
-  selectWasChanged: function () {
+  composeDate: function () {
     var year = this.get('selectedYear'),
         month = this.get('selectedMonth'),
         day = this.get('selectedDay'),
@@ -127,8 +131,16 @@ var DateTimePicker = Ember.Component.extend({
     // I like the unified format of having 'Z' at the end to signify UTC
     ISOdate = (new Date(ISOdate)).toISOString();
 
-    this.sendAction('action', ISOdate);
-  }.observes('selectedYear', 'selectedMonth', 'selectedDay', 'selectedHour', 'selectedMinute', 'selectedAMPM')
+    return ISOdate;
+  },
+
+  selectWasChanged: function () {
+    this.publish();
+  }.observes('selectedYear', 'selectedMonth', 'selectedDay', 'selectedHour', 'selectedMinute', 'selectedAMPM'),
+
+  publish: function () {
+    this.sendAction('action', this.composeDate(), this.get('data'));
+  },
 });
 
 export default DateTimePicker;
