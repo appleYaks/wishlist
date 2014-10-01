@@ -20,6 +20,23 @@ var ItemEditControllerMixin = Ember.Mixin.create({
   }.observes('selectedKeyType'),
 
   actions: {
+    fieldDateChanged: function (date, fieldKey) {
+      var fields = this.get('fields'),
+          field;
+
+      if (!fieldKey) {
+        throw Error('field did not have a key when changing date!');
+      }
+
+      field = fields.findBy('key', fieldKey);
+
+      if (!field) {
+        throw Error('a field by the name "' + fieldKey + '" did not exist when changing date!');
+      }
+
+      Ember.set(field, 'val', date);
+    },
+
     newFieldDateChanged: function (date) {
       this.set('newFieldValue', date);
     },

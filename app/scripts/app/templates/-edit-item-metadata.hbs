@@ -19,7 +19,21 @@
   <label>
     <span>{{key}}:</span>
   </label>
-  {{input value=val}}
+
+  {{#view 'field-edit' field=this}}
+    {{#if view.isString}}
+      {{input class="field-string" value=val}}
+    {{/if}}
+    {{#if view.isNumber}}
+      {{input class="field-number" value=val}}
+    {{/if}}
+    {{#if view.isBoolean}}
+      {{input type="checkbox" class="checkmark field-checkbox" checked=val}}
+    {{/if}}
+    {{#if view.isDate}}
+      {{datetime-picker class="datetime-picker field-date" data=key action="fieldDateChanged"}}
+    {{/if}}
+  {{/view}}
   {{/each}}
 </ul>
 </div>
