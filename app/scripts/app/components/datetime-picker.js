@@ -13,12 +13,12 @@ var AMPM = ['AM', 'PM'];
 var DateTimePicker = Ember.Component.extend({
   init: function () {
     // preset selected datetime based on model
-    var modelDate = this.get('modelDate'),
-        year = moment(modelDate).year(),
-        day = moment(modelDate).date(),
-        month = moment(modelDate).month(),
-        hour = moment(modelDate).hour(),
-        minute = moment(modelDate).minute(),
+    var date = this.get('date'),
+        year = moment(date).year(),
+        day = moment(date).date(),
+        month = moment(date).month(),
+        hour = moment(date).hour(),
+        minute = moment(date).minute(),
         // index for AMPM array
         ampm = hour < 12 ? 0 : 1,
         days;
@@ -72,7 +72,7 @@ var DateTimePicker = Ember.Component.extend({
     }
 
     // TODO: remove after testing
-    this.set('momentDate', moment(modelDate).format('LLL'));
+    this.set('momentDate', moment(date).format('LLL'));
 
     this._super();
   },
