@@ -10,12 +10,6 @@ var ItemEditControllerMixin = Ember.Mixin.create({
   ],
 
   selectedKeyType: null,
-
-  actions: {
-    dateChanged: function (editedDate) {
-      this.set('date', editedDate);
-    }
-  }
 });
 
 export default ItemEditControllerMixin;
