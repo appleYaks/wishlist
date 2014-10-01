@@ -52,6 +52,11 @@
   {{input id="newFieldValue" value=newFieldValue placeholder="0"}}
   {{/if}}
 
+  {{#if selectedKeyType.bool}}
+  <label for="newFieldValue">Yes or no?</label>
+  {{input id="newFieldValue" type="checkbox" class="checkmark" checked=newFieldValue}}
+  {{/if}}
+
   {{#if selectedKeyType.date}}
   <p>Date!</p>
   {{/if}}
