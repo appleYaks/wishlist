@@ -2,22 +2,22 @@
   @extend .item-edit;
 
   @include breakpoint($screen-large-lodpi) {
-    background: hsla(44, 87, 82, 1);
+    border: 3px dashed black;
+    background: hsla(0, 100, 100, 0.9);
   }
 }
 
-.item-new .item-metadata {
-  color: black;
-
-  @include breakpoint($screen-large-lodpi) {
-    background: hsla(44, 75, 62, 0.7);
-  }
-}
-
+.item-new .item-metadata,
 .item-new .new-field {
   color: black;
 
   @include breakpoint($screen-large-lodpi) {
-    background: hsla(44, 75, 62, 0.5);
+    border: 3px solid black;
+    // background: hsla(44, 77, 100, 1);
+    background: none;
+
+    textarea, input:not([type=checkbox]) {
+      border: 1px solid black;
+    }
   }
 }
