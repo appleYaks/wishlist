@@ -1,16 +1,6 @@
-var stringType = { type: 'String', string: true };
-var numberType = { type: 'Number', number: true };
-var dateType   = { type: 'Date', date: true };
+import ItemEditControllerMixin from 'client/mixins/item-edit-controller';
 
-var ItemEditController = Em.ObjectController.extend({
-  fieldKeyTypes: [
-    stringType,
-    numberType,
-    dateType
-  ],
-
-  selectedKeyType: null,
-
+var ItemEditController = Em.ObjectController.extend(ItemEditControllerMixin, {
   complete: function (key, value) {
     if (arguments.length > 1) {
       return value;
@@ -23,8 +13,7 @@ var ItemEditController = Em.ObjectController.extend({
     deleteItem: function (item) {
       console.log('deleting item: ', item);
       // send API DELETE request with model's `id` and `GroupId`
-      // tell `controllers.items` to slice out this model from its content
-      // this.get('controllers.items');
+      // call route.refresh(), which should tell `controllers.items` to slice out this model from its content
     },
 
     cancel: function () {
@@ -33,21 +22,8 @@ var ItemEditController = Em.ObjectController.extend({
     },
 
     save: function () {
-      var model = this.get('model');
-      var items = this.get('controllers.items.model');
-      var blah = items.filter(function (item) {
-        return item === model;
-      });
-      console.log(model);
-      window.x = model;
-      window.t = this;
-      // console.log(items);
-      // console.log(blah);
-    },
 
-    dateChanged: function (editedDate) {
-      this.set('date', editedDate);
-    }
+    },
   }
 });
 
