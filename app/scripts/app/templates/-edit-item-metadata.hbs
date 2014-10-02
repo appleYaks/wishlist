@@ -1,41 +1,71 @@
 <div class="item-metadata">
-<label for="title">Title:</label>
-{{input id="title" value=title}}
+  <ul class="default-meta-list">
+    <li class="title">
+      <label for="title">Title:</label>
+      <div class="meta-value">
+        {{input id="title" value=title}}
+      </div>
+    </li>
 
-<label for="description">Description:</label>
-{{textarea id="description" value=description}}
+    <li class="description">
+      <label for="description">Description:</label>
+      <div class="meta-value">
+        {{textarea id="description" value=description}}
+      </div>
+    </li>
 
-<label for="rating">Rating:</label>
-{{input id="rating" value=rating}}
+    <li class="rating">
+      <label for="rating">Rating:</label>
+      <div class="meta-value">
+        {{input id="rating" value=rating}}
+      </div>
+    </li>
 
-<label for="priority">Priority:</label>
-{{input id="priority" value=priority}}
+    <li class="priority">
+      <label for="priority">Priority:</label>
+      <div class="meta-value">
+        {{input id="priority" value=priority}}
+      </div>
+    </li>
 
-<label for="complete">Complete:</label>
-{{input type="checkbox" id="complete" class="checkmark" checked=complete}}
+    <li class="complete">
+      <label for="complete">Complete:</label>
+      <div class="meta-value">
+        {{input type="checkbox" id="complete" class="checkmark" checked=complete}}
+      </div>
+    </li>
+  </ul>
 
-<ul class="fields">
-  {{#each fields}}
-  <label>
-    <span>{{key}}:</span>
-  </label>
-
-  {{#view 'field-edit' field=this}}
-    {{#if view.isString}}
-      {{input class="field-string" value=val}}
+  <section class="fields">
+    {{#if fields}}
+      <h1>Custom Fields</h1>
     {{/if}}
-    {{#if view.isNumber}}
-      {{input class="field-number" value=val}}
-    {{/if}}
-    {{#if view.isBoolean}}
-      {{input type="checkbox" class="checkmark field-checkbox" checked=val}}
-    {{/if}}
-    {{#if view.isDate}}
-      {{datetime-picker class="datetime-picker field-date" data=key action="fieldDateChanged"}}
-    {{/if}}
-  {{/view}}
-  {{/each}}
-</ul>
+
+    <ul class="fields-list">
+      {{#each fields}}
+      <li class="item-edit-field">
+        <label>
+          <span>{{key}}</span>
+        </label>
+
+        {{#view 'field' field=this classNames="field-value"}}
+          {{#if view.isString}}
+            {{input class="field-string" value=val}}
+          {{/if}}
+          {{#if view.isNumber}}
+            {{input class="field-number" value=val}}
+          {{/if}}
+          {{#if view.isBoolean}}
+            {{input type="checkbox" class="checkmark field-checkbox" checked=val}}
+          {{/if}}
+          {{#if view.isDate}}
+            {{datetime-picker class="datetime-picker field-date" data=key date=val action="fieldDateChanged"}}
+          {{/if}}
+        {{/view}}
+      </li>
+      {{/each}}
+    </ul>
+  </section>
 </div>
 
 <aside class="new-field">
@@ -49,32 +79,54 @@
     selection=selectedKeyType
   }}
 
-  {{#if selectedKeyType}}
-  <label for="newFieldKey">Name the field with a single word:</label>
-  {{input id="newFieldKey" value=newFieldKey}}
-  {{/if}}
+  <ul class="add-field-params">
+    {{#if selectedKeyType}}
+    <li>
+      <label for="newFieldKey">Name the field with a single word:</label>
+      <div class="add-field-key">
+        {{input id="newFieldKey" value=newFieldKey}}
+      </div>
+    </li>
+    {{/if}}
 
-  {{#if selectedKeyType.string}}
-  <label for="newFieldValue">What should it say?</label>
-  {{input id="newFieldValue" value=newFieldValue placeholder="Words go here!"}}
-  {{/if}}
+    {{#if selectedKeyType.string}}
+    <li>
+      <label for="newFieldValue">What should it say?</label>
+      <div class="add-field-value">
+        {{input id="newFieldValue" value=newFieldValue placeholder="Words go here!"}}
+      </div>
+    </li>
+    {{/if}}
 
-  {{#if selectedKeyType.number}}
-  <label for="newFieldValue">What number should it have?</label>
-  {{input id="newFieldValue" value=newFieldValue placeholder="0"}}
-  {{/if}}
+    {{#if selectedKeyType.number}}
+    <li>
+      <label for="newFieldValue">What number should it have?</label>
+      <div class="add-field-value">
+        {{input id="newFieldValue" value=newFieldValue placeholder="0"}}
+      </div>
+    </li>
+    {{/if}}
 
-  {{#if selectedKeyType.bool}}
-  <label for="newFieldValue">Yes or no?</label>
-  {{input id="newFieldValue" type="checkbox" class="checkmark" checked=newFieldValue}}
-  {{/if}}
+    {{#if selectedKeyType.bool}}
+    <li>
+      <label for="newFieldValue">Yes or no?</label>
+      <div class="add-field-value">
+        {{input id="newFieldValue" type="checkbox" class="checkmark" checked=newFieldValue}}
+      </div>
+    </li>
+    {{/if}}
 
-  {{#if selectedKeyType.date}}
-  <label for="newFieldValue">What date would you like?</label>
-  {{datetime-picker id="newFieldValue" class="datetime-picker" triggerActionOnStart="true" action="newFieldDateChanged"}}
-  {{/if}}
+    {{#if selectedKeyType.date}}
+    <li>
+      <label for="newFieldValue">What date would you like?</label>
+      <div class="add-field-value">
+        {{datetime-picker id="newFieldValue" class="datetime-picker" triggerActionOnStart="true" action="newFieldDateChanged"}}
+      </div>
+    </li>
+    {{/if}}
 
-  {{#if selectedKeyType}}
-  <button {{action 'addField'}}>Add</button>
-  {{/if}}
+    {{#if selectedKeyType}}
+    <button {{action 'addField'}}>Add</button>
+    {{/if}}
+  </ul>
 </aside>

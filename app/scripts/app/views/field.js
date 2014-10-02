@@ -1,4 +1,4 @@
-var FieldEditView = Ember.View.extend({
+var FieldView = Ember.View.extend({
   init: function () {
     this._super();
 
@@ -16,4 +16,4 @@ var FieldEditView = Ember.View.extend({
   }
 });
 
-export default FieldEditView;
+export default FieldView;

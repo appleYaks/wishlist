@@ -9,16 +9,12 @@
 
   .datetime-picker { color: black; }
   label, input { display: block; }
-  input, textarea {
-    margin-top: 0.2em;
-    margin-bottom: 0.5em;
+  input:not([type=checkbox]), textarea {
     padding: 5px;
     border: 0;
     width: 100%;
-    color: black;
     border-radius: 5px;
   }
-  input[type=checkbox] { width: auto; }
   textarea { resize: vertical; }
 }
 
@@ -30,6 +26,8 @@
 }
 
 .new-field {
+  @extend .item-metadata;
+
   color: white;
 
   @include breakpoint($screen-large-lodpi) {
@@ -47,4 +45,7 @@
 
   select, button { color: black; }
   select { margin-bottom: 0.5em; }
+
+  label { text-decoration: none; font-weight: normal; }
+  .add-field-key, .add-field-value { @extend .field-value; }
 }

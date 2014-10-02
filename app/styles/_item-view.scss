@@ -14,21 +14,33 @@
     color: hsla(100, 100, 100, 0.9);
     border-radius: $container-border-radius;
 
+    h1 {
+      font-size: 1.2em;
+      margin-bottom: 5px;
+    }
+
+    p.description {
+      font-size: 0.9em;
+      margin-top: 8px;
+      text-indent: 1em;
+    }
+
+    li {
+      margin: 0.7em 0;
+      padding: 0;
+    }
+
     label {
       display: block;
       font-weight: bold;
       text-decoration: underline;
     }
 
-    .title {
-      font-size: 1.2em;
-      margin-bottom: 5px;
+    .fields {
+      h1 { text-align: center; }
     }
 
-    .description {
-      font-size: 0.9em;
-      margin-top: 8px;
-      text-indent: 1em;
-    }
+    .meta-value, .field-value { margin-top: 5px; }
+    .checkmark { margin-top: -5px; padding: 0; }
   }
 }

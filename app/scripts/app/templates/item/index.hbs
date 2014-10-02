@@ -9,17 +9,52 @@
     <h1 class="title">{{title}}</h1>
     <p class="description">{{description}}</p>
 
-    <p class="rating"><label>Rating</label> {{rating}}</p>
-    <p class="priority"><label>Priority</label> {{priority}}</p>
-    <p class="complete">
-      <label>Completed</label>
-      {{input type="checkbox" class="checkmark" disabled="disabled" checked=complete}}
-    </p>
-
-    <ul class="fields">
-      {{#each fields}}
-      <li class="item-field"><label>{{key}}</label> {{val}}</li>
-      {{/each}}
+    <ul class="default-meta-list">
+      <li class="rating">
+        <label>Rating</label>
+        <div class="meta-value">{{rating}}</div>
+      </li>
+      <li class="priority">
+        <label>Priority</label>
+        <div class="meta-value">{{priority}}</div>
+      </li>
+      <li class="complete">
+        <label>Completed</label>
+        <div class="meta-value">
+          {{input type="checkbox" class="checkmark" disabled="disabled" checked=complete}}
+        </div>
+      </li>
     </ul>
+
+    <section class="fields">
+      {{#if fields}}
+        <h1>Custom Fields</h1>
+      {{/if}}
+
+      <ul class="fields-list">
+        {{#each fields}}
+        <li class="item-field">
+          <label>
+            <span>{{key}}</span>
+          </label>
+
+          {{#view 'field' field=this classNames="field-value"}}
+            {{#if view.isString}}
+              {{val}}
+            {{/if}}
+            {{#if view.isNumber}}
+              {{val}}
+            {{/if}}
+            {{#if view.isBoolean}}
+              {{input type="checkbox" class="checkmark field-checkbox" checked=val disabled="disabled"}}
+            {{/if}}
+            {{#if view.isDate}}
+              {{moment-calendar val}}
+            {{/if}}
+          {{/view}}
+        </li>
+        {{/each}}
+      </ul>
+    </section>
   </section>
 </section>
