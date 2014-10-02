@@ -128,5 +128,13 @@
     {{#if selectedKeyType}}
     <button {{action 'addField'}}>Add</button>
     {{/if}}
+
+    <div class="errors">
+    {{#each errors}}
+      <span class="error">
+        {{this}}
+      </span>
+    {{/each}}
+    </div>
   </ul>
 </aside>
