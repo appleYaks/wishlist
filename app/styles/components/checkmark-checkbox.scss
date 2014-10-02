@@ -11,9 +11,16 @@
   width: $checkbox-size;
   background: none;
   text-align: center;
-  @include appearance(none);
   outline: none;
   cursor: pointer;
+  -webkit-appearance: none;
+  // since firefox doesn't support non-standard :after on input elements,
+  // at least try to make the checkbox have a similar look and feel
+  -moz-transform: scale(1.5);
+  &[disabled] {
+    -moz-appearance: none;
+    -moz-transform: scale(1);
+  }
 
   &:after {
     content: '\2714';
@@ -25,13 +32,10 @@
 
   &:checked {
     border-radius: 50%;
-    // background: hsla(55,100,60,1);
   }
 
   &:checked:after {
     color: green;
     text-shadow: 0 1px 0 black;
-    // color: #85ada7;
-    // text-shadow: 0 1px 0 #669991;
   }
 }
