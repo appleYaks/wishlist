@@ -35,6 +35,7 @@ var DateTimePicker = Ember.Component.extend({
     this.set('selectedMonth', months[month]);
     this.set('selectedYear', year);
     // get days based on month and year
+    this.getDays();
     days = this.get('days');
 
     if (day < 1 || day > days[days.length-1]) {
@@ -82,24 +83,39 @@ var DateTimePicker = Ember.Component.extend({
   ampm: AMPM,
   years: years,
   months: months,
-  // vary days to choose from based on month/year
-  days: function () {
-    var month = this.get('selectedMonth');
+  days: days,
 
-    if (['Apr', 'Jun', 'Sep', 'Nov'].indexOf(month)) {
-      return days.slice(0, 30);
+  // vary days to choose from based on month/year
+  getDays: function () {
+    var month = this.get('selectedMonth'),
+        wasSet = false,
+        newDays;
+
+    if (['Apr', 'Jun', 'Sep', 'Nov'].indexOf(month) !== -1) {
+      newDays = days.slice(0, 30);
+      wasSet = true;
     }
 
     if (month === 'Feb') {
       if (this.get('selectedYear') % 4 === 0) {
-        return days.slice(0, 29);
+        newDays = days.slice(0, 29);
+      } else {
+        newDays = days.slice(0, 28);
       }
 
-      return days.slice(0, 28);
+      wasSet = true;
     }
 
-    return days;
-  }.property('selectedMonth', 'selectedYear'),
+    if (!wasSet) {
+      newDays = days;
+    }
+
+    if (this.get('selectedDay') > newDays.length) {
+      this.set('selectedDay', newDays.length);
+    }
+
+    this.set('days', newDays);
+  }.observes('selectedMonth', 'selectedYear'),
 
   composeDate: function () {
     var year = this.get('selectedYear'),
