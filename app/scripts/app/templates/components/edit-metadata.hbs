@@ -31,7 +31,7 @@
 
       {{#view 'field' field=this classNames="field-value"}}
       {{#if view.isString}}
-      {{input class="field-string" value=val}}
+      {{textarea class="field-string" value=val}}
       {{/if}}
       {{#if view.isNumber}}
       {{input class="field-number" value=val}}
@@ -76,7 +76,7 @@
     <li>
       <label for="newFieldValue">What should it say?</label>
       <div class="add-field-value">
-        {{input id="newFieldValue" value=newFieldValue placeholder="Words go here!"}}
+        {{textarea id="newFieldValue" value=newFieldValue placeholder="Words go here!"}}
       </div>
     </li>
     {{/if}}
