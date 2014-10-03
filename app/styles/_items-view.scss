@@ -32,14 +32,3 @@
     @include display-flex;
   }
 }
-
-.items-list li .controls {
-  display: none;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-
-  &, button:last-child {
-    margin-left: 0.25em;
-  }
-}
