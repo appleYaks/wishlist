@@ -35,7 +35,7 @@
         {{#each fields}}
         <li class="item-field">
           <label>
-            <span>{{key}}</span>
+            <span>{{dedasherize key}}</span>
           </label>
 
           {{#view 'field' field=this classNames="field-value"}}

@@ -5,6 +5,7 @@ import FastClickInit from 'client/utils/fastclick';
 
 // helpers
 import momentCalendar from 'client/helpers/moment-calendar';
+import deDasherize from 'client/helpers/de-dasherize';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
 

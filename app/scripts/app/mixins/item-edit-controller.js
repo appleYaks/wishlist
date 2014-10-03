@@ -67,14 +67,14 @@ var ItemEditControllerMixin = Ember.Mixin.create({
       if (!key) {
         errors.push('Sorry, I can\'t add a field with no name.');
       } else {
-        key = Ember.String.dasherize(key);
+        key = key.replace(/\s+/g, '-');
       }
 
       if (key && fields.findBy('key', key)) {
         errors.push('Sorry, a field already exists with that name. Please try again.');
       }
 
-      if (!/^[a-z][0-9a-z-]+$/.test(key)) {
+      if (!/^[a-zA-Z][0-9a-zA-Z-]+$/.test(key)) {
         errors.push('The name given needs to start with a letter, and afterwords be only letters, numbers, or dashes.');
       }
 
