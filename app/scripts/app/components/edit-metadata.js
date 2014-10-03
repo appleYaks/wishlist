@@ -3,7 +3,9 @@ var numberType  = { type: 'Number', number: true };
 var booleanType = { type: 'Boolean', bool: true };
 var dateType    = { type: 'Date', date: true };
 
-var ItemEditControllerMixin = Ember.Mixin.create({
+var EditMetadataComponent = Ember.Component.extend({
+  classNames: ['edit-metadata'],
+
   fieldKeyTypes: [
     stringType,
     numberType,
@@ -113,4 +115,4 @@ var ItemEditControllerMixin = Ember.Mixin.create({
   }
 });
 
-export default ItemEditControllerMixin;
+export default EditMetadataComponent;

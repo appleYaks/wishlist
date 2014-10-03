@@ -1,0 +1,52 @@
+.edit-metadata {
+  h1 { text-align: center; }
+  .datetime-picker { color: black; }
+  label, input { display: block; }
+  input:not([type=checkbox]), textarea {
+    padding: 5px;
+    border: 0;
+    width: 100%;
+    border-radius: 5px;
+  }
+  textarea { resize: vertical; }
+}
+
+.edit-metadata .metadata {
+  @include breakpoint($screen-large-lodpi) {
+    border: 3px dashed black;
+    background: hsla(210, 55, 40, 1);
+  }
+}
+
+.edit-metadata .new-field,
+.edit-metadata .fields {
+  @include breakpoint($screen-large-lodpi) {
+    margin: 1em 20px;
+    padding:  20px;
+  }
+
+  h1 {
+    margin-top: 0;
+    font-size: 1.1em;
+  }
+}
+
+.edit-metadata .new-field {
+  color: white;
+
+  select, button { color: black; }
+  .select-center {
+    margin: 0 auto 0.5em;
+    text-align: center;
+  }
+
+  label { text-decoration: none; font-weight: normal; }
+  .add-field-key, .add-field-value { @extend .field-value; }
+
+  .error {
+    display: block;
+    margin-top: 0.5em;
+    color: hsla(0, 100, 70, 1);
+    font-weight: bold;
+  }
+}

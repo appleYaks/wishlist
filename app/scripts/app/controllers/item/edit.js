@@ -1,6 +1,4 @@
-import ItemEditControllerMixin from 'client/mixins/item-edit-controller';
-
-var ItemEditController = Em.ObjectController.extend(ItemEditControllerMixin, {
+var ItemEditController = Em.ObjectController.extend({
   complete: function (key, value) {
     if (arguments.length > 1) {
       return value;

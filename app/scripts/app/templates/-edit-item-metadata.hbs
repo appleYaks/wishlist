@@ -1,140 +1,20 @@
-<div class="item-metadata">
-  <ul class="default-meta-list">
-    <li class="title">
-      <label for="title">Title:</label>
-      <div class="meta-value">
-        {{input id="title" value=title}}
-      </div>
-    </li>
+<li class="rating">
+  <label for="rating">Rating:</label>
+  <div class="meta-value">
+    {{input id="rating" value=rating}}
+  </div>
+</li>
 
-    <li class="description">
-      <label for="description">Description:</label>
-      <div class="meta-value">
-        {{textarea id="description" value=description}}
-      </div>
-    </li>
+<li class="priority">
+  <label for="priority">Priority:</label>
+  <div class="meta-value">
+    {{input id="priority" value=priority}}
+  </div>
+</li>
 
-    <li class="rating">
-      <label for="rating">Rating:</label>
-      <div class="meta-value">
-        {{input id="rating" value=rating}}
-      </div>
-    </li>
-
-    <li class="priority">
-      <label for="priority">Priority:</label>
-      <div class="meta-value">
-        {{input id="priority" value=priority}}
-      </div>
-    </li>
-
-    <li class="complete">
-      <label for="complete">Complete:</label>
-      <div class="meta-value">
-        {{input type="checkbox" id="complete" class="checkmark" checked=complete}}
-      </div>
-    </li>
-  </ul>
-
-  <section class="fields">
-    {{#if fields}}
-      <h1>Custom Fields</h1>
-    {{/if}}
-
-    <ul class="fields-list">
-      {{#each fields}}
-      <li class="item-edit-field">
-        <label>
-          <span>{{dedasherize key}}</span>
-        </label>
-
-        {{#view 'field' field=this classNames="field-value"}}
-          {{#if view.isString}}
-            {{input class="field-string" value=val}}
-          {{/if}}
-          {{#if view.isNumber}}
-            {{input class="field-number" value=val}}
-          {{/if}}
-          {{#if view.isBoolean}}
-            {{input type="checkbox" class="checkmark field-checkbox" checked=val}}
-          {{/if}}
-          {{#if view.isDate}}
-            {{datetime-picker class="datetime-picker field-date" data=key date=val action="fieldDateChanged"}}
-          {{/if}}
-        {{/view}}
-      </li>
-      {{/each}}
-    </ul>
-  </section>
-</div>
-
-<aside class="new-field">
-  <h1>Add a new Field!</h1>
-
-  {{view Ember.Select
-    content=fieldKeyTypes
-    prompt="Please select a data type:"
-    optionValuePath="content.type"
-    optionLabelPath="content.type"
-    selection=selectedKeyType
-  }}
-
-  <ul class="add-field-params">
-    {{#if selectedKeyType}}
-    <li>
-      <label for="newFieldKey">Name the field using only letters, numbers, dashes, or spaces. Start with a letter:</label>
-      <div class="add-field-key">
-        {{input id="newFieldKey" value=newFieldKey}}
-      </div>
-    </li>
-    {{/if}}
-
-    {{#if selectedKeyType.string}}
-    <li>
-      <label for="newFieldValue">What should it say?</label>
-      <div class="add-field-value">
-        {{input id="newFieldValue" value=newFieldValue placeholder="Words go here!"}}
-      </div>
-    </li>
-    {{/if}}
-
-    {{#if selectedKeyType.number}}
-    <li>
-      <label for="newFieldValue">What number should it have?</label>
-      <div class="add-field-value">
-        {{input id="newFieldValue" value=newFieldValue placeholder="0"}}
-      </div>
-    </li>
-    {{/if}}
-
-    {{#if selectedKeyType.bool}}
-    <li>
-      <label for="newFieldValue">Yes or no?</label>
-      <div class="add-field-value">
-        {{input id="newFieldValue" type="checkbox" class="checkmark" checked=newFieldValue}}
-      </div>
-    </li>
-    {{/if}}
-
-    {{#if selectedKeyType.date}}
-    <li>
-      <label for="newFieldValue">What date would you like?</label>
-      <div class="add-field-value">
-        {{datetime-picker id="newFieldValue" class="datetime-picker" triggerActionOnStart="true" action="newFieldDateChanged"}}
-      </div>
-    </li>
-    {{/if}}
-
-    {{#if selectedKeyType}}
-    <button {{action 'addField'}}>Add</button>
-    {{/if}}
-
-    <div class="errors">
-    {{#each errors}}
-      <span class="error">
-        {{this}}
-      </span>
-    {{/each}}
-    </div>
-  </ul>
-</aside>
+<li class="complete">
+  <label for="complete">Complete:</label>
+  <div class="meta-value">
+    {{input type="checkbox" id="complete" class="checkmark" checked=complete}}
+  </div>
+</li>

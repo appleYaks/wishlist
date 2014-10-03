@@ -17,10 +17,6 @@ var ItemsController = Em.ArrayController.extend(SortableControllerMixin, {
       // call route.refresh(), which should tell `controllers.items` to slice out this model from its content
     },
 
-    edit: function (item) {
-      this.transitionToRoute('item.edit', item);
-    },
-
     sortByTitle: function () {
       var direction = this.get('userSorted') === 'title-asc' ? false : true;
       this.set('sortProperties', ['title']);
