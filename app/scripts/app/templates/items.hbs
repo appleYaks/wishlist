@@ -9,7 +9,7 @@
     {{#each}}
     <li>
       {{input type="checkbox" class="checkmark" checked=complete}}
-      {{#link-to 'item' this}}
+      {{#link-to 'item' this class='list-item'}}
         {{title}}
       {{/link-to}}
       <div class="controls">

@@ -8,10 +8,11 @@
   <ul class="groups-list">
   {{#each}}
     <li>
-      {{#link-to 'items' id}}
+      {{#link-to 'items' id class='list-item'}}
         {{title}}
       {{/link-to}}
       <div class="controls">
+        {{#link-to 'group' this}}<button><i class="fa fa-info-circle"></i></button>{{/link-to}}
         <button {{action 'edit' this}}><i class="fa fa-pencil"></i></button>
         <button {{action 'delete' this}}><i class="fa fa-trash"></i></button>
       </div>
