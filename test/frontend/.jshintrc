@@ -46,6 +46,7 @@
         "keyEvent": true,
         "triggerEvent": true,
         "find": true,
+        "findWithAssert": true,
         "currentPath": true,
         "currentRouteName": true,
         "currentURL": true,

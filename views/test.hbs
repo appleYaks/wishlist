@@ -30,28 +30,23 @@
       });
 
       window.ENV = {
-        APP: {}
+        APP: {
+          // Don't clutter console with too many logs
+          LOG_ACTIVE_GENERATION    : false,
+          LOG_MODULE_RESOLVER      : false,
+          LOG_TRANSITIONS          : false,
+          LOG_TRANSITIONS_INTERNAL : false,
+          LOG_VIEW_LOOKUPS         : false,
+          rootElement              : '#testRoot',
+          testing: true,
+        }
       };
 
-      Ember.run(function () {
-        window.App = require('client/app')['default'].create(window.ENV.APP);
+      window.App = require('client/app')['default'].create(window.ENV.APP);
 
-        // Don't clutter console with too many logs
-        App.LOG_ACTIVE_GENERATION = false;
-        App.LOG_MODULE_RESOLVER = false;
-        App.LOG_TRANSITIONS = false;
-        App.LOG_TRANSITIONS_INTERNAL = false;
-        App.LOG_VIEW_LOOKUPS = false;
+      App.injectTestHelpers();
 
-        App.deferReadiness();
-        App.rootElement = '#testRoot';
-        App.injectTestHelpers();
-        App.advanceReadiness();
-      });
-
-      Ember.$(function () {
-        mocha.run();
-      });
+      mocha.run();
     </script>
   </body>
 </html>
