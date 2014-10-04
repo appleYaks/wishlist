@@ -68,7 +68,7 @@ var DataStore = Ember.Object.extend({
         factory = this._factories.get(type) || Ember.Object,
         model;
 
-    if (factory === Ember.Object) {
+    if (this.get('warnings') && factory === Ember.Object) {
       console.log('WARNING: A model was created of type "' + type + '" even though there was no registered model factory associated with it.');
     }
 

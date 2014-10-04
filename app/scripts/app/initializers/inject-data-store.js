@@ -8,6 +8,11 @@ export default {
     initialize: function (container, application) {
       var store;
 
+      // warnings clutter the console in testing
+      if (!application.get('testing')) {
+          DataStore.reopen({ warnings: true });
+      }
+
       application.register('store:main', DataStore);
       application.inject('route', 'store', 'store:main');
 
