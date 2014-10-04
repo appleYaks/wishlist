@@ -76,7 +76,7 @@ var EditMetadataComponent = Ember.Component.extend({
         errors.push('Sorry, a field already exists with that name. Please try again.');
       }
 
-      if (!/^[a-zA-Z][0-9a-zA-Z-]+$/.test(key)) {
+      if (!/^[a-zA-Z][0-9a-zA-Z-]*$/.test(key)) {
         errors.push('The name given needs to start with a letter, and afterwords be only letters, numbers, or dashes.');
       }
 
