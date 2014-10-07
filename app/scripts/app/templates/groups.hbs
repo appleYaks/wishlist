@@ -2,7 +2,7 @@
   <header>
     <span class="dummy"></span>
     <h1 class="title">Groups</h1>
-    <button {{action 'add'}}>+</button>
+    {{#link-to 'groups.new'}}<i class="fa fa-plus"></i><span class="link-text">Add</span>{{/link-to}}
   </header>
 
   <ul class="groups-list">

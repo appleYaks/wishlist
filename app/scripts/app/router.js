@@ -11,6 +11,7 @@ Router.map(function () {
     this.resource('group', {path: ':group_id'}, function () {
       this.route('edit');
     });
+    this.route('new');
 
     this.resource('items', {path: ':group_id/items'}, function () {
       this.resource('item', {path: ':item_id'}, function () {

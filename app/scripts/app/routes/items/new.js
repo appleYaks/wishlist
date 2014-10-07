@@ -1,4 +1,4 @@
-var ItemNewRoute = Em.Route.extend({
+var ItemsNewRoute = Em.Route.extend({
   setupController: function (controller) {
     var model = this.store.createModelOfType('items', {
       GroupId: this.controllerFor('items').get('GroupId')
@@ -21,4 +21,4 @@ var ItemNewRoute = Em.Route.extend({
   }
 });
 
-export default ItemNewRoute;
+export default ItemsNewRoute;

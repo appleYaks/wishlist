@@ -1,0 +1,22 @@
+.group-new {
+  @extend .group-edit;
+
+  @include breakpoint($screen-large-lodpi) {
+    border: 3px dashed black;
+    background: hsla(0, 100, 100, 0.9);
+  }
+}
+
+.group-new .metadata,
+.group-new .new-field {
+  color: black;
+  border: 3px solid black;
+
+  @include breakpoint($screen-large-lodpi) {
+    background: none;
+
+    input:not([type=checkbox]), textarea, select {
+      border: 1px solid black;
+    }
+  }
+}

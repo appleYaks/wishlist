@@ -5,10 +5,6 @@ var GroupsController = Em.ArrayController.extend(SortableControllerMixin, {
   sortedTitleAsc: Ember.computed.equal('userSorted', 'title-asc'),
 
   actions: {
-    add: function () {
-
-    },
-
     delete: function (group) {
       console.log('deleting group: ', group);
       // warn user!!!! get confirmation
