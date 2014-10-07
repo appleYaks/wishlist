@@ -7,10 +7,6 @@ var ItemsController = Em.ArrayController.extend(SortableControllerMixin, {
   sortedRatingAsc: Ember.computed.equal('userSorted', 'rating-asc'),
 
   actions: {
-    add: function () {
-      this.transitionToRoute('items.new');
-    },
-
     delete: function (item) {
       console.log('deleting item: ', item);
       // send API DELETE request with model's `id` and `GroupId`

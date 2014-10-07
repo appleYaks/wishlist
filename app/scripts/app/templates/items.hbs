@@ -2,7 +2,7 @@
   <header>
     {{#link-to 'groups'}}<i class="fa fa-tasks"></i><span class="link-text">Groups</span>{{/link-to}}
     <h1 class="title">Items</h1>
-    <button {{action 'add'}}>+</button>
+    {{#link-to 'items.new'}}<i class="fa fa-plus"></i><span class="link-text">Add</span>{{/link-to}}
   </header>
 
   <ul class="items-list">

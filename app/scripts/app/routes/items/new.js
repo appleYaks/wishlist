@@ -1,6 +1,10 @@
 var ItemNewRoute = Em.Route.extend({
   setupController: function (controller) {
-    controller.set('model', this.store.createModelOfType('items'));
+    var model = this.store.createModelOfType('items', {
+      GroupId: this.controllerFor('items').get('GroupId')
+    });
+
+    controller.set('model', model);
   },
 
   renderTemplate: function () {
