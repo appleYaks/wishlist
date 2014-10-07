@@ -7,16 +7,15 @@
   }
 }
 
-.item-new .edit-metadata,
+.item-new .metadata,
 .item-new .new-field {
   color: black;
+  border: 3px solid black;
 
   @include breakpoint($screen-large-lodpi) {
-    border: 3px solid black;
-    // background: hsla(44, 77, 100, 1);
     background: none;
 
-    textarea, input:not([type=checkbox]) {
+    input:not([type=checkbox]), textarea, select {
       border: 1px solid black;
     }
   }

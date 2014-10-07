@@ -31,7 +31,13 @@ $footer-outer-height: 3em;
 @import 'compass/css3';
 @import 'compass/typography';
 
-/*  Modules  */
+/*  Components  */
+@import 'components/checkmark-checkbox';
+@import 'components/list-controls';
+@import 'components/metadata';
+@import 'components/edit-metadata';
+
+/*  Views  */
 @import 'base';
 @import 'application';
 @import 'groups-view';
@@ -41,7 +47,3 @@ $footer-outer-height: 3em;
 @import 'item-view';
 @import 'item-edit-view';
 @import 'item-new-view';
-@import 'components/checkmark-checkbox';
-@import 'components/list-controls';
-@import 'components/metadata';
-@import 'components/edit-metadata';
