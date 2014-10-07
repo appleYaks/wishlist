@@ -2,13 +2,24 @@
   h1 { text-align: center; }
   .datetime-picker { color: black; }
   label, input { display: block; }
-  input:not([type=checkbox]), textarea {
+  textarea { resize: vertical; }
+
+  input:not([type=checkbox]), textarea, select {
     padding: 5px;
     border: 0;
     width: 100%;
     border-radius: 5px;
   }
-  textarea { resize: vertical; }
+
+  select {
+    background-image: none;
+    background-color: white;
+    @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+  }
+
+  .datetime-picker select {
+    width: auto;
+  }
 }
 
 .edit-metadata .metadata {
