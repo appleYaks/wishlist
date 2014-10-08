@@ -40,9 +40,13 @@ var api = Ember.Object.extend({
   getTransform: function (transform) {
     if (typeof transform === 'string') {
       transform = this.get('keyTransforms.' + transform);
-    } else if (typeof transform === 'undefined') {
+    }
+
+    if (typeof transform === 'undefined') {
       transform = this.get('keyTransforms.defalt');
-    } else if (typeof transform !== 'function') {
+    }
+
+    if (typeof transform !== 'function') {
       throw new Error('Type of keyTransform was not a function!');
     }
 
@@ -54,7 +58,7 @@ var api = Ember.Object.extend({
   // e.g. /api/v1/groups/1/items
   //
   // the transform will take the prefixName and prefixVal,
-  // and return a set accepted by DataStore#all to filter by key/value
+  // and return an array of parameters for DataStore#all
   fetchAll: function (type, prefixName, prefixVal, transform) {
     var self = this;
 
