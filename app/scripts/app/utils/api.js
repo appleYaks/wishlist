@@ -28,6 +28,24 @@ var api = Ember.Object.extend({
     });
   },
 
+  deleteModel: function (type, model) {
+    var store = this.store,
+        ajax;
+
+    // ajax =  $.ajax({
+    //   url: '/api/v1/' + type + '/' + id,
+    //   type: 'DELETE',
+    // });
+
+    return new Ember.RSVP.Promise(function (resolve, reject) {
+      // ajax.done(function () {
+        resolve();
+      // });
+
+      // ajax.fail(reject);
+    });
+  },
+
   find: function (type, id) {
     var self = this;
 

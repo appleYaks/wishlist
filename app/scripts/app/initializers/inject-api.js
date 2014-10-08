@@ -9,6 +9,7 @@ export default {
       application.register('api:main', Api);
       application.inject('api:main', 'store', 'store:main');
       application.inject('route', 'api', 'api:main');
+      application.inject('controller', 'api', 'api:main');
 
       var api;
       api = container.lookup('api:main');

@@ -15,6 +15,7 @@ export default {
 
       application.register('store:main', DataStore);
       application.inject('route', 'store', 'store:main');
+      application.inject('controller', 'store', 'store:main');
 
       // add basic model types to the store so they can accept models
       store = container.lookup('store:main');

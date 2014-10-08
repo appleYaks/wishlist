@@ -15,7 +15,7 @@ var GroupsRoute = Em.Route.extend({
       into: 'application',
       outlet: 'groups',
     });
-  }
+  },
 });
 
 export default GroupsRoute;

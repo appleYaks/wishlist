@@ -291,6 +291,25 @@ var DataStore = Ember.Object.extend({
 
     return modelType.findBy(key, val);
   },
+
+  deleteModels: function (type, models) {
+    var modelType = this._store[type];
+
+    if (!modelType) {
+      throw new Error('There is no model of type ' + type + ' in the datastore!');
+    }
+
+    if (Array.isArray(models)) {
+      modelType.removeObjects(models);
+    } else if (typeof models === 'object') {
+      modelType.removeObject(models);
+    }
+  },
+
+  seekAndDestroy: function (type, key, val) {
+    var models = this.all(type, key, val);
+    this.deleteModels(type, models);
+  },
 });
 
 export default DataStore;
