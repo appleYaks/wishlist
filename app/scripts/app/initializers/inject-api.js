@@ -1,8 +1,8 @@
-import Api from 'client/utils/api-fetch';
+import Api from 'client/utils/api';
 import sequelizeTransform from 'client/utils/sequelize-data-transform';
 
 export default {
-  name: 'api-fetch',
+  name: 'api',
   after: ['data-store'],
 
   initialize: function (container, application) {

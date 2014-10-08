@@ -1,4 +1,4 @@
-var apiFetch = Ember.Object.extend({
+var api = Ember.Object.extend({
   init: function () {
     this._super();
     // a transform will take the prefixName and prefixVal,
@@ -79,4 +79,4 @@ var apiFetch = Ember.Object.extend({
   }
 });
 
-export default apiFetch;
+export default api;
