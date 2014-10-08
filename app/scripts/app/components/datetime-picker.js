@@ -151,7 +151,8 @@ var DateTimePicker = Ember.Component.extend({
   },
 
   selectWasChanged: function () {
-    this.publish();
+    // observes is synchronous--this makes sure the call to `publish` fires once
+    Ember.run.once(this, 'publish');
   }.observes('selectedYear', 'selectedMonth', 'selectedDay', 'selectedHour', 'selectedMinute', 'selectedAMPM'),
 
   publish: function () {
