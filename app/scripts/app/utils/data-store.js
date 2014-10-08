@@ -201,35 +201,37 @@ var DataStore = Ember.Object.extend({
   _binarySearch: function (sortedArray, value, key) {
     key = key || 'id';
 
+    if (typeof value === 'undefined') {
+      throw new Error('The value for binary searching was undefined!');
+    }
+
+    if (key === 'id' && value < 0) {
+      throw new Error('The value for binary searching by id was less than zero!');
+    }
+
     if (!sortedArray.get('length')) {
       return;
     }
 
-    if (key === 'id' && value < 0) {
-      return;
-    }
-
     var beg = 0,
-        end = sortedArray.get('length'),
-        mid = beg + Math.floor((end - beg) / 2),
-        checkedItem = sortedArray.objectAt(mid);
+        end = sortedArray.get('length') - 1,
+        mid,
+        checkedItem;
 
-    while (mid !== end && checkedItem.get(key) !== value) {
-      if (value < checkedItem[key]){
-        end = mid;
-      } else {
-        beg = mid + 1;
-      }
-
+    while (beg <= end) {
       mid = beg + Math.floor((end - beg) / 2);
       checkedItem = sortedArray.objectAt(mid);
+
+      if (checkedItem[key] < value) {
+        beg = mid + 1;
+      } else if (checkedItem[key] > value) {
+        end = mid - 1;
+      } else {
+        return checkedItem;
+      }
     }
 
-    if (mid === end) {
-      return;
-    }
-
-    return checkedItem;
+    return;
   },
 
   /**

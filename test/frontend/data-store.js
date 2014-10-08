@@ -511,13 +511,17 @@ describe('DataStore', function () {
       }];
 
       store.load(type, models);
-
       modelType.get('length').should.equal(models.length);
+
+      // preliminary checks before actual searching is done
+      expect(store._binarySearch.bind(store, modelType)).to.throw(Error);
+      expect(store._binarySearch.bind(store, modelType, -1)).to.throw(Error);
+      expect(store._binarySearch([], 1)).to.not.exist;
 
       // searching by `id`
       for (i = 1; i < 6; ++i) {
-        find = modelType.findBy('id', field);
-        bSearch = store._binarySearch(modelType, field);
+        find = modelType.findBy('id', i);
+        bSearch = store._binarySearch(modelType, i);
         expect(find).to.equal(bSearch);
       }
 
@@ -526,15 +530,16 @@ describe('DataStore', function () {
 
       // searching by `sort`
       newSort = modelType.sortBy('sort');
+      field = 'sort';
 
       for (i = 6; i < 11; ++i) {
-        find = newSort.findBy('sort', field);
-        bSearch = store._binarySearch(newSort, field);
+        find = newSort.findBy('sort', i);
+        bSearch = store._binarySearch(newSort, i, field);
         expect(find).to.equal(bSearch);
       }
 
-      expect(store._binarySearch(newSort, 5)).to.not.exist;
-      expect(store._binarySearch(newSort, 11)).to.not.exist;
+      expect(store._binarySearch(newSort, 5, field)).to.not.exist;
+      expect(store._binarySearch(newSort, 11, field)).to.not.exist;
     });
 
     it('returns a single model using search criteria', function () {
