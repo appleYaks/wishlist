@@ -24,9 +24,6 @@ var GroupsController = Em.ArrayController.extend(SortableControllerMixin, {
         var id = Ember.get(group, 'id'),
             routeName = self.get('controllers.application').get('currentRouteName');
 
-        self.store.deleteModels('groups', group);
-        self.store.seekAndDestroy('items', 'GroupId', id);
-
         // if we just deleted a group we were editing or viewing
         if (routeName.indexOf('group.index') !== -1 && self.get('controllers.group/index').get('model.id') === id) {
           self.transitionToRoute('groups');
@@ -36,9 +33,15 @@ var GroupsController = Em.ArrayController.extend(SortableControllerMixin, {
         }
 
         // if we just deleted the group whose items we were looking at, we must transition away
-        if (routeName.indexOf('items') !== -1 && self.get('controllers.items').get('GroupId') === id) {
+        if (routeName.indexOf('item') !== -1 && self.get('controllers.items').get('GroupId') === id) {
           self.transitionToRoute('groups');
         }
+
+        self.store.deleteModels('groups', group);
+        self.store.seekAndDestroy('items', 'GroupId', id);
+        // refresh the `groups` route to remove the model from the list.
+        // even if we're on a sub-route, the action will bubble up.
+        self.send('refresh');
       }).catch(function () {
         alert('Sorry, something went wrong! The app is in an unstable state. Please close it out completely and open it again.');
       });

@@ -14,6 +14,13 @@ var ItemsRoute = Em.Route.extend({
       into: 'application',
       outlet: 'items',
     });
+  },
+
+  actions: {
+    refresh: function () {
+      this.refresh();
+      return true;
+    }
   }
 });
 

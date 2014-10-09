@@ -16,6 +16,12 @@ var GroupsRoute = Em.Route.extend({
       outlet: 'groups',
     });
   },
+
+  actions: {
+    refresh: function () {
+      this.refresh();
+    }
+  }
 });
 
 export default GroupsRoute;
