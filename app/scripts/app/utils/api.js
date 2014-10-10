@@ -29,9 +29,9 @@ var api = Ember.Object.extend({
   },
 
   add: function (type, model) {
-    model = JSON.stringify(model);
-
     return new Ember.RSVP.Promise(function (resolve, reject) {
+      model = JSON.stringify(model);
+
       $.ajax({
         url: '/api/v1/' + type,
         type: 'POST',
@@ -45,11 +45,11 @@ var api = Ember.Object.extend({
   },
 
   edit: function (type, model) {
-    var id = Ember.get(model, 'id');
-
-    model = JSON.stringify(model);
-
     return new Ember.RSVP.Promise(function (resolve, reject) {
+      var id = Ember.get(model, 'id');
+
+      model = JSON.stringify(model);
+
       $.ajax({
         url: '/api/v1/' + type + '/' + id,
         type: 'PUT',
@@ -82,9 +82,9 @@ var api = Ember.Object.extend({
   },
 
   deleteModel: function (type, model) {
-    var id = Ember.get(model, 'id');
-
     return new Ember.RSVP.Promise(function (resolve, reject) {
+      var id = Ember.get(model, 'id');
+
       if (typeof id === 'undefined') {
         return reject(new Error('model did not have an id!'));
       }
