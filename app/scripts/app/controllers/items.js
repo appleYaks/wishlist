@@ -27,6 +27,12 @@ var ItemsController = Em.ArrayController.extend(SortableControllerMixin, {
       this.set('sortAscending', direction);
     },
 
+    patchChecked: function (model) {
+      this.api.patch('items', model, 'complete').catch(function () {
+        alert('Sorry, something went wrong saving your checkmark! Please try again later.');
+      });
+    },
+
     delete: function (item) {
       var self = this;
 

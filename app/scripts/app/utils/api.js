@@ -62,6 +62,25 @@ var api = Ember.Object.extend({
     });
   },
 
+  patch: function (type, model, patchKeys) {
+    return new Ember.RSVP.Promise(function (resolve, reject) {
+      var id = Ember.get(model, 'id'),
+          patches = JSON.stringify(model.getProperties(patchKeys));
+
+      if (typeof id === 'undefined') {
+        return reject(new Error('model did not have an id!'));
+      }
+
+      $.ajax({
+        url: '/api/v1/' + type + '/' + id,
+        type: 'PATCH',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: patches,
+      }).done(resolve).fail(reject);
+    });
+  },
+
   deleteModel: function (type, model) {
     var id = Ember.get(model, 'id');
 
