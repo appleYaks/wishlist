@@ -29,14 +29,15 @@ var api = Ember.Object.extend({
   },
 
   add: function (type, model) {
-    var json = JSON.stringify(model);
+    model = JSON.stringify(model);
 
     return new Ember.RSVP.Promise(function (resolve, reject) {
       $.ajax({
         url: '/api/v1/' + type,
         type: 'POST',
+        contentType: 'application/json',
         dataType: 'json',
-        data: json,
+        data: model,
       }).done(function (data) {
         resolve(data);
       }).fail(reject);
@@ -44,15 +45,17 @@ var api = Ember.Object.extend({
   },
 
   edit: function (type, model) {
-    var id = Ember.get(model, 'id'),
-        json = JSON.stringify(model);
+    var id = Ember.get(model, 'id');
+
+    model = JSON.stringify(model);
 
     return new Ember.RSVP.Promise(function (resolve, reject) {
       $.ajax({
         url: '/api/v1/' + type + '/' + id,
         type: 'PUT',
+        contentType: 'application/json',
         dataType: 'json',
-        data: json,
+        data: model,
       }).done(function (data) {
         resolve(data);
       }).fail(reject);
