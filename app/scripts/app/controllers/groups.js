@@ -43,7 +43,7 @@ var GroupsController = Em.ArrayController.extend(SortableControllerMixin, {
         // even if we're on a sub-route, the action will bubble up.
         self.send('refresh');
       }).catch(function () {
-        alert('Sorry, something went wrong! The app is in an unstable state. Please close it out completely and open it again.');
+        alert('Sorry, something went wrong deleting your group! Please try again later.');
       });
     },
   }
