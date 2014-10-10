@@ -15,7 +15,7 @@ var GroupEditController = Em.ObjectController.extend({
         self.store.load('groups', data);
         self.send('refresh');
 
-        self.transitionToRoute('group.index', id);
+        self.transitionToRoute('group.index', self.store.find('groups', id));
       }).catch(function () {
         alert('Sorry, something went wrong saving your edited group! Please try again later.');
       });

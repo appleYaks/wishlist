@@ -23,7 +23,7 @@ var ItemEditController = Em.ObjectController.extend({
         self.store.load('items', data);
         self.send('refresh');
 
-        self.transitionToRoute('item.index', id);
+        self.transitionToRoute('item.index', self.store.find('items', id));
       }).catch(function () {
         alert('Sorry, something went wrong saving your edited item! Please try again later.');
       });
