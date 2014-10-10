@@ -28,21 +28,33 @@ var api = Ember.Object.extend({
     });
   },
 
-  deleteModel: function (type, model) {
-    var store = this.store,
-        ajax;
-
-    // ajax =  $.ajax({
-    //   url: '/api/v1/' + type + '/' + id,
-    //   type: 'DELETE',
-    // });
+  add: function (type, model) {
+    var model = JSON.stringify(model);
 
     return new Ember.RSVP.Promise(function (resolve, reject) {
-      // ajax.done(function () {
-        resolve();
-      // });
+      $.ajax({
+        url: '/api/v1/' + type,
+        type: 'POST',
+        dataType: 'json',
+        data: model,
+      }).done(function (data) {
+        resolve(data);
+      }).fail(reject);
+    });
+  },
 
-      // ajax.fail(reject);
+  deleteModel: function (type, model) {
+    var id = Ember.get(model, 'id');
+
+    return new Ember.RSVP.Promise(function (resolve, reject) {
+      if (typeof id === 'undefined') {
+        return reject(new Error('model did not have an id!'));
+      }
+
+      $.ajax({
+        url: '/api/v1/' + type + '/' + id,
+        type: 'DELETE',
+      }).done(resolve).fail(reject);
     });
   },
 

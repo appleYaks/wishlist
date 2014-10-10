@@ -1,4 +1,6 @@
 var ItemsNewController = Em.ObjectController.extend({
+  needs: ['items'],
+
   actions: {
     cancel: function () {
       this.get('model').destroy();
@@ -6,11 +8,22 @@ var ItemsNewController = Em.ObjectController.extend({
     },
 
     save: function () {
-      // call api on the server to save item.
-      // when request returns, store.load() the result.
-      // call .refresh() on the route via an action, (necessary?)
-      // then transitionTo the id returned from the server.
-      // the willTransition on this route will destroy this temp model
+      var self = this,
+          item = this.get('model'),
+          GroupId = this.get('controllers.items.GroupId');
+
+      item.set('GroupId', GroupId);
+
+      this.api.add('items', item).then(function (data) {
+        var id = Ember.get(data, 'id');
+
+        self.store.load('items', data);
+        self.send('refresh');
+
+        self.transitionToRoute('item.index', id);
+      }).catch(function () {
+        alert('Sorry, saving your item failed! Please try again later.');
+      });
     },
   }
 });
