@@ -20,7 +20,11 @@ body {
   @include breakpoint($screen-large-lodpi) {
     width: 33%;
     margin-left: 10px;
-    padding-bottom: $footer-outer-height;
+
+    &.sortable {
+      // allow space for sortable area
+      padding-bottom: $footer-outer-height;
+    }
 
     &:last-of-type {
       margin-right: 10px;

@@ -1,6 +1,6 @@
 .metadata {
   @include breakpoint($screen-large-lodpi) {
-    margin: 0 20px;
+    margin: 0 20px 1em;
     padding: 5px 20px;
     background: hsla(280, 45, 40, 1);
     color: hsla(100, 100, 100, 0.9);
@@ -30,5 +30,17 @@
 
     .meta-value, .field-value { margin-top: 5px; }
     .checkmark { margin-top: -5px; padding: 0; }
+  }
+}
+
+.fields {
+  @include breakpoint($screen-large-lodpi) {
+    margin: 1em 20px;
+    padding:  20px;
+  }
+
+  h1 {
+    margin-top: 0;
+    font-size: 1.1em;
   }
 }
