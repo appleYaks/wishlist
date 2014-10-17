@@ -1,11 +1,8 @@
 var ItemEditController = Em.ObjectController.extend({
-  complete: function (key, value) {
-    if (arguments.length > 1) {
-      return value;
-    }
-
-    return this.get('canonicalModel.complete');
-  }.property('canonicalModel.complete'),
+  setComplete: function () {
+    var complete = this.get('canonicalModel.complete');
+    this.set('model.complete', complete);
+  }.observes('canonicalModel.complete'),
 
   actions: {
     cancel: function () {
