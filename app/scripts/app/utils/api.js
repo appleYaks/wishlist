@@ -13,18 +13,40 @@ var api = Ember.Object.extend({
 
   // provide a fake API in the case of a static site with preloaded model data
   fakeIt: function () {
-    this.set('find', function (type, id) { return this.store.find(type, id); });
+    var self = this;
+
+    this.set('add', function (type, model) {
+      var count = self.store.all(type).get('length');
+      // model will be destroyed on willTransition, so we need a copy to add to the store
+      model = JSON.parse(JSON.stringify(model));
+      // make sure the new id is past any probable id number in the preloaded data
+      model.id = 100 + count;
+      return Ember.RSVP.resolve(model);
+    });
+    this.set('edit', function (type, model) {
+      // app code expects plain object (from server), so "create" one
+      model = JSON.parse(JSON.stringify(model));
+      delete model.canonicalModel;
+      return Ember.RSVP.resolve(model);
+    });
+    this.set('patch', function (type, model) {
+      // app code expects plain object (from server), so "create" one
+      model = JSON.parse(JSON.stringify(model));
+      return Ember.RSVP.resolve(model);
+    });
+    this.set('deleteModel', function () { return Ember.RSVP.resolve(); });
+    this.set('find', function (type, id) { return self.store.find(type, id); });
     this.set('fetchAll', function (type, prefixName, prefixVal, transform) {
       var transformed;
 
       if (typeof prefixVal === 'undefined') {
-        return this.store.all(type);
+        return self.store.all(type);
       }
 
-      transform = this.getTransform(transform);
+      transform = self.getTransform(transform);
       transformed = transform(type, prefixName, prefixVal);
 
-      return this.store.all.apply(this.store, transformed);
+      return self.store.all.apply(self.store, transformed);
     });
   },
 
