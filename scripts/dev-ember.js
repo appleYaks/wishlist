@@ -465,8 +465,19 @@ define("client/controllers/item/edit",
     "use strict";
     var ItemEditController = Em.ObjectController.extend({
       setComplete: function () {
-        var complete = this.get('canonicalModel.complete');
-        this.set('model.complete', complete);
+        var model = this.get('model'),
+            complete;
+
+        // this observer fires even when this controller is not part of the active route.
+        // this is because route controllers are singletons and persist.
+        // since changing routes destroys the temp model we used for editing, we must
+        // avoid accessing or mutating it until we know it's fresh (on entering the route).
+        if (model.isDestroyed) {
+          return;
+        }
+
+        complete = this.get('canonicalModel.complete');
+        model.set('complete', complete);
       }.observes('canonicalModel.complete'),
 
       actions: {
