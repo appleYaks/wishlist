@@ -12,7 +12,7 @@
   <meta charset="UTF-8" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
 
-  <title>My awesome app!</title>
+  <title>Wishlist!</title>
 
   <meta name="HandheldFriendly" content="True" />
   <meta name="MobileOptimized" content="320" />
@@ -30,9 +30,41 @@
 
   <link rel="stylesheet" href="styles/main.css">
 
+  <style>
+     #github-info {
+       text-align: center;
+     }
+
+     #github-info span {
+      padding: 10px;
+      border: 1px solid hsla(200, 80%, 30%, 1);
+      background: hsla(200, 80%, 60%, 0.6);
+      color: black;
+      color: hsla(220, 80%, 20%, 1);
+      border-radius: 5px;
+    }
+
+    #github-info i.fa {
+      padding: 3px 4px;
+      background: #EEE;
+      cursor: pointer;
+      border-radius: 50%;
+      box-shadow: 1px 1px black;
+    }
+
+    #github-info i.fa:active {
+      box-shadow: inset 1px 1px #AAA;
+    }
+
+    #github-info i.fa:active:before {
+      position: relative;
+      left: 1px;
+      top: 1px;
+    }
+  </style>
 </head>
 <body>
-  <p id="github-info" style="text-align: center;"><a href="https://github.com/darvelo/wishlist">Check out the code on GitHub!</a> All data here other than titles, descriptions, and custom fields was randomly generated. <i class="fa fa-close" style="cursor: pointer;"></i></p>
+  <p id="github-info"><span><a href="https://github.com/darvelo/wishlist">Check out the code on GitHub!</a> All data here other than titles, descriptions, and custom fields was randomly generated. <i class="fa fa-close"></i></span></p>
 
   <script src="scripts/vendor.js"></script>
   <script src="scripts/templates-ember.js"></script>
@@ -49,7 +81,7 @@
   <script>
     (function () {
       var githubInfo = document.getElementById('github-info');
-      var closeButton = githubInfo.children[1];
+      var closeButton = githubInfo.children[0].children[1];
 
       closeButton.addEventListener('click', function () {
         document.body.removeChild(githubInfo);
