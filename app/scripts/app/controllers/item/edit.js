@@ -25,7 +25,8 @@ var ItemEditController = Em.ObjectController.extend({
 
     save: function () {
       var self = this,
-          item = this.get('model'),
+          // needed because Ember.TextField does not convert input to numbers
+          item = this.get('model').numberize(),
           validationErrors = validateItem(item);
 
       this.set('validationErrors', validationErrors);

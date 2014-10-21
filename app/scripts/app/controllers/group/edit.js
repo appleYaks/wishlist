@@ -9,7 +9,8 @@ var GroupEditController = Em.ObjectController.extend({
 
     save: function () {
       var self = this,
-          group = this.get('model'),
+          // needed because Ember.TextField does not convert input to numbers
+          group = this.get('model').numberize(),
           validationErrors = validateGroup(group);
 
       this.set('validationErrors', validationErrors);

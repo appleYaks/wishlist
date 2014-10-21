@@ -24,11 +24,11 @@ function validateField (field) {
   }
 
   if (field.type === 'Date' && !validator.isDate(field.val)) {
-    errors.push('Field "' + field.key + '" was a Date type but val was not a valid Date.');
+    errors.push('Custom Field "' + field.key + '" was not a valid Date.');
   } else if (field.type === 'Number' && (typeof field.val !== 'number' || isNaN(field.val))) {
-    errors.push('The val for field "' + field.key + '" was not a valid Number.');
+    errors.push('Custom Field "' + field.key + '" was not a valid Number.');
   } else if (field.type === 'String' && typeof field.val !== 'string') {
-    errors.push('The val for field "' + field.key + '" was not a String.');
+    errors.push('Custom Field "' + field.key + '" was not a String.');
   }
 
   return errors;

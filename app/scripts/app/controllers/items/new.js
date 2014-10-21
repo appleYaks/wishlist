@@ -11,7 +11,8 @@ var ItemsNewController = Em.ObjectController.extend({
 
     save: function () {
       var self = this,
-          item = this.get('model'),
+          // needed because Ember.TextField does not convert input to numbers
+          item = this.get('model').numberize(),
           GroupId = this.get('controllers.items.GroupId'),
           validationErrors = validateItem(item);
 
