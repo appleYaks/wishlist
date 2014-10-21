@@ -1,3 +1,5 @@
+import validateItem from 'client/validators/item';
+
 var ItemsNewController = Em.ObjectController.extend({
   needs: ['items'],
 
@@ -10,7 +12,14 @@ var ItemsNewController = Em.ObjectController.extend({
     save: function () {
       var self = this,
           item = this.get('model'),
-          GroupId = this.get('controllers.items.GroupId');
+          GroupId = this.get('controllers.items.GroupId'),
+          validationErrors = validateItem(item);
+
+      this.set('validationErrors', validationErrors);
+
+      if (validationErrors.length) {
+        return;
+      }
 
       item.set('GroupId', GroupId);
 

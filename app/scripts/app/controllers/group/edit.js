@@ -1,3 +1,5 @@
+import validateGroup from 'client/validators/group';
+
 var GroupEditController = Em.ObjectController.extend({
   actions: {
     cancel: function () {
@@ -7,7 +9,14 @@ var GroupEditController = Em.ObjectController.extend({
 
     save: function () {
       var self = this,
-          group = this.get('model');
+          group = this.get('model'),
+          validationErrors = validateGroup(group);
+
+      this.set('validationErrors', validationErrors);
+
+      if (validationErrors.length) {
+        return;
+      }
 
       this.api.edit('groups', group).then(function (data) {
         var id = Ember.get(data, 'id');

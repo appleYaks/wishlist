@@ -5,7 +5,7 @@
     <button class="icon" {{action 'save'}}><i class="fa fa-floppy-o"></i><span class="button-text">Save</span></button>
   </header>
 
-  {{#edit-metadata title=title description=description fields=fields}}
+  {{#edit-metadata title=title description=description fields=fields validationErrors=validationErrors}}
     {{partial '-edit-item-metadata'}}
   {{/edit-metadata}}
 </section>

@@ -1,3 +1,5 @@
+import validateItem from 'client/validators/item';
+
 var ItemEditController = Em.ObjectController.extend({
   setComplete: function () {
     var model = this.get('model'),
@@ -23,7 +25,14 @@ var ItemEditController = Em.ObjectController.extend({
 
     save: function () {
       var self = this,
-          item = this.get('model');
+          item = this.get('model'),
+          validationErrors = validateItem(item);
+
+      this.set('validationErrors', validationErrors);
+
+      if (validationErrors.length) {
+        return;
+      }
 
       this.api.edit('items', item).then(function (data) {
         var id = Ember.get(data, 'id');

@@ -48,10 +48,10 @@ var EditMetadataComponent = Ember.Component.extend({
           val = this.get('newFieldValue'),
           type = this.get('selectedKeyType'),
           fields = this.get('fields'),
-          errors = [];
+          newFieldErrors = [];
 
       // clear out old errors
-      this.set('errors', errors);
+      this.set('newFieldErrors', newFieldErrors);
 
       // use defaults
       if (val === null || typeof val === 'undefined') {
@@ -67,32 +67,32 @@ var EditMetadataComponent = Ember.Component.extend({
       }
 
       if (!key) {
-        errors.push('Sorry, I can\'t add a field with no name.');
+        newFieldErrors.push('Sorry, I can\'t add a field with no name.');
       } else {
         key = key.replace(/\s+/g, '-');
       }
 
       if (key && fields.findBy('key', key)) {
-        errors.push('Sorry, a field already exists with that name. Please try again.');
+        newFieldErrors.push('Sorry, a field already exists with that name. Please try again.');
       }
 
       if (!/^[a-zA-Z][0-9a-zA-Z-]*$/.test(key)) {
-        errors.push('The name given needs to start with a letter, and afterwords be only letters, numbers, or dashes.');
+        newFieldErrors.push('The name given needs to start with a letter, and afterwords be only letters, numbers, or dashes.');
       }
 
       if (type.number && isNaN(val)) {
-        errors.push('What you entered as a number is actually not a number.');
+        newFieldErrors.push('What you entered as a number is actually not a number.');
       }
 
       if (type.bool && val !== true && val !== false) {
-        errors.push('I don\'t know how you broke it, but the checkbox needs to be either checked or unchecked!');
+        newFieldErrors.push('I don\'t know how you broke it, but the checkbox needs to be either checked or unchecked!');
       }
 
       if (type.date && !moment(val).isValid()) {
-        errors.push('That does not appear to be a valid date.');
+        newFieldErrors.push('That does not appear to be a valid date.');
       }
 
-      if (errors.length) {
+      if (newFieldErrors.length) {
         return;
       }
 

@@ -1,3 +1,5 @@
+import validateGroup from 'client/validators/group';
+
 var GroupsNewController = Em.ObjectController.extend({
   actions: {
     cancel: function () {
@@ -7,7 +9,14 @@ var GroupsNewController = Em.ObjectController.extend({
 
     save: function () {
       var self = this,
-          group = this.get('model');
+          group = this.get('model'),
+          validationErrors = validateGroup(group);
+
+      this.set('validationErrors', validationErrors);
+
+      if (validationErrors.length) {
+        return;
+      }
 
       this.api.add('groups', group).then(function (data) {
         self.store.load('groups', data);
