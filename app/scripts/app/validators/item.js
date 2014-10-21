@@ -17,11 +17,11 @@ function validateItem (item) {
     errors.push('Description field was not a String.');
   }
 
-  if (typeof rating !== 'number') {
+  if (typeof rating !== 'number' || isNaN(rating)) {
     errors.push('Rating field was not a Number.');
   }
 
-  if (typeof priority !== 'number') {
+  if (typeof priority !== 'number' || isNaN(priority)) {
     errors.push('Priority field was not a Number.');
   }
 

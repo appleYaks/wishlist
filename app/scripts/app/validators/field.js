@@ -14,6 +14,10 @@ function validateField (field) {
     errors.push('The type for at least one field was not a String.');
   }
 
+  if (['String', 'Number', 'Date'].indexOf(field.type) === -1) {
+    errors.push('At least one field had an unsupported type: ' + field.type + '.');
+  }
+
   // we can't access any more properties because there were errors in the ones we need
   if (errors.length) {
     return errors;
@@ -21,8 +25,10 @@ function validateField (field) {
 
   if (field.type === 'Date' && !validator.isDate(field.val)) {
     errors.push('Field "' + field.key + '" was a Date type but val was not a valid Date.');
-  } else if (typeof field.val !== field.type.toLowerCase()) {
-    errors.push('The val for field "' + field.key + '" was not of its given type, ' + field.type + '.');
+  } else if (field.type === 'Number' && (typeof field.val !== 'number' || isNaN(field.val))) {
+    errors.push('The val for field "' + field.key + '" was not a valid Number.');
+  } else if (field.type === 'String' && typeof field.val !== 'string') {
+    errors.push('The val for field "' + field.key + '" was not a String.');
   }
 
   return errors;
