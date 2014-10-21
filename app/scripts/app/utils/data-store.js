@@ -294,6 +294,13 @@ var DataStore = Ember.Object.extend({
     return modelType.findBy(key, val);
   },
 
+  /**
+  * Remove a model or models of the given type from internal storage.
+  *
+  * @param {String} type The name of the modelType you wish to remove from.
+  * @param {(Object|Array)} models A model or array of models you want to remove.
+  * @return
+  */
   deleteModels: function (type, models) {
     var modelType = this._store[type];
 
@@ -308,6 +315,14 @@ var DataStore = Ember.Object.extend({
     }
   },
 
+  /**
+  * Delete all models of the given type from internal storage that have `key` === `val`.
+  *
+  * @param {String} type The name of the modelType you wish to remove models from.
+  * @param {String} key The key to search on all models for a particular value.
+  * @param {(Number|String|Date)} val The value the key should have in order for the model to be removed.
+  * @return
+  */
   seekAndDestroy: function (type, key, val) {
     var models = this.all(type, key, val);
     this.deleteModels(type, models);
