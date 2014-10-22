@@ -25,7 +25,7 @@ function validateField (field) {
 
   if (field.type === 'Date' && !validator.isDate(field.val)) {
     errors.push('Custom Field "' + field.key + '" was not a valid Date.');
-  } else if (field.type === 'Number' && (typeof field.val !== 'number' || isNaN(field.val))) {
+  } else if (field.type === 'Number' && typeof field.val !== 'number') {
     errors.push('Custom Field "' + field.key + '" was not a valid Number.');
   } else if (field.type === 'String' && typeof field.val !== 'string') {
     errors.push('Custom Field "' + field.key + '" was not a String.');
