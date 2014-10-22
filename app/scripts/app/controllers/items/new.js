@@ -3,6 +3,11 @@ import validateItem from 'client/validators/item';
 var ItemsNewController = Em.ObjectController.extend({
   needs: ['items'],
 
+  // the route sets GroupId
+  GroupId: null,
+
+  validationErrors: null,
+
   actions: {
     cancel: function () {
       this.get('model').destroy();

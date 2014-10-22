@@ -1,6 +1,11 @@
 import validateGroup from 'client/validators/group';
 
 var GroupEditController = Em.ObjectController.extend({
+  // set by the route; `model` is a temp copy of `canonicalModel`
+  canonicalModel: null,
+
+  validationErrors: null,
+
   actions: {
     cancel: function () {
       this.get('model').destroy();

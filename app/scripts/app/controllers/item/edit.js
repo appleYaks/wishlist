@@ -1,6 +1,11 @@
 import validateItem from 'client/validators/item';
 
 var ItemEditController = Em.ObjectController.extend({
+  // set by the route; `model` is based off of `canonicalModel`
+  canonicalModel: null,
+
+  validationErrors: null,
+
   setComplete: function () {
     var model = this.get('model'),
         complete;

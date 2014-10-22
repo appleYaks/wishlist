@@ -1,6 +1,8 @@
 import validateGroup from 'client/validators/group';
 
 var GroupsNewController = Em.ObjectController.extend({
+  validationErrors: null,
+
   actions: {
     cancel: function () {
       this.get('model').destroy();

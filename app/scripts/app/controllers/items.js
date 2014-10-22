@@ -3,6 +3,9 @@ import SortableControllerMixin from 'client/mixins/sortable-controller';
 var ItemsController = Em.ArrayController.extend(SortableControllerMixin, {
   needs: ['application', 'item/index', 'item/edit'],
 
+  // the route sets GroupId
+  GroupId: null,
+
   // various sort orders
   sortedTitleAsc: Ember.computed.equal('userSorted', 'title-asc'),
   sortedPriorityAsc: Ember.computed.equal('userSorted', 'priority-asc'),

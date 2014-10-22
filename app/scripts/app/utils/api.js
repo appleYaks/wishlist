@@ -26,7 +26,6 @@ var api = Ember.Object.extend({
     this.set('edit', function (type, model) {
       // app code expects plain object (from server), so "create" one
       model = JSON.parse(JSON.stringify(model));
-      delete model.canonicalModel;
       return Ember.RSVP.resolve(model);
     });
     this.set('patch', function (type, model) {
