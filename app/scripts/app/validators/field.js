@@ -14,7 +14,7 @@ function validateField (field) {
     errors.push('The type for at least one field was not a String.');
   }
 
-  if (['String', 'Number', 'Date'].indexOf(field.type) === -1) {
+  if (['String', 'Number', 'Date', 'Boolean'].indexOf(field.type) === -1) {
     errors.push('At least one field had an unsupported type: ' + field.type + '.');
   }
 
@@ -29,6 +29,8 @@ function validateField (field) {
     errors.push('Custom Field "' + field.key + '" was not a valid Number.');
   } else if (field.type === 'String' && typeof field.val !== 'string') {
     errors.push('Custom Field "' + field.key + '" was not a String.');
+  } else if (field.type === 'Boolean' && typeof field.val !== 'boolean') {
+    errors.push('Custom Field "' + field.key + '" was not a Boolean.');
   }
 
   return errors;
