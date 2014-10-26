@@ -27,6 +27,11 @@
     border: 3px dashed black;
     background: hsla(210, 55, 40, 1);
   }
+
+  .edit-field {
+    position: relative;
+    button { position: absolute; top: 0; right: 0; }
+  }
 }
 
 .edit-metadata .new-field {

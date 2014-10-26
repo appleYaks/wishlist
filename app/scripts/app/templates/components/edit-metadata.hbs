@@ -34,23 +34,25 @@
 
   <ul class="fields-list">
     {{#each fields}}
-    <li class="item-edit-field">
+    <li class="edit-field">
       <label>
         <span>{{dedasherize key}}</span>
       </label>
 
+      <button class="icon" {{action 'deleteField' this}}><i class="fa fa-close"></i><span class="button-text">Delete</span></button>
+
       {{#view 'field' field=this classNames="field-value"}}
       {{#if view.isString}}
-      {{textarea class="field-string" value=val}}
+        {{textarea class="field-string" value=val}}
       {{/if}}
       {{#if view.isNumber}}
-      {{input class="field-number" value=val}}
+        {{input class="field-number" value=val}}
       {{/if}}
       {{#if view.isBoolean}}
-      {{input type="checkbox" class="checkmark field-checkbox" checked=val}}
+        {{input type="checkbox" class="checkmark field-checkbox" checked=val}}
       {{/if}}
       {{#if view.isDate}}
-      {{datetime-picker class="datetime-picker field-date" data=key date=val action="fieldDateChanged"}}
+        {{datetime-picker class="datetime-picker field-date" data=key date=val action="fieldDateChanged"}}
       {{/if}}
       {{/view}}
     </li>

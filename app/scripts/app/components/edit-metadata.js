@@ -22,6 +22,10 @@ var EditMetadataComponent = Ember.Component.extend({
   }.observes('selectedKeyType'),
 
   actions: {
+    deleteField: function (field) {
+      this.get('fields').removeObject(field);
+    },
+
     fieldDateChanged: function (date, fieldKey) {
       var fields = this.get('fields'),
           field;

@@ -43,14 +43,7 @@ header {
     font-weight: normal;
   }
 
-  button.icon {
-    border: none;
-    background: none;
-    outline: 0;
-  }
-
   .link-text { @include squish-text; }
-  .button-text { @include squish-text; }
 
   .fa {
     margin-right: 5px;
@@ -109,4 +102,12 @@ li {
 input, textarea {
   background: white;
   color: black;
+}
+
+button.icon {
+  border: none;
+  background: none;
+  outline: 0;
+
+  .button-text { @include squish-text; }
 }
