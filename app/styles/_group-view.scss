@@ -1,7 +1,0 @@
-.group {
-  @include breakpoint($screen-large-lodpi) {
-    background: hsla(280, 45, 60, 1);
-    margin: 20px;
-    border-radius: $container-border-radius;
-  }
-}

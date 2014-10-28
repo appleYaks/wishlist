@@ -1,6 +1,7 @@
+import ActivatableControllerMixin from 'client/mixins/activatable-controller';
 import SortableControllerMixin from 'client/mixins/sortable-controller';
 
-var GroupsController = Em.ArrayController.extend(SortableControllerMixin, {
+var GroupsController = Em.ArrayController.extend(ActivatableControllerMixin, SortableControllerMixin, {
   needs: ['application', 'group/index',  'group/edit', 'items'],
 
   // user-controlled sort order

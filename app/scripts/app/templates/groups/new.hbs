@@ -1,7 +1,7 @@
-<section class="group-new">
+<section {{bind-attr class=":group-new active"}}>
   <header>
-    <button class="icon" {{action 'cancel'}}><i class="fa fa-close"></i><span class="button-text">Cancel</span></button>
     <h1 class="title">Create Group</h1>
+    <button class="icon" {{action 'cancel'}}><i class="fa fa-close"></i><span class="button-text">Cancel</span></button>
     <button class="icon" {{action 'save'}}><i class="fa fa-floppy-o"></i><span class="button-text">Save</span></button>
   </header>
 

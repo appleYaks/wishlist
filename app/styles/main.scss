@@ -16,12 +16,6 @@ $screen-medium-landscape: $screen-medium (orientation landscape);
 $screen-large-portrait: $screen-large (orientation portrait);
 $screen-large-landscape: $screen-large (orientation landscape);
 $screen-large-landscape-hidpi: $screen-large (orientation landscape) $hidpi;
-$screen-large-lodpi: $screen-large $lodpi;
-
-/*  globals  */
-$container-border-radius: 10px;
-$list-link-padding: 0.5em 0;
-$footer-outer-height: 3em;
 
 /*  Libraries  */
 @import 'normalize'; // via Bower
@@ -32,19 +26,26 @@ $footer-outer-height: 3em;
 @import 'compass/typography';
 
 /*  Components  */
-@import 'components/checkmark-checkbox';
-@import 'components/list-controls';
-@import 'components/metadata';
-@import 'components/edit-metadata';
 
 /*  Views  */
 @import 'base';
 @import 'application';
-@import 'groups-view';
-@import 'group-view';
-@import 'group-edit-view';
-@import 'group-new-view';
-@import 'items-view';
-@import 'item-view';
-@import 'item-edit-view';
-@import 'item-new-view';
+
+/*************************************************/
+/*  Components  */
+// @import 'components/checkmark-checkbox';
+// @import 'components/list-controls';
+// @import 'components/metadata';
+// @import 'components/edit-metadata';
+
+/*  Views  */
+// @import 'base';
+// @import 'application';
+// @import 'groups-view';
+// @import 'group-view';
+// @import 'group-edit-view';
+// @import 'group-new-view';
+// @import 'items-view';
+// @import 'item-view';
+// @import 'item-edit-view';
+// @import 'item-new-view';

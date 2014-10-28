@@ -1,6 +1,7 @@
+import ActivatableControllerMixin from 'client/mixins/activatable-controller';
 import SortableControllerMixin from 'client/mixins/sortable-controller';
 
-var ItemsController = Em.ArrayController.extend(SortableControllerMixin, {
+var ItemsController = Em.ArrayController.extend(ActivatableControllerMixin, SortableControllerMixin, {
   needs: ['application', 'item/index', 'item/edit'],
 
   // the route sets GroupId
