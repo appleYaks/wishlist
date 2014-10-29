@@ -5,7 +5,7 @@
     {{#link-to 'items.new'}}<i class="fa fa-plus"></i><span class="link-text">Add</span>{{/link-to}}
   </header>
 
-  <ul class="items-list">
+  <ul class="list items-list">
     {{#each}}
     <li>
       {{action-checkbox type="checkbox" class="checkmark" checked=complete action="patchChecked" model=this}}

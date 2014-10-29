@@ -10,6 +10,7 @@ html, body, .application, .content {
   left: 0;
   height: 100%;
   width: 100%;
+  background: white;
   @include transform(translate3d(100%,0,0));
   @include transition-duration(.25s);
 
@@ -17,22 +18,117 @@ html, body, .application, .content {
   &.active {
     @include transform(translate3d(0,0,0));
   }
+
+  & > *:nth-child(2) {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+.sortable {
 }
 
 header {
+  @include display-flex;
+  @include justify-content(space-between);
+  @include align-items(center);
   position: absolute;
   top: 0;
+  height: 50px;
+  width: 100%;
+  background: hsla(0,0%,90%,0.7);
+  border-bottom: 1px solid #DDD;
+  font-size: 5vh;
+  font-weight: normal;
+
+  & > h1, & > a {
+    padding: 10px;
+    color: black;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: inherit;
+    font-weight: normal;
+  }
+
+  .link-text { @include squish-text; }
+
+  // rearrange header items
+  // source order is title first, which may be easier for non-mobile layouts
+  :nth-child(1) { @include order(2); }
+  :nth-child(2) { @include order(1); }
+  :nth-child(3) { @include order(3); }
 }
 
 footer {
+  @include display-flex;
+  @include justify-content(center);
+  @include align-items(center);
   position: absolute;
   bottom: 0;
+  height: 50px;
+  width: 100%;
+  background: #f7f7f7;
+  border-bottom: 1px solid #777;
+
+  .fa {
+    display: block;
+  }
 }
 
-.groups {
-  background: green;
+button {
+  background: none;
+  border: none;
+  height: 100%;
+  // color: #ff2d55;
+  .button-text { @include squish-text; }
 }
 
-.items {
-  background: blue;
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: white;
+  padding: 500px 0;
+  padding: 50px 0;
+  height: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+
+  li {
+    max-height: 80px;
+    border-top: 1px solid #333;
+  }
+
+  li:first-of-type { border-top: none; }
+  li:last-of-type { border-bottom: 1px solid #333; }
+
+  li a {
+  }
+
+  .controls {
+    visibility: hidden;
+  }
+}
+
+.checkmark {
+  // $checkbox-left: nth($list-link-padding, 1);
+  $checkbox-size: 1.25em;
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  &:after {
+    content: '\2714';
+    line-height: $checkbox-size / 1.2;
+    font-size: $checkbox-size;
+    color: #DDD;
+    text-shadow: 0 -1px 0 #AAA;
+  }
+
+  &:checked:after {
+    color: green;
+    text-shadow: 0 1px 0 black;
+  }
 }

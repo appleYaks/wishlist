@@ -1,0 +1,10 @@
+.groups {
+  header h1 {
+    // parent's flexbox has 3 elements but one is an empty dummy element,
+    // to get the same layout as the other views. the lack of content in the
+    // dummy shifts the h1, so we need to center it manually.
+    position: absolute;
+    left: 50%;
+    @include transform(translate3d(-50%, 0, 0));
+  }
+}

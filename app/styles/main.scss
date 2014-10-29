@@ -30,6 +30,7 @@ $screen-large-landscape-hidpi: $screen-large (orientation landscape) $hidpi;
 /*  Views  */
 @import 'base';
 @import 'application';
+@import 'groups-view';
 
 /*************************************************/
 /*  Components  */
@@ -41,7 +42,6 @@ $screen-large-landscape-hidpi: $screen-large (orientation landscape) $hidpi;
 /*  Views  */
 // @import 'base';
 // @import 'application';
-// @import 'groups-view';
 // @import 'group-view';
 // @import 'group-edit-view';
 // @import 'group-new-view';
