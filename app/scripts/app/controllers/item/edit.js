@@ -14,7 +14,8 @@ var ItemEditController = Em.ObjectController.extend({
     // this is because route controllers are singletons and persist.
     // since changing routes destroys the temp model we used for editing, we must
     // avoid accessing or mutating it until we know it's fresh (on entering the route).
-    if (model.isDestroyed) {
+    // this function also fires when the canonicalModel is first set (and === null).
+    if (model === null || model.isDestroyed) {
       return;
     }
 
