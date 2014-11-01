@@ -1,6 +1,7 @@
+import ActivatableControllerMixin from 'client/mixins/activatable-controller';
 import validateItem from 'client/validators/item';
 
-var ItemEditController = Em.ObjectController.extend({
+var ItemEditController = Em.ObjectController.extend(ActivatableControllerMixin, {
   // set by the route; `model` is based off of `canonicalModel`
   canonicalModel: null,
 

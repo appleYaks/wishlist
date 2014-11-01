@@ -1,6 +1,7 @@
+import ActivatableControllerMixin from 'client/mixins/activatable-controller';
 import validateItem from 'client/validators/item';
 
-var ItemsNewController = Em.ObjectController.extend({
+var ItemsNewController = Em.ObjectController.extend(ActivatableControllerMixin, {
   needs: ['items'],
 
   // the route sets GroupId
