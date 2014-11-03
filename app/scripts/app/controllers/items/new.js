@@ -30,12 +30,10 @@ var ItemsNewController = Em.ObjectController.extend(ActivatableControllerMixin, 
       item.set('GroupId', GroupId);
 
       this.api.add('items', item).then(function (data) {
-        var id = Ember.get(data, 'id');
-
         self.store.load('items', data);
         self.send('refresh');
 
-        self.transitionToRoute('item.index', id);
+        self.transitionToRoute('items');
       }).catch(function () {
         alert('Sorry, saving your item failed! Please try again later.');
       });
