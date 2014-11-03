@@ -1,6 +1,7 @@
+import ActivatableControllerMixin from 'client/mixins/activatable-controller';
 import validateGroup from 'client/validators/group';
 
-var GroupsNewController = Em.ObjectController.extend({
+var GroupsNewController = Em.ObjectController.extend(ActivatableControllerMixin, {
   validationErrors: null,
 
   actions: {

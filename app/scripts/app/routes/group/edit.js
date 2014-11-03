@@ -1,9 +1,13 @@
-var GroupEditRoute = Em.Route.extend({
+import GroupViewRouteMixin from 'client/mixins/group-view-route';
+
+var GroupEditRoute = Em.Route.extend(GroupViewRouteMixin, {
   setupController: function (controller, group) {
+    controller.set('canonicalModel', group);
+
     // deep copy of passed-in model to mess with in case edits are canceled.
     // seems like `.toJSON()` is not supported for `Ember.Object`
-    controller.set('model', this.store.createModelOfType('groups', group));
-    controller.set('canonicalModel', group);
+    group = this.store.createModelOfType('groups', group);
+    this._super(controller, group);
   },
 
   renderTemplate: function () {
@@ -14,8 +18,12 @@ var GroupEditRoute = Em.Route.extend({
   },
 
   actions: {
-    willTransition: function () {
-      this.get('controller.model').destroy();
+    willTransition: function (transition) {
+      var controller = this.get('controller'),
+          model = controller.get('model');
+
+      model.destroy();
+      this._super(transition);
     }
   }
 });

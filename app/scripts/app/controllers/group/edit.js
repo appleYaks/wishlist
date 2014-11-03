@@ -1,6 +1,7 @@
+import ActivatableControllerMixin from 'client/mixins/activatable-controller';
 import validateGroup from 'client/validators/group';
 
-var GroupEditController = Em.ObjectController.extend({
+var GroupEditController = Em.ObjectController.extend(ActivatableControllerMixin, {
   // set by the route; `model` is a temp copy of `canonicalModel`
   canonicalModel: null,
 

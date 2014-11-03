@@ -1,6 +1,9 @@
-var GroupsNewRoute = Em.Route.extend({
+import GroupViewRouteMixin from 'client/mixins/group-view-route';
+
+var GroupsNewRoute = Em.Route.extend(GroupViewRouteMixin, {
   setupController: function (controller) {
-    controller.set('model', this.store.createModelOfType('groups'));
+    var model = this.store.createModelOfType('groups');
+    this._super(controller, model);
   },
 
   renderTemplate: function () {
@@ -11,8 +14,16 @@ var GroupsNewRoute = Em.Route.extend({
   },
 
   actions: {
-    willTransition: function () {
-      this.get('controller.model').destroy();
+    willTransition: function (transition) {
+      var controller = this.get('controller'),
+          model = controller.get('model');
+
+      model.destroy();
+
+      // allow GroupsRoute model to show the new model
+      this.send('refresh');
+
+      this._super(transition);
     }
   }
 });
