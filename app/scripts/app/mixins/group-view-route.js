@@ -1,7 +1,7 @@
+import ActiveRouteBaseMixin from 'client/mixins/active-route-base';
 import transitionEndName from 'client/utils/get-transitionend-event-name';
-import ViewRouteBaseMixin from 'client/mixins/view-route-base';
 
-var GroupViewRouteMixin = Ember.Mixin.create(ViewRouteBaseMixin, {
+var GroupViewRouteMixin = Ember.Mixin.create(ActiveRouteBaseMixin, {
   actions: {
     willTransition: function (transition) {
       // group view will always be the second section element

@@ -1,4 +1,4 @@
-var ViewRouteBaseMixin = Ember.Mixin.create({
+var ActiveRouteBaseMixin = Ember.Mixin.create({
   setupController: function (controller, model) {
     this.setControllerActive();
     this._super(controller, model);
@@ -29,4 +29,4 @@ var ViewRouteBaseMixin = Ember.Mixin.create({
   },
 });
 
-export default ViewRouteBaseMixin;
+export default ActiveRouteBaseMixin;

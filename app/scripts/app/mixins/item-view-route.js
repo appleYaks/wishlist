@@ -1,7 +1,7 @@
+import ActiveRouteBaseMixin from 'client/mixins/active-route-base';
 import transitionEndName from 'client/utils/get-transitionend-event-name';
-import ViewRouteBaseMixin from 'client/mixins/view-route-base';
 
-var ItemViewRouteMixin = Ember.Mixin.create(ViewRouteBaseMixin, {
+var ItemViewRouteMixin = Ember.Mixin.create(ActiveRouteBaseMixin, {
   actions: {
     willTransition: function (transition) {
       // item view will always be the third section element
