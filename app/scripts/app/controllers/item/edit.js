@@ -45,7 +45,6 @@ var ItemEditController = Em.ObjectController.extend(ActivatableControllerMixin, 
         var id = Ember.get(data, 'id');
 
         self.store.load('items', data);
-        self.send('refresh');
 
         self.transitionToRoute('item.index', self.store.find('items', id));
       }).catch(function () {

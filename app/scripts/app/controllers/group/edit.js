@@ -28,7 +28,6 @@ var GroupEditController = Em.ObjectController.extend({
         var id = Ember.get(data, 'id');
 
         self.store.load('groups', data);
-        self.send('refresh');
 
         self.transitionToRoute('group.index', self.store.find('groups', id));
       }).catch(function () {
