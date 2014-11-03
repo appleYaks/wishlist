@@ -1,5 +1,6 @@
 import ActiveRouteBaseMixin from 'client/mixins/active-route-base';
 import transitionEndName from 'client/utils/get-transitionend-event-name';
+import media from 'client/utils/detect-form-factor';
 
 var ItemsRoute = Em.Route.extend(ActiveRouteBaseMixin, {
   model: function (params) {
@@ -26,6 +27,11 @@ var ItemsRoute = Em.Route.extend(ActiveRouteBaseMixin, {
     },
 
     willTransition: function (transition) {
+      // tablet sizes and bigger have a multi-panel layout and don't need animations here
+      if (media.notSmall()) {
+        return;
+      }
+
       var controller = this.get('controller'),
           element = $('.items');
 
