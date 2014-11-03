@@ -42,14 +42,8 @@ var ItemsRoute = Em.Route.extend({
       var controller = this.get('controller'),
           element = $('.items');
 
-      if (transition.params['item.index']) {
-        this.controllerFor('item.index').set('active', false);
-      }
-
-      if (transition.params['item.edit']) {
-        this.controllerFor('item.edit').set('active', false);
-      }
-
+      // if transitioning to groups, we need to set `active` to
+      // `false` on the ItemsController to make it animate away
       if (element.length && controller.get('active') === true && transition.params['groups.index']) {
         controller.set('active', false);
 
