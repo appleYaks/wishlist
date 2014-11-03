@@ -8,7 +8,6 @@ var GroupEditController = Em.ObjectController.extend({
 
   actions: {
     cancel: function () {
-      this.get('model').destroy();
       this.transitionToRoute('groups');
     },
 

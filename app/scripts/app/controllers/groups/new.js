@@ -5,7 +5,6 @@ var GroupsNewController = Em.ObjectController.extend({
 
   actions: {
     cancel: function () {
-      this.get('model').destroy();
       this.transitionToRoute('groups');
     },
 
