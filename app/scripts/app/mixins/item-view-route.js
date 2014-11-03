@@ -1,41 +1,10 @@
 import transitionEndName from 'client/utils/get-transitionend-event-name';
+import ViewRouteBaseMixin from 'client/mixins/view-route-base';
 
-function retryTransition (evt) {
-  var transition = evt.data.transition;
-
-  Ember.run(function () {
-    transition.retry();
-  });
-}
-
-var ItemViewRoute = Ember.Mixin.create({
-  setupController: function (controller, model) {
-    this.setControllerActive();
-    this._super(controller, model);
-  },
-
-  // afterModel: function () {
-  //   this.setControllerActive();
-  // },
-
-  setControllerActive: function () {
-    var self = this;
-    // requestAnimationFrame seems to be the only way for iOS to respect the CSS transition delay
-    window.requestAnimationFrame(function () {
-      self.set('controller.active', true);
-    });
-  },
-
-  setControllerInactive: function () {
-    var self = this;
-    // requestAnimationFrame seems to be the only way for iOS to respect the CSS transition delay
-    window.requestAnimationFrame(function () {
-      self.set('controller.active', false);
-    });
-  },
-
+var ItemViewRouteMixin = Ember.Mixin.create(ViewRouteBaseMixin, {
   actions: {
     willTransition: function (transition) {
+      // item view will always be the third section element
       var element = $('.content > section:nth-of-type(3)');
 
       // prevent infinite loop on transition.retry()
@@ -43,11 +12,11 @@ var ItemViewRoute = Ember.Mixin.create({
         return;
       }
 
+      // transitioning between the new,index,and edit routes should be instantaneous
       if (transition.params['item.index']) {
         this.controllerFor('item.index').set('active', true);
         return;
       }
-
       if (transition.params['item.edit']) {
         this.controllerFor('item.edit').set('active', true);
         return;
@@ -57,9 +26,9 @@ var ItemViewRoute = Ember.Mixin.create({
       transition.abort();
       this.setControllerInactive();
 
-      element.one(transitionEndName, { transition: transition }, retryTransition);
+      element.one(transitionEndName, { transition: transition }, this.get('retryTransition'));
     }
   }
 });
 
-export default ItemViewRoute;
+export default ItemViewRouteMixin;
