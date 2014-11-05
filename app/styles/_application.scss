@@ -26,11 +26,19 @@ html, body, .application, .content, .content > section {
 
   // the actual content between the header and footer
   & > *:nth-child(2) {
+    position: absolute;
+    z-index: 2000;
+    top: 50px;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    magin: 0;
+    padding: 0;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-    padding: 50px 0;
-    position: relative;
-    z-index: 2000;
+
+    // metadata views have no footer
+    &.metadata-container { bottom: 0; }
   }
 }
 
@@ -98,7 +106,6 @@ button {
   margin: 0;
   // background: white;
   // padding: 500px 0;
-  height: 100%;
 
   li {
     max-height: 80px;

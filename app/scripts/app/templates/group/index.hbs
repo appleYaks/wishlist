@@ -5,39 +5,41 @@
     {{#link-to 'group.edit'}}<i class="fa fa-pencil"></i><span class="link-text">Edit</span>{{/link-to}}
   </header>
 
-  <section class="group-metadata metadata">
-    <h1 class="title">{{title}}</h1>
-    <p class="description">{{description}}</p>
+  <section class="group-metadata metadata-container">
+    <section class="metadata">
+      <h1 class="title">{{title}}</h1>
+      <p class="description">{{description}}</p>
+    </section>
+
+    {{#if fields}}
+    <section class="fields metadata">
+      <h1>Custom Fields</h1>
+
+      <ul class="fields-list">
+        {{#each fields}}
+        <li class="group-field">
+          <label>
+            <span>{{dedasherize key}}</span>
+          </label>
+
+          {{#view 'field' field=this classNames="field-value"}}
+            {{#if view.isString}}
+              {{val}}
+            {{/if}}
+            {{#if view.isNumber}}
+              {{val}}
+            {{/if}}
+            {{#if view.isBoolean}}
+              {{input type="checkbox" class="checkmark field-checkbox" checked=val disabled="disabled"}}
+            {{/if}}
+            {{#if view.isDate}}
+              {{moment-calendar val}}
+            {{/if}}
+          {{/view}}
+        </li>
+        {{/each}}
+      </ul>
+    </section>
+    {{/if}}
   </section>
-
-  {{#if fields}}
-  <section class="fields metadata">
-    <h1>Custom Fields</h1>
-
-    <ul class="fields-list">
-      {{#each fields}}
-      <li class="group-field">
-        <label>
-          <span>{{dedasherize key}}</span>
-        </label>
-
-        {{#view 'field' field=this classNames="field-value"}}
-          {{#if view.isString}}
-            {{val}}
-          {{/if}}
-          {{#if view.isNumber}}
-            {{val}}
-          {{/if}}
-          {{#if view.isBoolean}}
-            {{input type="checkbox" class="checkmark field-checkbox" checked=val disabled="disabled"}}
-          {{/if}}
-          {{#if view.isDate}}
-            {{moment-calendar val}}
-          {{/if}}
-        {{/view}}
-      </li>
-      {{/each}}
-    </ul>
-  </section>
-  {{/if}}
 </section>

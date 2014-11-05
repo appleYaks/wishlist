@@ -16,7 +16,6 @@ var port      = process.env.PORT || 9000;
 app.root = __dirname;
 app.config = require('./config.js');
 app.api = require('./lib/api');
-app.classes = require('./lib/classes');
 app.db = database.db;
 app.db.raw = database.raw;
 

@@ -5,5 +5,7 @@
     <button class="icon" {{action 'save'}}><i class="fa fa-floppy-o"></i><span class="button-text">Save</span></button>
   </header>
 
-  {{edit-metadata title=title description=description fields=fields validationErrors=validationErrors}}
+  <section class="group-new-metadata metadata-container">
+    {{edit-metadata title=title description=description fields=fields validationErrors=validationErrors}}
+  </section>
 </section>
