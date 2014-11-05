@@ -1,3 +1,13 @@
+html {
+  // for use with rem units'. creates a similarity to using px,
+  // e.g. makes 1.4rem = 14px, 2.4rem = 24px
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
 // `html` is needed for specificity over normalize.css
 // http://coding.smashingmagazine.com/2007/07/27/css-specificity-things-you-should-know/
 *, *:before, *:after {
