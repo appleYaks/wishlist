@@ -88,13 +88,13 @@ footer {
   background: #f7f7f7;
   border-bottom: 1px solid #777;
 
-  .fa {
-    display: block;
-  }
+  .fa { display: block; }
+  button { @include flex-grow(1); }
 }
 
 button {
   background: none;
+  padding: 0;
   border: none;
   height: 100%;
   // color: #ff2d55;
