@@ -1,4 +1,6 @@
-var GroupsRoute = Em.Route.extend({
+import SortableRouteMixin from 'client/mixins/sortable-route';
+
+var GroupsRoute = Em.Route.extend(SortableRouteMixin, {
   model: function () {
     var preload = this.get('preload');
 

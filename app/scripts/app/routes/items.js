@@ -1,8 +1,9 @@
 import ActiveRouteBaseMixin from 'client/mixins/active-route-base';
+import SortableRouteMixin from 'client/mixins/sortable-route';
 import transitionEndName from 'client/utils/get-transitionend-event-name';
 import media from 'client/utils/detect-form-factor';
 
-var ItemsRoute = Em.Route.extend(ActiveRouteBaseMixin, {
+var ItemsRoute = Em.Route.extend(ActiveRouteBaseMixin, SortableRouteMixin, {
   model: function (params) {
     this.set('currentGroupId', parseInt(params.group_id, 10));
     return this.api.fetchAll('items', 'groups', params.group_id);
@@ -18,6 +19,11 @@ var ItemsRoute = Em.Route.extend(ActiveRouteBaseMixin, {
       into: 'application',
       outlet: 'items',
     });
+  },
+
+  clearSortingMethod: function (evt) {
+    var ctx = evt.data.ctx;
+    ctx.send('clearSort');
   },
 
   actions: {
@@ -41,6 +47,10 @@ var ItemsRoute = Em.Route.extend(ActiveRouteBaseMixin, {
         controller.set('active', false);
 
         transition.abort();
+
+        // this line must go before retrying the transition, since the
+        // event bubble hierarchy will be different once the route exits.
+        element.one(transitionEndName, { ctx: this }, this.get('clearSortingMethod'));
 
         element.one(transitionEndName, { transition: transition }, this.get('retryTransition'));
       }
