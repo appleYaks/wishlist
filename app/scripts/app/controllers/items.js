@@ -11,6 +11,7 @@ var ItemsController = Em.ArrayController.extend(ActivatableControllerMixin, Sort
   sortedTitleAsc: Ember.computed.equal('userSorted', 'title-asc'),
   sortedPriorityAsc: Ember.computed.equal('userSorted', 'priority-asc'),
   sortedRatingAsc: Ember.computed.equal('userSorted', 'rating-asc'),
+  sortedCompleteAsc: Ember.computed.equal('userSorted', 'complete-asc'),
 
   actions: {
     sortByTitle: function () {
@@ -28,6 +29,12 @@ var ItemsController = Em.ArrayController.extend(ActivatableControllerMixin, Sort
     sortByRating: function () {
       var direction = this.get('userSorted') === 'rating-asc' ? false : true;
       this.set('sortProperties', ['rating']);
+      this.set('sortAscending', direction);
+    },
+
+    sortByComplete: function () {
+      var direction = this.get('userSorted') === 'complete-asc' ? false : true;
+      this.set('sortProperties', ['complete']);
       this.set('sortAscending', direction);
     },
 

@@ -20,9 +20,10 @@
     {{/each}}
   </ul>
 
-  <footer {{bind-attr class=userSorted}}>
+  <footer {{bind-attr class="userSorted"}}>
     <button class="title" {{action 'sortByTitle'}}><i {{bind-attr class=":fa sortedTitleAsc:fa-sort-alpha-desc:fa-sort-alpha-asc"}}></i>Title</button>
     <button class="priority" {{action 'sortByPriority'}}><i {{bind-attr class=":fa sortedPriorityAsc:fa-sort-numeric-desc:fa-sort-numeric-asc"}}></i>Priority</button>
     <button class="rating" {{action 'sortByRating'}}><i {{bind-attr class=":fa sortedRatingAsc:fa-sort-numeric-desc:fa-sort-numeric-asc"}}></i>Rating</button>
+    <button class="complete" {{action 'sortByComplete'}}><i {{bind-attr class=":fa sortedCompleteAsc:fa-sort-desc:fa-sort-asc"}}></i>Complete</button>
   </footer>
 </section>
