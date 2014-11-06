@@ -1,0 +1,25 @@
+.sortable footer {
+  &.title-asc  > .title,
+  &.title-desc > .title, {
+    background: black;
+    color: white;
+  }
+
+  &.priority-asc  > .priority,
+  &.priority-desc > .priority, {
+    background: black;
+    color: white;
+  }
+
+  &.rating-asc  > .rating,
+  &.rating-desc > .rating, {
+    background: black;
+    color: white;
+  }
+
+  &.complete-asc >  .complete,
+  &.complete-desc > .complete, {
+    background: black;
+    color: white;
+  }
+}
