@@ -10,7 +10,6 @@ html, body, .application, .content, .content > section {
   left: 0;
   height: 100%;
   width: 100%;
-  background: hsla(0,0,0,0.2);
   background: white;
   @include transform(translate3d(100%,0,0));
   @include transition-duration(.25s);
@@ -19,10 +18,6 @@ html, body, .application, .content, .content > section {
   &.active {
     @include transform(translate3d(0,0,0));
   }
-
-  // &:nth-of-type(1) { z-index: 1000; }
-  // &:nth-of-type(2) { z-index: 2000; }
-  // &:nth-of-type(3) { z-index: 3000; }
 
   // the actual content between the header and footer
   & > *:nth-child(2) {
@@ -51,7 +46,7 @@ header {
   top: 0;
   height: 50px;
   width: 100%;
-  background: hsla(0,0%,90%,0.7);
+  background: hsla(0, 0%, 90%, 0.7);
   border-bottom: 1px solid #DDD;
   font-size: 5vh;
   font-weight: normal;
@@ -70,7 +65,7 @@ header {
   .link-text { @include squish-text; }
 
   // rearrange header items
-  // source order is title first, which may be easier for non-mobile layouts
+  // source order is title first, which may be better for accessibility
   :nth-child(1) { @include order(2); }
   :nth-child(2) { @include order(1); }
   :nth-child(3) { @include order(3); }
@@ -104,8 +99,7 @@ button {
 .list {
   list-style: none;
   margin: 0;
-  // background: white;
-  // padding: 500px 0;
+  background: white;
 
   li {
     max-height: 80px;
@@ -119,38 +113,6 @@ button {
   }
 
   .controls {
-    visibility: hidden;
-  }
-}
-
-.loading {
-  $size: 2.4rem;
-  position: fixed;
-  top: calc(50% - #{$size} / 2);
-  left: calc(50% - #{$size} / 2);
-  font-size: $size;
-  width: $size;
-  height: $size;
-}
-
-.checkmark {
-  // $checkbox-left: nth($list-link-padding, 1);
-  $checkbox-size: 1.25em;
-  cursor: pointer;
-  background: none;
-  border: none;
-  outline: none;
-  -webkit-appearance: none;
-  &:after {
-    content: '\2714';
-    line-height: $checkbox-size / 1.2;
-    font-size: $checkbox-size;
-    color: #DDD;
-    text-shadow: 0 -1px 0 #AAA;
-  }
-
-  &:checked:after {
-    color: green;
-    text-shadow: 0 1px 0 black;
+    // visibility: hidden;
   }
 }

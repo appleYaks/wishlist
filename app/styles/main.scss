@@ -37,11 +37,13 @@ $lodpi: max-resolution 1dppx;
 @import 'application';
 @import 'groups-view';
 @import 'metadata-view';
+
+/*  Components  */
 @import 'components/sortable';
+@import 'components/checkmark-checkbox';
+@import 'components/loading-spinner';
 
 /*************************************************/
-/*  Components  */
-// @import 'components/checkmark-checkbox';
 // @import 'components/list-controls';
 // @import 'components/metadata';
 // @import 'components/edit-metadata';

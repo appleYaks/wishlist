@@ -1,0 +1,21 @@
+.checkmark {
+  // $checkbox-left: nth($list-link-padding, 1);
+  $checkbox-size: 1.25em;
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  &:after {
+    content: '\2714';
+    line-height: $checkbox-size / 1.2;
+    font-size: $checkbox-size;
+    color: #DDD;
+    text-shadow: 0 -1px 0 #AAA;
+  }
+
+  &:checked:after {
+    color: green;
+    text-shadow: 0 1px 0 black;
+  }
+}

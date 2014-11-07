@@ -1,0 +1,9 @@
+.loading {
+  $size: 2.4rem;
+  position: fixed;
+  top: calc(50% - #{$size} / 2);
+  left: calc(50% - #{$size} / 2);
+  font-size: $size;
+  width: $size;
+  height: $size;
+}
