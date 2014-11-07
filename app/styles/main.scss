@@ -1,21 +1,26 @@
-/*  Base breakpoints  */
-$screen-small: 0px 719px;
-$screen-medium: 720px;
-$screen-large: 1024px;
-$screen-xtra-large: 1200px;
+/*  Base Breakpoint Variables  */
+$screen-small-max: 640px;
+$screen-medium-max: 1024px;
 
 /*  Media Queries  */
-$hidpi: min-resolution 1.5dppx;
-$lodpi: max-resolution 1dppx;
-$screen-portrait: (orientation portrait);
-$screen-landscape: (orientation landscape);
+$screen-small: (max-device-width $screen-small-max);
 $screen-small-portrait: $screen-small (orientation portrait);
 $screen-small-landscape: $screen-small (orientation landscape);
-$screen-medium-portrait: $screen-medium (orientation portrait);
-$screen-medium-landscape: $screen-medium (orientation landscape);
+$not-small: (min-device-width $screen-small-max + 1);
+
+$screen-medium: (min-device-width $screen-small-max + 1) (max-device-width $screen-medium-max);
+// need to duplicate these since it seems a compound query can't be used as a variable to add to another query
+$screen-medium-portrait:  (min-device-width $screen-small-max + 1) (max-device-width $screen-medium-max) (orientation portrait);
+$screen-medium-landscape: (min-device-width $screen-small-max + 1) (max-device-width $screen-medium-max) (orientation landscape);
+
+$screen-large: (min-device-width $screen-medium-max + 1);
 $screen-large-portrait: $screen-large (orientation portrait);
 $screen-large-landscape: $screen-large (orientation landscape);
-$screen-large-landscape-hidpi: $screen-large (orientation landscape) $hidpi;
+
+$screen-portrait: (orientation portrait);
+$screen-landscape: (orientation landscape);
+$hidpi: min-resolution 1.5dppx;
+$lodpi: max-resolution 1dppx;
 
 /*  Libraries  */
 @import 'normalize'; // via Bower
