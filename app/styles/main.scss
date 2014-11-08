@@ -30,18 +30,23 @@ $lodpi: max-resolution 1dppx;
 @import 'compass/css3';
 @import 'compass/typography';
 
-/*  Components  */
-
 /*  Views  */
 @import 'base';
 @import 'application';
-@import 'groups-view';
-@import 'metadata-view';
+@import 'sections/groups-view';
+@import 'sections/groups-new-view';
+@import 'sections/group-view';
+@import 'sections/group-edit-view';
+@import 'sections/items-view';
+@import 'sections/items-new-view';
+@import 'sections/item-view';
+@import 'sections/item-edit-view';
 
 /*  Components  */
 @import 'components/sortable';
 @import 'components/checkmark-checkbox';
 @import 'components/loading-spinner';
+@import 'components/metadata-view';
 
 /*************************************************/
 // @import 'components/list-controls';

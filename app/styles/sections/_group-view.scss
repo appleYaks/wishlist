@@ -1,0 +1,19 @@
+.group {
+  @include breakpoint($not-small) {
+    @include transform(translate3d(-100%,0,0));
+    border-left: 1px solid black;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: inset 30px 0 40px -30px #999;
+  }
+
+  @include breakpoint($screen-medium) {
+    left: 40%;
+    width: 50%;
+  }
+
+  @include breakpoint($screen-large) {
+    left: 30%;
+    width: 30%;
+  }
+}

@@ -1,4 +1,4 @@
-html, body, .application, .content, .content > section {
+html, body, .application, .content {
   height: 100%;
   overflow: hidden;
   @include transform(translate3d(0,0,0));
@@ -6,21 +6,26 @@ html, body, .application, .content, .content > section {
 
 .content > section {
   position: absolute;
-  top: 0;
-  left: 0;
   height: 100%;
-  width: 100%;
   background: white;
-  @include transform(translate3d(100%,0,0));
+  overflow: hidden;
   @include transition-duration(.25s);
+
+  @include breakpoint($screen-small) {
+    left: 0;
+    width: 100%;
+    @include transform(translate3d(100%,0,0));
+  }
 
   // slide previous sections out of view when navigating deeper
   &.active {
-    @include transform(translate3d(0,0,0));
+    // @include breakpoint($screen-small) {
+      @include transform(translate3d(0,0,0));
+    // }
   }
 
   // the actual content between the header and footer
-  & > *:nth-child(2) {
+  > *:nth-child(2) {
     position: absolute;
     z-index: 2000;
     top: 50px;
@@ -48,10 +53,10 @@ header {
   width: 100%;
   background: hsla(0, 0%, 90%, 0.7);
   border-bottom: 1px solid #DDD;
-  font-size: 5vh;
+  font-size: 30px;
   font-weight: normal;
 
-  & > h1, & > a {
+  > h1, > a {
     padding: 10px;
     color: black;
   }
@@ -92,6 +97,7 @@ button {
   padding: 0;
   border: none;
   height: 100%;
+  outline: none;
   // color: #ff2d55;
   .button-text { @include squish-text; }
 }

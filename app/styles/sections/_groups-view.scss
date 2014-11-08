@@ -1,0 +1,25 @@
+.groups {
+  @include breakpoint($not-small) {
+    border-right: 1px solid black;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: 2;
+  }
+
+  @include breakpoint($screen-medium) {
+    width: 40%;
+  }
+
+  @include breakpoint($screen-large) {
+    width: 30%;
+  }
+}
+
+.groups header h1 {
+  // parent's flexbox has 3 elements but one is an empty dummy element,
+  // to get the same layout as the other views. the lack of content in the
+  // dummy shifts the h1, so we need to center it manually.
+  position: absolute;
+  left: 50%;
+  @include transform(translate3d(-50%, 0, 0));
+}
