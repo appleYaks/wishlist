@@ -14,10 +14,12 @@ var GroupViewRouteMixin = Ember.Mixin.create(ActiveRouteBaseMixin, {
 
       // transitioning between the new,index,and edit routes should be instantaneous
       if (transition.params['group.index']) {
+        this.setControllerInactive();
         this.controllerFor('group.index').set('active', true);
         return;
       }
       if (transition.params['group.edit']) {
+        this.setControllerInactive();
         this.controllerFor('group.edit').set('active', true);
         return;
       }

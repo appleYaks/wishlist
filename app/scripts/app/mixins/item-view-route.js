@@ -14,10 +14,12 @@ var ItemViewRouteMixin = Ember.Mixin.create(ActiveRouteBaseMixin, {
 
       // transitioning between the new,index,and edit routes should be instantaneous
       if (transition.params['item.index']) {
+        this.setControllerInactive();
         this.controllerFor('item.index').set('active', true);
         return;
       }
       if (transition.params['item.edit']) {
+        this.setControllerInactive();
         this.controllerFor('item.edit').set('active', true);
         return;
       }
