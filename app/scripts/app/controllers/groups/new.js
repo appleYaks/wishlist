@@ -23,6 +23,7 @@ var GroupsNewController = Em.ObjectController.extend(ActivatableControllerMixin,
 
       this.api.add('groups', group).then(function (data) {
         self.store.load('groups', data);
+        // allow GroupsRoute model to show the new group
         self.send('refresh');
 
         self.transitionToRoute('groups');

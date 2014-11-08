@@ -20,9 +20,6 @@ var GroupsNewRoute = Em.Route.extend(GroupViewRouteMixin, {
 
       model.destroy();
 
-      // allow GroupsRoute model to show the new model
-      this.send('refresh');
-
       this._super(transition);
     }
   }

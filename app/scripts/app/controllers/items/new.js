@@ -31,6 +31,7 @@ var ItemsNewController = Em.ObjectController.extend(ActivatableControllerMixin, 
 
       this.api.add('items', item).then(function (data) {
         self.store.load('items', data);
+        // allow ItemsRoute model to show the new item
         self.send('refresh');
 
         self.transitionToRoute('items');

@@ -23,9 +23,6 @@ var ItemsNewRoute = Em.Route.extend(ItemViewRouteMixin, {
 
       model.destroy();
 
-      // allow ItemsRoute model to show the new model
-      this.send('refresh');
-
       this._super(transition);
     }
   }
