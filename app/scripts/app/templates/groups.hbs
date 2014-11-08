@@ -21,7 +21,7 @@
   </ul>
 
   <footer {{bind-attr class=userSorted}}>
-    <button class="clearSort" {{action 'clearSort'}}><i class="fa fa-square-o"></i>Unsort</button>
+    <button class="clearSort" {{action 'clearSort' 'groups'}}><i class="fa fa-square-o"></i>Unsort</button>
     <button class="title" {{action 'sortByTitle'}}><i {{bind-attr class=":fa sortedTitleAsc:fa-sort-alpha-desc:fa-sort-alpha-asc"}}></i>Title</button>
   </footer>
 </section>

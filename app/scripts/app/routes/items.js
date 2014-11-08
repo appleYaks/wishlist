@@ -11,6 +11,7 @@ var ItemsRoute = Em.Route.extend(ActiveRouteBaseMixin, SortableRouteMixin, {
 
   setupController: function (controller, model) {
     controller.set('GroupId', this.get('currentGroupId'));
+    this.clearSortingMethod();
     this._super(controller, model);
   },
 
@@ -19,11 +20,6 @@ var ItemsRoute = Em.Route.extend(ActiveRouteBaseMixin, SortableRouteMixin, {
       into: 'application',
       outlet: 'items',
     });
-  },
-
-  clearSortingMethod: function (evt) {
-    var ctx = evt.data.ctx;
-    ctx.send('clearSort');
   },
 
   actions: {
@@ -50,7 +46,7 @@ var ItemsRoute = Em.Route.extend(ActiveRouteBaseMixin, SortableRouteMixin, {
 
         // this line must go before retrying the transition, since the
         // event bubble hierarchy will be different once the route exits.
-        element.one(transitionEndName, { ctx: this }, this.get('clearSortingMethod'));
+        element.one(transitionEndName, { controller: controller }, this.get('clearSortingMethod'));
 
         element.one(transitionEndName, { transition: transition }, this.get('retryTransition'));
       }
