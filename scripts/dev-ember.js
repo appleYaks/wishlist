@@ -34,7 +34,7 @@ define("client/components/action-checkbox",
       transmitAction: function () {
         Ember.run.schedule('sync', this, function () {
           var action = this.get('action'),
-          model = this.get('model');
+              model = this.get('model');
 
           if (action && model) {
             this.get('controller').send(action, model);
@@ -241,6 +241,10 @@ define("client/components/edit-metadata",
       }.observes('selectedKeyType'),
 
       actions: {
+        deleteField: function (field) {
+          this.get('fields').removeObject(field);
+        },
+
         fieldDateChanged: function (date, fieldKey) {
           var fields = this.get('fields'),
               field;
@@ -267,10 +271,10 @@ define("client/components/edit-metadata",
               val = this.get('newFieldValue'),
               type = this.get('selectedKeyType'),
               fields = this.get('fields'),
-              errors = [];
+              newFieldErrors = [];
 
           // clear out old errors
-          this.set('errors', errors);
+          this.set('newFieldErrors', newFieldErrors);
 
           // use defaults
           if (val === null || typeof val === 'undefined') {
@@ -286,32 +290,32 @@ define("client/components/edit-metadata",
           }
 
           if (!key) {
-            errors.push('Sorry, I can\'t add a field with no name.');
+            newFieldErrors.push('Sorry, I can\'t add a field with no name.');
           } else {
             key = key.replace(/\s+/g, '-');
           }
 
           if (key && fields.findBy('key', key)) {
-            errors.push('Sorry, a field already exists with that name. Please try again.');
+            newFieldErrors.push('Sorry, a field already exists with that name. Please try again.');
           }
 
           if (!/^[a-zA-Z][0-9a-zA-Z-]*$/.test(key)) {
-            errors.push('The name given needs to start with a letter, and afterwords be only letters, numbers, or dashes.');
+            newFieldErrors.push('The name given needs to start with a letter, and afterwords be only letters, numbers, or dashes.');
           }
 
           if (type.number && isNaN(val)) {
-            errors.push('What you entered as a number is actually not a number.');
+            newFieldErrors.push('What you entered as a number is actually not a number.');
           }
 
           if (type.bool && val !== true && val !== false) {
-            errors.push('I don\'t know how you broke it, but the checkbox needs to be either checked or unchecked!');
+            newFieldErrors.push('I don\'t know how you broke it, but the checkbox needs to be either checked or unchecked!');
           }
 
           if (type.date && !moment(val).isValid()) {
-            errors.push('That does not appear to be a valid date.');
+            newFieldErrors.push('That does not appear to be a valid date.');
           }
 
-          if (errors.length) {
+          if (newFieldErrors.length) {
             return;
           }
 
@@ -337,25 +341,39 @@ define("client/components/edit-metadata",
     __exports__["default"] = EditMetadataComponent;
   });
 define("client/controllers/group/edit",
-  ["exports"],
-  function(__exports__) {
+  ["client/mixins/activatable-controller","client/validators/group","exports"],
+  function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
-    var GroupEditController = Em.ObjectController.extend({
+    var ActivatableControllerMixin = __dependency1__["default"];
+    var validateGroup = __dependency2__["default"];
+
+    var GroupEditController = Em.ObjectController.extend(ActivatableControllerMixin, {
+      // set by the route; `model` is a temp copy of `canonicalModel`
+      canonicalModel: null,
+
+      validationErrors: null,
+
       actions: {
         cancel: function () {
-          this.get('model').destroy();
           this.transitionToRoute('groups');
         },
 
         save: function () {
           var self = this,
-              group = this.get('model');
+              // needed because Ember.TextField does not convert input to numbers
+              group = this.get('model').numberize(),
+              validationErrors = validateGroup(group);
+
+          this.set('validationErrors', validationErrors);
+
+          if (validationErrors.length) {
+            return;
+          }
 
           this.api.edit('groups', group).then(function (data) {
             var id = Ember.get(data, 'id');
 
             self.store.load('groups', data);
-            self.send('refresh');
 
             self.transitionToRoute('group.index', self.store.find('groups', id));
           }).catch(function () {
@@ -368,18 +386,21 @@ define("client/controllers/group/edit",
     __exports__["default"] = GroupEditController;
   });
 define("client/controllers/group/index",
-  ["exports"],
-  function(__exports__) {
-    "use strict";
-    __exports__["default"] = Ember.ObjectController.extend();
-  });
-define("client/controllers/groups",
-  ["client/mixins/sortable-controller","exports"],
+  ["client/mixins/activatable-controller","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var SortableControllerMixin = __dependency1__["default"];
+    var ActivatableControllerMixin = __dependency1__["default"];
 
-    var GroupsController = Em.ArrayController.extend(SortableControllerMixin, {
+    __exports__["default"] = Ember.ObjectController.extend(ActivatableControllerMixin);
+  });
+define("client/controllers/groups",
+  ["client/mixins/activatable-controller","client/mixins/sortable-controller","exports"],
+  function(__dependency1__, __dependency2__, __exports__) {
+    "use strict";
+    var ActivatableControllerMixin = __dependency1__["default"];
+    var SortableControllerMixin = __dependency2__["default"];
+
+    var GroupsController = Em.ArrayController.extend(ActivatableControllerMixin, SortableControllerMixin, {
       needs: ['application', 'group/index',  'group/edit', 'items'],
 
       // user-controlled sort order
@@ -431,22 +452,35 @@ define("client/controllers/groups",
     __exports__["default"] = GroupsController;
   });
 define("client/controllers/groups/new",
-  ["exports"],
-  function(__exports__) {
+  ["client/mixins/activatable-controller","client/validators/group","exports"],
+  function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
-    var GroupsNewController = Em.ObjectController.extend({
+    var ActivatableControllerMixin = __dependency1__["default"];
+    var validateGroup = __dependency2__["default"];
+
+    var GroupsNewController = Em.ObjectController.extend(ActivatableControllerMixin, {
+      validationErrors: null,
+
       actions: {
         cancel: function () {
-          this.get('model').destroy();
           this.transitionToRoute('groups');
         },
 
         save: function () {
           var self = this,
-              group = this.get('model');
+              // needed because Ember.TextField does not convert input to numbers
+              group = this.get('model').numberize(),
+              validationErrors = validateGroup(group);
+
+          this.set('validationErrors', validationErrors);
+
+          if (validationErrors.length) {
+            return;
+          }
 
           this.api.add('groups', group).then(function (data) {
             self.store.load('groups', data);
+            // allow GroupsRoute model to show the new group
             self.send('refresh');
 
             self.transitionToRoute('groups');
@@ -460,10 +494,18 @@ define("client/controllers/groups/new",
     __exports__["default"] = GroupsNewController;
   });
 define("client/controllers/item/edit",
-  ["exports"],
-  function(__exports__) {
+  ["client/mixins/activatable-controller","client/validators/item","exports"],
+  function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
-    var ItemEditController = Em.ObjectController.extend({
+    var ActivatableControllerMixin = __dependency1__["default"];
+    var validateItem = __dependency2__["default"];
+
+    var ItemEditController = Em.ObjectController.extend(ActivatableControllerMixin, {
+      // set by the route; `model` is based off of `canonicalModel`
+      canonicalModel: null,
+
+      validationErrors: null,
+
       setComplete: function () {
         var model = this.get('model'),
             complete;
@@ -472,7 +514,8 @@ define("client/controllers/item/edit",
         // this is because route controllers are singletons and persist.
         // since changing routes destroys the temp model we used for editing, we must
         // avoid accessing or mutating it until we know it's fresh (on entering the route).
-        if (model.isDestroyed) {
+        // this function also fires when the canonicalModel is first set (and === null).
+        if (model === null || model.isDestroyed) {
           return;
         }
 
@@ -482,19 +525,25 @@ define("client/controllers/item/edit",
 
       actions: {
         cancel: function () {
-          this.get('model').destroy();
           this.transitionToRoute('items');
         },
 
         save: function () {
           var self = this,
-              item = this.get('model');
+              // needed because Ember.TextField does not convert input to numbers
+              item = this.get('model').numberize(),
+              validationErrors = validateItem(item);
+
+          this.set('validationErrors', validationErrors);
+
+          if (validationErrors.length) {
+            return;
+          }
 
           this.api.edit('items', item).then(function (data) {
             var id = Ember.get(data, 'id');
 
             self.store.load('items', data);
-            self.send('refresh');
 
             self.transitionToRoute('item.index', self.store.find('items', id));
           }).catch(function () {
@@ -507,24 +556,31 @@ define("client/controllers/item/edit",
     __exports__["default"] = ItemEditController;
   });
 define("client/controllers/item/index",
-  ["exports"],
-  function(__exports__) {
-    "use strict";
-    __exports__["default"] = Ember.ObjectController.extend();
-  });
-define("client/controllers/items",
-  ["client/mixins/sortable-controller","exports"],
+  ["client/mixins/activatable-controller","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var SortableControllerMixin = __dependency1__["default"];
+    var ActivatableControllerMixin = __dependency1__["default"];
 
-    var ItemsController = Em.ArrayController.extend(SortableControllerMixin, {
+    __exports__["default"] = Ember.ObjectController.extend(ActivatableControllerMixin);
+  });
+define("client/controllers/items",
+  ["client/mixins/activatable-controller","client/mixins/sortable-controller","exports"],
+  function(__dependency1__, __dependency2__, __exports__) {
+    "use strict";
+    var ActivatableControllerMixin = __dependency1__["default"];
+    var SortableControllerMixin = __dependency2__["default"];
+
+    var ItemsController = Em.ArrayController.extend(ActivatableControllerMixin, SortableControllerMixin, {
       needs: ['application', 'item/index', 'item/edit'],
+
+      // the route sets GroupId
+      GroupId: null,
 
       // various sort orders
       sortedTitleAsc: Ember.computed.equal('userSorted', 'title-asc'),
       sortedPriorityAsc: Ember.computed.equal('userSorted', 'priority-asc'),
       sortedRatingAsc: Ember.computed.equal('userSorted', 'rating-asc'),
+      sortedCompleteAsc: Ember.computed.equal('userSorted', 'complete-asc'),
 
       actions: {
         sortByTitle: function () {
@@ -542,6 +598,12 @@ define("client/controllers/items",
         sortByRating: function () {
           var direction = this.get('userSorted') === 'rating-asc' ? false : true;
           this.set('sortProperties', ['rating']);
+          this.set('sortAscending', direction);
+        },
+
+        sortByComplete: function () {
+          var direction = this.get('userSorted') === 'complete-asc' ? false : true;
+          this.set('sortProperties', ['complete']);
           this.set('sortAscending', direction);
         },
 
@@ -584,32 +646,46 @@ define("client/controllers/items",
     __exports__["default"] = ItemsController;
   });
 define("client/controllers/items/new",
-  ["exports"],
-  function(__exports__) {
+  ["client/mixins/activatable-controller","client/validators/item","exports"],
+  function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
-    var ItemsNewController = Em.ObjectController.extend({
+    var ActivatableControllerMixin = __dependency1__["default"];
+    var validateItem = __dependency2__["default"];
+
+    var ItemsNewController = Em.ObjectController.extend(ActivatableControllerMixin, {
       needs: ['items'],
+
+      // the route sets GroupId
+      GroupId: null,
+
+      validationErrors: null,
 
       actions: {
         cancel: function () {
-          this.get('model').destroy();
           this.transitionToRoute('items');
         },
 
         save: function () {
           var self = this,
-              item = this.get('model'),
-              GroupId = this.get('controllers.items.GroupId');
+              // needed because Ember.TextField does not convert input to numbers
+              item = this.get('model').numberize(),
+              GroupId = this.get('controllers.items.GroupId'),
+              validationErrors = validateItem(item);
+
+          this.set('validationErrors', validationErrors);
+
+          if (validationErrors.length) {
+            return;
+          }
 
           item.set('GroupId', GroupId);
 
           this.api.add('items', item).then(function (data) {
-            var id = Ember.get(data, 'id');
-
             self.store.load('items', data);
+            // allow ItemsRoute model to show the new item
             self.send('refresh');
 
-            self.transitionToRoute('item.index', id);
+            self.transitionToRoute('items');
           }).catch(function () {
             alert('Sorry, saving your item failed! Please try again later.');
           });
@@ -741,6 +817,135 @@ define("client/initializers/preload",
         }
       };
   });
+define("client/mixins/activatable-controller",
+  ["exports"],
+  function(__exports__) {
+    "use strict";
+    var ActivatableControllerMixin = Ember.Mixin.create({
+      active: false
+    });
+
+    __exports__["default"] = ActivatableControllerMixin;
+  });
+define("client/mixins/active-route-base",
+  ["exports"],
+  function(__exports__) {
+    "use strict";
+    var ActiveRouteBaseMixin = Ember.Mixin.create({
+      setupController: function (controller, model) {
+        this.setControllerActive();
+        this._super(controller, model);
+      },
+
+      setControllerActive: function () {
+        var self = this;
+        // requestAnimationFrame seems to be the only way for iOS to respect the CSS transition delay
+        window.requestAnimationFrame(function () {
+          self.set('controller.active', true);
+        });
+      },
+
+      setControllerInactive: function () {
+        var self = this;
+        // requestAnimationFrame seems to be the only way for iOS to respect the CSS transition delay
+        window.requestAnimationFrame(function () {
+          self.set('controller.active', false);
+        });
+      },
+
+      retryTransition: function (evt) {
+        var transition = evt.data.transition;
+
+        Ember.run(function () {
+          transition.retry();
+        });
+      },
+    });
+
+    __exports__["default"] = ActiveRouteBaseMixin;
+  });
+define("client/mixins/group-view-route",
+  ["client/mixins/active-route-base","client/utils/get-transitionend-event-name","exports"],
+  function(__dependency1__, __dependency2__, __exports__) {
+    "use strict";
+    var ActiveRouteBaseMixin = __dependency1__["default"];
+    var transitionEndName = __dependency2__["default"];
+
+    var GroupViewRouteMixin = Ember.Mixin.create(ActiveRouteBaseMixin, {
+      actions: {
+        willTransition: function (transition) {
+          // group view will always be the second section element
+          var element = $('.content > section:nth-of-type(2)');
+
+          // prevent infinite loop on transition.retry()
+          if (!element.length || !element.hasClass('active')) {
+            return;
+          }
+
+          // transitioning between the new,index,and edit routes should be instantaneous
+          if (transition.params['group.index']) {
+            this.setControllerInactive();
+            this.controllerFor('group.index').set('active', true);
+            return;
+          }
+          if (transition.params['group.edit']) {
+            this.setControllerInactive();
+            this.controllerFor('group.edit').set('active', true);
+            return;
+          }
+
+          // TODO: skip transition abort + CSS transition if not on mobile
+          transition.abort();
+          this.setControllerInactive();
+
+          element.one(transitionEndName, { transition: transition }, this.get('retryTransition'));
+        }
+      }
+    });
+
+    __exports__["default"] = GroupViewRouteMixin;
+  });
+define("client/mixins/item-view-route",
+  ["client/mixins/active-route-base","client/utils/get-transitionend-event-name","exports"],
+  function(__dependency1__, __dependency2__, __exports__) {
+    "use strict";
+    var ActiveRouteBaseMixin = __dependency1__["default"];
+    var transitionEndName = __dependency2__["default"];
+
+    var ItemViewRouteMixin = Ember.Mixin.create(ActiveRouteBaseMixin, {
+      actions: {
+        willTransition: function (transition) {
+          // item view will always be the third section element
+          var element = $('.content > section:nth-of-type(3)');
+
+          // prevent infinite loop on transition.retry()
+          if (!element.length || !element.hasClass('active')) {
+            return;
+          }
+
+          // transitioning between the new,index,and edit routes should be instantaneous
+          if (transition.params['item.index']) {
+            this.setControllerInactive();
+            this.controllerFor('item.index').set('active', true);
+            return;
+          }
+          if (transition.params['item.edit']) {
+            this.setControllerInactive();
+            this.controllerFor('item.edit').set('active', true);
+            return;
+          }
+
+          // TODO: skip transition abort + CSS transition if not on mobile
+          transition.abort();
+          this.setControllerInactive();
+
+          element.one(transitionEndName, { transition: transition }, this.get('retryTransition'));
+        }
+      }
+    });
+
+    __exports__["default"] = ItemViewRouteMixin;
+  });
 define("client/mixins/sortable-controller",
   ["exports"],
   function(__exports__) {
@@ -759,10 +964,51 @@ define("client/mixins/sortable-controller",
 
     __exports__["default"] = SortControllerMixin;
   });
-define("client/models/group",
+define("client/mixins/sortable-route",
   ["exports"],
   function(__exports__) {
     "use strict";
+    var SortableRouteMixin = Ember.Mixin.create({
+      clearSortingMethod: function (evt) {
+        var controller;
+
+        // depending on whether this was executed directly in JS,
+        // through a template, or by a jQuery event handler,
+        // we'll need to get the controller via the proper method.
+        // a template may trigger the action for a controller/route pair that
+        // is not the currently active route, in which case we prevent the action
+        // from taking place on the active controller by passing a string
+        // with the name of the controller to be changed.
+        if (evt && evt.data && evt.data.controller) {
+          controller = evt.data.controller;
+        } else if (typeof evt === 'string') {
+          controller = this.controllerFor(evt);
+        } else {
+          controller = evt || this.get('controller');
+        }
+
+        // the default from the data store is to sort id ascending.
+        // if we set both to null, and the previous vals were to sort anything descending,
+        // the list will be sorted by id, but in *descending* order.
+        controller.set('sortProperties', ['id']);
+        controller.set('sortAscending', true);
+      },
+
+      actions: {
+        clearSort: function (controller) {
+          this.clearSortingMethod(controller);
+        },
+      }
+    });
+
+    __exports__["default"] = SortableRouteMixin;
+  });
+define("client/models/group",
+  ["client/utils/numberize-field","exports"],
+  function(__dependency1__, __exports__) {
+    "use strict";
+    var numberizeField = __dependency1__["default"];
+
     var Group = Ember.Object.extend({
       init: function () {
         this._super();
@@ -771,14 +1017,30 @@ define("client/models/group",
 
       title: '',
       description: '',
+
+      numberize: function () {
+        var fields = this.get('fields');
+
+        if (!Array.isArray(fields)) {
+          return this;
+        }
+
+        // only re-set the value if it's clear it's a number,
+        // otherwise we'll get NaN in the TextField
+        fields.forEach(numberizeField);
+
+        return this;
+      }
     });
 
     __exports__["default"] = Group;
   });
 define("client/models/item",
-  ["exports"],
-  function(__exports__) {
+  ["client/utils/numberize-field","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
+    var numberizeField = __dependency1__["default"];
+
     var Item = Ember.Object.extend({
       init: function () {
         this._super();
@@ -790,6 +1052,31 @@ define("client/models/item",
       rating: 0,
       priority: 0,
       complete: false,
+
+      numberize: function () {
+        var rating = parseInt(this.get('rating'), 10),
+            priority = parseInt(this.get('priority'), 10),
+            fields = this.get('fields');
+
+
+        if (!isNaN(rating)) {
+          this.set('rating', rating);
+        }
+
+        if (!isNaN(priority)) {
+          this.set('priority', priority);
+        }
+
+        if (!Array.isArray(fields)) {
+          return this;
+        }
+
+        // only re-set the value if it's clear it's a number,
+        // otherwise we'll get NaN in the TextField
+        fields.forEach(numberizeField);
+
+        return this;
+      }
     });
 
     __exports__["default"] = Item;
@@ -799,6 +1086,7 @@ define("client/router",
   function(__exports__) {
     "use strict";
     var Router = Em.Router.extend({
+      location: 'hash'
     });
 
     Router.map(function () {
@@ -827,7 +1115,35 @@ define("client/routes/application",
   ["exports"],
   function(__exports__) {
     "use strict";
-    var ApplicationRoute = Em.Route.extend();
+    var body = document.body;
+
+    var ApplicationRoute = Em.Route.extend({
+      spinnerEl: 'div',
+      spinnerClassNames: 'loading fa fa-spin fa-spinner',
+
+      removeLoadingSpinner: function () {
+        var spinnerClassNames = this.get('spinnerClassNames'),
+            spinnerEl = this.get('spinnerEl'),
+            spinners = [].slice.call(body.children).filter(function (el) {
+              return el.className === spinnerClassNames && el.nodeName.toLowerCase() === spinnerEl;
+            });
+
+        spinners.forEach(function (spinner) {
+          body.removeChild(spinner);
+        });
+      },
+
+      actions: {
+        loading: function () {
+          var spinnerEl = this.get('spinnerEl'),
+              spinner = document.createElement(spinnerEl);
+
+          spinner.className = this.get('spinnerClassNames');
+          body.appendChild(spinner);
+          this.router.on('didTransition', this, 'removeLoadingSpinner');
+        }
+      }
+    });
 
     __exports__["default"] = ApplicationRoute;
   });
@@ -851,15 +1167,19 @@ define("client/routes/group",
     __exports__["default"] = GroupRoute;
   });
 define("client/routes/group/edit",
-  ["exports"],
-  function(__exports__) {
+  ["client/mixins/group-view-route","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
-    var GroupEditRoute = Em.Route.extend({
+    var GroupViewRouteMixin = __dependency1__["default"];
+
+    var GroupEditRoute = Em.Route.extend(GroupViewRouteMixin, {
       setupController: function (controller, group) {
+        controller.set('canonicalModel', group);
+
         // deep copy of passed-in model to mess with in case edits are canceled.
         // seems like `.toJSON()` is not supported for `Ember.Object`
-        controller.set('model', this.store.createModelOfType('groups', group));
-        controller.set('canonicalModel', group);
+        group = this.store.createModelOfType('groups', group);
+        this._super(controller, group);
       },
 
       renderTemplate: function () {
@@ -870,8 +1190,12 @@ define("client/routes/group/edit",
       },
 
       actions: {
-        willTransition: function () {
-          this.get('controller.model').destroy();
+        willTransition: function (transition) {
+          var controller = this.get('controller'),
+              model = controller.get('model');
+
+          model.destroy();
+          this._super(transition);
         }
       }
     });
@@ -879,10 +1203,12 @@ define("client/routes/group/edit",
     __exports__["default"] = GroupEditRoute;
   });
 define("client/routes/group/index",
-  ["exports"],
-  function(__exports__) {
+  ["client/mixins/group-view-route","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
-    var GroupIndexRoute = Em.Route.extend({
+    var GroupViewRouteMixin = __dependency1__["default"];
+
+    var GroupIndexRoute = Em.Route.extend(GroupViewRouteMixin, {
       renderTemplate: function () {
         this.render('group/index', {
           into: 'application',
@@ -894,10 +1220,12 @@ define("client/routes/group/index",
     __exports__["default"] = GroupIndexRoute;
   });
 define("client/routes/groups",
-  ["exports"],
-  function(__exports__) {
+  ["client/mixins/sortable-route","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
-    var GroupsRoute = Em.Route.extend({
+    var SortableRouteMixin = __dependency1__["default"];
+
+    var GroupsRoute = Em.Route.extend(SortableRouteMixin, {
       model: function () {
         var preload = this.get('preload');
 
@@ -926,12 +1254,15 @@ define("client/routes/groups",
     __exports__["default"] = GroupsRoute;
   });
 define("client/routes/groups/new",
-  ["exports"],
-  function(__exports__) {
+  ["client/mixins/group-view-route","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
-    var GroupsNewRoute = Em.Route.extend({
+    var GroupViewRouteMixin = __dependency1__["default"];
+
+    var GroupsNewRoute = Em.Route.extend(GroupViewRouteMixin, {
       setupController: function (controller) {
-        controller.set('model', this.store.createModelOfType('groups'));
+        var model = this.store.createModelOfType('groups');
+        this._super(controller, model);
       },
 
       renderTemplate: function () {
@@ -942,8 +1273,13 @@ define("client/routes/groups/new",
       },
 
       actions: {
-        willTransition: function () {
-          this.get('controller.model').destroy();
+        willTransition: function (transition) {
+          var controller = this.get('controller'),
+              model = controller.get('model');
+
+          model.destroy();
+
+          this._super(transition);
         }
       }
     });
@@ -982,15 +1318,19 @@ define("client/routes/item",
     __exports__["default"] = ItemRoute;
   });
 define("client/routes/item/edit",
-  ["exports"],
-  function(__exports__) {
+  ["client/mixins/item-view-route","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
-    var ItemEditRoute = Em.Route.extend({
+    var ItemViewRouteMixin = __dependency1__["default"];
+
+    var ItemEditRoute = Em.Route.extend(ItemViewRouteMixin, {
       setupController: function (controller, item) {
+        controller.set('canonicalModel', item);
+
         // deep copy of passed-in model to mess with in case edits are canceled.
         // seems like `.toJSON()` is not supported for `Ember.Object`
-        controller.set('model', this.store.createModelOfType('items', item));
-        controller.set('canonicalModel', item);
+        item = this.store.createModelOfType('items', item);
+        this._super(controller, item);
       },
 
       renderTemplate: function () {
@@ -1001,8 +1341,12 @@ define("client/routes/item/edit",
       },
 
       actions: {
-        willTransition: function () {
-          this.get('controller.model').destroy();
+        willTransition: function (transition) {
+          var controller = this.get('controller'),
+              model = controller.get('model');
+
+          model.destroy();
+          this._super(transition);
         }
       }
     });
@@ -1010,10 +1354,12 @@ define("client/routes/item/edit",
     __exports__["default"] = ItemEditRoute;
   });
 define("client/routes/item/index",
-  ["exports"],
-  function(__exports__) {
+  ["client/mixins/item-view-route","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
-    var ItemIndexRoute = Em.Route.extend({
+    var ItemViewRouteMixin = __dependency1__["default"];
+
+    var ItemIndexRoute = Em.Route.extend(ItemViewRouteMixin, {
       renderTemplate: function () {
         this.render('item/index', {
           into: 'application',
@@ -1025,18 +1371,23 @@ define("client/routes/item/index",
     __exports__["default"] = ItemIndexRoute;
   });
 define("client/routes/items",
-  ["exports"],
-  function(__exports__) {
+  ["client/mixins/active-route-base","client/mixins/sortable-route","client/utils/get-transitionend-event-name","client/utils/detect-form-factor","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
-    var ItemsRoute = Em.Route.extend({
+    var ActiveRouteBaseMixin = __dependency1__["default"];
+    var SortableRouteMixin = __dependency2__["default"];
+    var transitionEndName = __dependency3__["default"];
+    var media = __dependency4__["default"];
+
+    var ItemsRoute = Em.Route.extend(ActiveRouteBaseMixin, SortableRouteMixin, {
       model: function (params) {
         this.set('currentGroupId', parseInt(params.group_id, 10));
         return this.api.fetchAll('items', 'groups', params.group_id);
       },
 
       setupController: function (controller, model) {
-        // allow sub-routes to access the GroupId since it seems the dynamic segment is not available otherwise
         controller.set('GroupId', this.get('currentGroupId'));
+        this.clearSortingMethod();
         this._super(controller, model);
       },
 
@@ -1051,6 +1402,30 @@ define("client/routes/items",
         refresh: function () {
           this.refresh();
           return true;
+        },
+
+        willTransition: function (transition) {
+          // tablet sizes and bigger have a multi-panel layout and don't need animations here
+          if (media.notSmall()) {
+            return;
+          }
+
+          var controller = this.get('controller'),
+              element = $('.items');
+
+          // if transitioning to groups, we need to set `active` to
+          // `false` on the ItemsController to make it animate away
+          if (element.length && controller.get('active') === true && transition.params['groups.index']) {
+            controller.set('active', false);
+
+            transition.abort();
+
+            // this line must go before retrying the transition, since the
+            // event bubble hierarchy will be different once the route exits.
+            element.one(transitionEndName, { controller: controller }, this.get('clearSortingMethod'));
+
+            element.one(transitionEndName, { transition: transition }, this.get('retryTransition'));
+          }
         }
       }
     });
@@ -1058,16 +1433,18 @@ define("client/routes/items",
     __exports__["default"] = ItemsRoute;
   });
 define("client/routes/items/new",
-  ["exports"],
-  function(__exports__) {
+  ["client/mixins/item-view-route","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
-    var ItemsNewRoute = Em.Route.extend({
+    var ItemViewRouteMixin = __dependency1__["default"];
+
+    var ItemsNewRoute = Em.Route.extend(ItemViewRouteMixin, {
       setupController: function (controller) {
         var model = this.store.createModelOfType('items', {
           GroupId: this.controllerFor('items').get('GroupId')
         });
 
-        controller.set('model', model);
+        this._super(controller, model);
       },
 
       renderTemplate: function () {
@@ -1078,8 +1455,13 @@ define("client/routes/items/new",
       },
 
       actions: {
-        willTransition: function () {
-          this.get('controller.model').destroy();
+        willTransition: function (transition) {
+          var controller = this.get('controller'),
+              model = controller.get('model');
+
+          model.destroy();
+
+          this._super(transition);
         }
       }
     });
@@ -1143,7 +1525,6 @@ define("client/utils/api",
         this.set('edit', function (type, model) {
           // app code expects plain object (from server), so "create" one
           model = JSON.parse(JSON.stringify(model));
-          delete model.canonicalModel;
           return Ember.RSVP.resolve(model);
         });
         this.set('patch', function (type, model) {
@@ -1592,6 +1973,13 @@ define("client/utils/data-store",
         return modelType.findBy(key, val);
       },
 
+      /**
+      * Remove a model or models of the given type from internal storage.
+      *
+      * @param {String} type The name of the modelType you wish to remove from.
+      * @param {(Object|Array)} models A model or array of models you want to remove.
+      * @return
+      */
       deleteModels: function (type, models) {
         var modelType = this._store[type];
 
@@ -1606,6 +1994,14 @@ define("client/utils/data-store",
         }
       },
 
+      /**
+      * Delete all models of the given type from internal storage that have `key` === `val`.
+      *
+      * @param {String} type The name of the modelType you wish to remove models from.
+      * @param {String} key The key to search on all models for a particular value.
+      * @param {(Number|String|Date)} val The value the key should have in order for the model to be removed.
+      * @return
+      */
       seekAndDestroy: function (type, key, val) {
         var models = this.all(type, key, val);
         this.deleteModels(type, models);
@@ -1613,6 +2009,40 @@ define("client/utils/data-store",
     });
 
     __exports__["default"] = DataStore;
+  });
+define("client/utils/detect-form-factor",
+  ["exports"],
+  function(__exports__) {
+    "use strict";
+    var matchMedia = window.matchMedia,
+        smallMax = 640,
+        mediumMax = 1024;
+
+    function smallScreen () {
+      return matchMedia('screen and (max-device-width: ' + smallMax + 'px)').matches;
+    }
+
+    function mediumScreen () {
+      var min = smallMax + 1;
+      return matchMedia('screen and (min-device-width: ' + min + 'px) and (max-device-width: ' + mediumMax + 'px)').matches;
+    }
+
+    function largeScreen () {
+      var min = mediumMax + 1;
+      return matchMedia('screen and (min-device-width: ' + min + 'px)').matches;
+    }
+
+    function notSmall () {
+      var min = smallMax + 1;
+      return matchMedia('screen and (min-device-width: ' + min + 'px)').matches;
+    }
+
+    __exports__["default"] = {
+      smallScreen: smallScreen,
+      mediumScreen: mediumScreen,
+      largeScreen: largeScreen,
+      notSmall: notSmall,
+    };
   });
 define("client/utils/fastclick",
   ["exports"],
@@ -1627,6 +2057,52 @@ define("client/utils/fastclick",
     };
 
     __exports__["default"] = FastClickInit;
+  });
+define("client/utils/get-transitionend-event-name",
+  ["exports"],
+  function(__exports__) {
+    "use strict";
+    function getTransitionEndName () {
+      var el = document.createElement('transitionEndNameTest'),
+          transitionEndEventNames;
+
+      transitionEndEventNames = {
+        'transition'       : 'transitionend',
+        'WebkitTransition' : 'webkitTransitionEnd',
+        'MozTransition'    : 'transitionend',
+        'OTransition'      : 'oTransitionEnd',
+        'msTransition'     : 'MSTransitionEnd',
+      };
+
+      for (var name in transitionEndEventNames) {
+        if (typeof el.style[name] !== 'undefined') {
+          return transitionEndEventNames[name];
+        }
+      }
+    }
+
+    __exports__["default"] = getTransitionEndName();
+  });
+define("client/utils/numberize-field",
+  ["exports"],
+  function(__exports__) {
+    "use strict";
+    function numberizeField (field) {
+      var val, newVal;
+
+      if (Ember.get(field, 'type') !== 'Number') {
+        return;
+      }
+
+      val = Ember.get(field, 'val');
+      newVal = parseInt(val, 10);
+
+      if (!isNaN(newVal)) {
+        Ember.set(field, 'val', newVal);
+      }
+    }
+
+    __exports__["default"] = numberizeField;
   });
 define("client/utils/sequelize-data-transform",
   ["exports"],
@@ -1648,6 +2124,131 @@ define("client/utils/sequelize-data-transform",
     }
 
     __exports__["default"] = sequelizeTransform;
+  });
+define("client/validators/field",
+  ["exports"],
+  function(__exports__) {
+    "use strict";
+    function validateField (field) {
+      var errors = [];
+
+      if (typeof field !== 'object') {
+        errors.push('At least one field was not an object.');
+        return errors;
+      }
+
+      if (typeof field.key !== 'string') {
+        errors.push('The key for at least one field was not a String.');
+      }
+
+      if (typeof field.type !== 'string') {
+        errors.push('The type for at least one field was not a String.');
+      }
+
+      if (['String', 'Number', 'Date', 'Boolean'].indexOf(field.type) === -1) {
+        errors.push('At least one field had an unsupported type: ' + field.type + '.');
+      }
+
+      // we can't access any more properties because there were errors in the ones we need
+      if (errors.length) {
+        return errors;
+      }
+
+      if (field.type === 'Date' && !validator.isDate(field.val)) {
+        errors.push('Custom Field "' + field.key + '" was not a valid Date.');
+      } else if (field.type === 'Number' && typeof field.val !== 'number') {
+        errors.push('Custom Field "' + field.key + '" was not a valid Number.');
+      } else if (field.type === 'String' && typeof field.val !== 'string') {
+        errors.push('Custom Field "' + field.key + '" was not a String.');
+      } else if (field.type === 'Boolean' && typeof field.val !== 'boolean') {
+        errors.push('Custom Field "' + field.key + '" was not a Boolean.');
+      }
+
+      return errors;
+    }
+
+    __exports__["default"] = validateField;
+  });
+define("client/validators/group",
+  ["client/validators/field","exports"],
+  function(__dependency1__, __exports__) {
+    "use strict";
+    var validateField = __dependency1__["default"];
+
+    function validateGroup (group) {
+      var title = Ember.get(group, 'title'),
+          description = Ember.get(group, 'description'),
+          fields = Ember.get(group, 'fields'),
+          errors = [];
+
+      if (typeof title !== 'string') {
+        errors.push('Title field was not a String.');
+      }
+
+      if (typeof description !== 'string') {
+        errors.push('Description field was not a String.');
+      }
+
+      if (!Array.isArray(fields)) {
+        errors.push('Fields field was not an Array.');
+      } else {
+        fields.forEach(function (field) {
+          errors = errors.concat(validateField(field));
+        });
+      }
+
+      return errors;
+    }
+
+    __exports__["default"] = validateGroup;
+  });
+define("client/validators/item",
+  ["client/validators/field","exports"],
+  function(__dependency1__, __exports__) {
+    "use strict";
+    var validateField = __dependency1__["default"];
+
+    function validateItem (item) {
+      var title = Ember.get(item, 'title'),
+          description = Ember.get(item, 'description'),
+          rating = Ember.get(item, 'rating'),
+          priority = Ember.get(item, 'priority'),
+          complete = Ember.get(item, 'complete'),
+          fields = Ember.get(item, 'fields'),
+          errors = [];
+
+      if (typeof title !== 'string') {
+        errors.push('Title field was not a String.');
+      }
+
+      if (typeof description !== 'string') {
+        errors.push('Description field was not a String.');
+      }
+
+      if (typeof rating !== 'number') {
+        errors.push('Rating field was not a Number.');
+      }
+
+      if (typeof priority !== 'number') {
+        errors.push('Priority field was not a Number.');
+      }
+
+      if (typeof complete !== 'boolean') {
+        errors.push('Complete field was not a Boolean.');
+      }
+
+      if (!Array.isArray(fields)) {
+        errors.push('Fields field was not an Array.');
+      } else {
+        fields.forEach(function (field) {
+          errors = errors.concat(validateField(field));
+        });
+      }
+
+      return errors;
+    }
+
+    __exports__["default"] = validateItem;
   });
 define("client/views/application",
   ["exports"],
