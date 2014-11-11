@@ -3,9 +3,12 @@
   $checkbox-size: 1.25em;
   cursor: pointer;
   background: none;
-  border: none;
+  // border: none;
+  border: 1px solid #888;
+  border-radius: 5px;
   outline: none;
   -webkit-appearance: none;
+
   &:after {
     content: '\2714';
     line-height: $checkbox-size / 1.2;

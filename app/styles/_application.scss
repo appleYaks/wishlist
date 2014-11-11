@@ -19,9 +19,7 @@ html, body, .application, .content {
 
   // slide previous sections out of view when navigating deeper
   &.active {
-    // @include breakpoint($screen-small) {
-      @include transform(translate3d(0,0,0));
-    // }
+    @include transform(translate3d(0,0,0));
   }
 
   // the actual content between the header and footer
@@ -100,25 +98,4 @@ button {
   outline: none;
   // color: #ff2d55;
   .button-text { @include squish-text; }
-}
-
-.list {
-  list-style: none;
-  margin: 0;
-  background: white;
-
-  li {
-    max-height: 80px;
-    border-top: 1px solid #333;
-  }
-
-  li:first-of-type { border-top: none; }
-  li:last-of-type { border-bottom: 1px solid #333; }
-
-  li a {
-  }
-
-  .controls {
-    // visibility: hidden;
-  }
 }

@@ -1,0 +1,57 @@
+.list {
+  list-style: none;
+  margin: 0;
+}
+
+.list li {
+  position: relative;
+  height: 6.4rem;
+  max-height: 6.4rem;
+  margin: 10px;
+  border: 1px solid #EEE;
+  border-bottom: 1px solid #AAA;
+  border-radius: 10px;
+  background: linear-gradient(#FFF 0%, #EEE 100%);
+  color: #444;
+
+  .list-checkbox {
+    position: absolute;
+    width: 6.4rem;
+    height: 100%;
+    border-right: 1px dashed black;
+  }
+
+  .checkmark {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    @include transform(translate3d(-50%, -50%, 0));
+  }
+
+  > a {
+    position: absolute;
+    padding: 0 10px;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    font-size: 2rem;
+    // remove link colors
+    color: inherit;
+    // ellipsis styles on overflow
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    // center text vertically
+    line-height: 6.4rem;
+  }
+
+  .list-checkbox + a {
+    width: calc(100% - 6.4rem);
+    right: 0;
+    text-align: left;
+  }
+
+  .controls { display: none; }
+}

@@ -8,7 +8,9 @@
   <ul class="list items-list">
     {{#each}}
     <li>
-      {{action-checkbox type="checkbox" class="checkmark" checked=complete action="patchChecked" model=this}}
+      <span class="list-checkbox">
+        {{action-checkbox type="checkbox" class="checkmark" checked=complete action="patchChecked" model=this}}
+      </span>
       {{#link-to 'item' this class='list-item'}}
         {{title}}
       {{/link-to}}
