@@ -1,18 +1,17 @@
 .checkmark {
-  // $checkbox-left: nth($list-link-padding, 1);
-  $checkbox-size: 1.25em;
+  $checkbox-size: 3rem;
   cursor: pointer;
-  background: none;
-  // border: none;
-  border: 1px solid #888;
+  border: 2px solid #BBB;
   border-radius: 5px;
+  width: $checkbox-size;
+  height: $checkbox-size;
   outline: none;
   -webkit-appearance: none;
 
   &:after {
     content: '\2714';
-    line-height: $checkbox-size / 1.2;
-    font-size: $checkbox-size;
+    line-height: $checkbox-size * 0.8;
+    font-size: $checkbox-size * 1.5;
     color: #DDD;
     text-shadow: 0 -1px 0 #AAA;
   }
