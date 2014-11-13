@@ -24,7 +24,6 @@ var ItemViewRouteMixin = Ember.Mixin.create(ActiveRouteBaseMixin, {
         return;
       }
 
-      // TODO: skip transition abort + CSS transition if not on mobile
       transition.abort();
       this.setControllerInactive();
 

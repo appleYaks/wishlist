@@ -21,6 +21,10 @@ var EditMetadataComponent = Ember.Component.extend({
     this.set('newFieldValue', null);
   }.observes('selectedKeyType'),
 
+  resetErrors: function () {
+    this.set('newFieldErrors', []);
+  }.observes('selectedKeyType'),
+
   actions: {
     deleteField: function (field) {
       this.get('fields').removeObject(field);
