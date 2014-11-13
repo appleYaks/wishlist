@@ -94,7 +94,13 @@ button {
   background: none;
   padding: 0;
   border: none;
-  height: 100%;
   outline: none;
   .button-text { @include squish-text; }
+}
+
+.back-button:before {
+  // small screens get a "back" arrow from FontAwesome. seems more natural.
+  @include breakpoint($screen-small) {
+    content: "\f060" !important;
+  }
 }
