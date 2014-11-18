@@ -21,6 +21,7 @@
   // to get the same layout as the other views. the lack of content in the
   // dummy shifts the h1, so we need to center it manually.
   position: absolute;
+  top: 0;
   left: 50%;
   @include transform(translate3d(-50%, 0, 0));
 }
