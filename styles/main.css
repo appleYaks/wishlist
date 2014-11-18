@@ -2226,6 +2226,7 @@ button {
 
 .groups header h1 {
   position: absolute;
+  top: 0;
   left: 50%;
   -moz-transform: translate3d(-50%, 0, 0);
   -ms-transform: translate3d(-50%, 0, 0);
