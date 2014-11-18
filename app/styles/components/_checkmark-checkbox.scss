@@ -9,7 +9,6 @@
   -webkit-appearance: none;
 
   &:after {
-    content: '\2714';
     line-height: $checkbox-size * 0.8;
     font-size: $checkbox-size * 1.5;
     color: #DDD;
@@ -17,6 +16,7 @@
   }
 
   &:checked:after {
+    content: '\2714';
     color: green;
     text-shadow: 0 1px 0 black;
   }
