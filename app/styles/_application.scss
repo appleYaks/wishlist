@@ -7,9 +7,21 @@ html, body, .application, .content {
 .content > section {
   position: absolute;
   height: 100%;
-  background: white;
+  background: url('/images/waves.png');
   overflow: hidden;
   @include transition-duration(.25s);
+
+  // place translucent color overlay over background
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: hsla(200,50%,50%,0.7);
+    z-index: -1;
+  }
 
   @include breakpoint($screen-small) {
     left: 0;
