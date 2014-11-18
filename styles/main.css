@@ -2094,12 +2094,21 @@ html, body, .application, .content {
 .content > section {
   position: absolute;
   height: 100%;
-  background: white;
+  background: url("/images/waves.png");
   overflow: hidden;
   -moz-transition-duration: 0.25s;
   -o-transition-duration: 0.25s;
   -webkit-transition-duration: 0.25s;
   transition-duration: 0.25s; }
+  .content > section:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(9, 116, 170, 0.7);
+    z-index: -1; }
   @media (max-device-width: 640px) {
     .content > section {
       left: 0;
@@ -2184,16 +2193,23 @@ footer {
     -webkit-flex-grow: 1;
     flex-grow: 1; }
 
+ul {
+  list-style: none;
+  padding: 0; }
+
 button {
   background: none;
   padding: 0;
   border: none;
-  height: 100%;
   outline: none; }
   button .button-text {
     font: 0/0 serif;
     text-shadow: none;
     color: transparent; }
+
+@media (max-device-width: 640px) {
+  .back-button:before {
+    content: "\f060" !important; } }
 
 @media (min-device-width: 641px) {
   .groups {
@@ -2282,18 +2298,19 @@ button {
 
 .checkmark {
   cursor: pointer;
-  background: none;
-  border: 1px solid #888;
+  border: 2px solid #BBB;
   border-radius: 5px;
+  width: 3rem;
+  height: 3rem;
   outline: none;
   -webkit-appearance: none; }
   .checkmark:after {
-    content: '\2714';
-    line-height: 1.04167em;
-    font-size: 1.25em;
+    line-height: 2.4rem;
+    font-size: 4.5rem;
     color: #DDD;
     text-shadow: 0 -1px 0 #AAA; }
   .checkmark:checked:after {
+    content: '\2714';
     color: green;
     text-shadow: 0 1px 0 black; }
 
@@ -2307,6 +2324,94 @@ button {
 
 .metadata-view header button {
   padding: 10px; }
+
+.metadata {
+  margin: 10px 10px 1em;
+  padding: 5px 20px;
+  color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px; }
+  .metadata h1 {
+    font-size: 1.2em;
+    margin-bottom: 5px; }
+  .metadata p.description {
+    font-size: 0.9em;
+    margin-top: 8px;
+    text-indent: 1em; }
+  .metadata li {
+    margin: 0.7em 0;
+    padding: 0; }
+  .metadata label {
+    display: block;
+    font-weight: bold;
+    text-decoration: underline; }
+  .metadata .meta-value, .metadata .field-value, .metadata .edit-metadata .new-field .add-field-key, .edit-metadata .new-field .metadata .add-field-key, .metadata .edit-metadata .new-field .add-field-value, .edit-metadata .new-field .metadata .add-field-value {
+    margin-top: 5px; }
+  .metadata .checkmark {
+    margin-top: -5px;
+    padding: 0; }
+
+@media (min-device-width: 1025px) {
+  .fields, .edit-metadata .new-field {
+    padding: 20px; } }
+.fields h1, .edit-metadata .new-field h1 {
+  margin-top: 0;
+  font-size: 1.1em; }
+
+.edit-metadata h1 {
+  text-align: center; }
+.edit-metadata .datetime-picker {
+  color: black; }
+.edit-metadata label, .edit-metadata input {
+  display: block; }
+.edit-metadata textarea {
+  resize: vertical; }
+.edit-metadata input:not([type=checkbox]), .edit-metadata textarea, .edit-metadata select {
+  padding: 5px;
+  border: 0;
+  width: 100%;
+  color: black;
+  border-radius: 5px; }
+.edit-metadata select {
+  background-image: none;
+  background-color: white;
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
+.edit-metadata .datetime-picker select {
+  width: auto; }
+
+@media (min-device-width: 1025px) {
+  .edit-metadata .metadata {
+    border: 3px dashed black; } }
+.edit-metadata .metadata .edit-field {
+  position: relative; }
+  .edit-metadata .metadata .edit-field button {
+    position: absolute;
+    top: 0;
+    right: 0; }
+
+.edit-metadata .new-field {
+  overflow: hidden;
+  *zoom: 1;
+  color: white; }
+  .edit-metadata .new-field button {
+    padding: 10px;
+    background: white;
+    border-radius: 5px;
+    float: right; }
+  .edit-metadata .new-field select, .edit-metadata .new-field button {
+    color: black; }
+  .edit-metadata .new-field .select-center {
+    margin: 0 auto 0.5em;
+    text-align: center; }
+  .edit-metadata .new-field label {
+    text-decoration: none;
+    font-weight: normal; }
+  .edit-metadata .new-field .error {
+    display: block;
+    margin-top: 0.5em;
+    color: #ff6666;
+    font-weight: bold; }
 
 .list {
   list-style: none;
@@ -2357,3 +2462,5 @@ button {
     display: none; }
 
 /*************************************************/
+
+/*# sourceMappingURL=main.css.map */
