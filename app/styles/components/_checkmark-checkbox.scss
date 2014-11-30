@@ -8,6 +8,10 @@
   outline: none;
   -webkit-appearance: none;
 
+  // since firefox doesn't support non-standard :after on input elements,
+  // at least try to make the checkbox have a similar look and feel
+  -moz-transform: scale(1.5);
+
   &:after {
     line-height: $checkbox-size * 0.8;
     font-size: $checkbox-size * 1.5;

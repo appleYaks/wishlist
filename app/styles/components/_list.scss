@@ -26,6 +26,9 @@
     left: 50%;
     top: 50%;
     @include transform(translate3d(-50%, -50%, 0));
+    // since firefox doesn't support non-standard :after on input elements,
+    // at least try to make the checkbox have a similar look and feel
+    -moz-transform: translate3d(-50%, -50%, 0) scale(1.5);
   }
 
   > a {
