@@ -1,45 +1,35 @@
 .metadata {
-  margin: 10px 10px 1em;
+  margin: 0 10px;
+  padding: 0 20px;
+  font-size: 2rem;
+  color: hsla(100, 100, 100, 0.9);
+  border-radius: 10px;
 
-  // @include breakpoint($screen-large) {
-    padding: 5px 20px;
-    color: hsla(100, 100, 100, 0.9);
-    border-radius: 10px;
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+  }
 
-    h1 {
-      font-size: 1.2em;
-      margin-bottom: 5px;
-    }
+  p.description {
+    font-size: 1.8rem;
+    margin-top: 8px;
+    text-indent: 1em;
+  }
 
-    p.description {
-      font-size: 0.9em;
-      margin-top: 8px;
-      text-indent: 1em;
-    }
+  li {
+    margin: 0.7em 0;
+    padding: 0;
+  }
 
-    li {
-      margin: 0.7em 0;
-      padding: 0;
-    }
+  label {
+    display: block;
+    font-weight: bold;
+    text-decoration: underline;
+  }
 
-    label {
-      display: block;
-      font-weight: bold;
-      text-decoration: underline;
-    }
-
-    .meta-value, .field-value { margin-top: 5px; }
-    .checkmark { margin-top: -5px; padding: 0; }
-  // }
+  .meta-value, .field-value { margin-top: 5px; }
 }
 
 .fields {
-  @include breakpoint($screen-large) {
-    padding:  20px;
-  }
-
-  h1 {
-    margin-top: 0;
-    font-size: 1.1em;
-  }
+  padding:  0 20px 20px;
 }
