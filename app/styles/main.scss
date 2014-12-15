@@ -1,27 +1,3 @@
-/*  Base Breakpoint Variables  */
-$screen-small-max: 640px;
-$screen-medium-max: 1024px;
-
-/*  Media Queries  */
-$screen-small: (max-device-width $screen-small-max);
-$screen-small-portrait: $screen-small (orientation portrait);
-$screen-small-landscape: $screen-small (orientation landscape);
-$not-small: (min-device-width $screen-small-max + 1);
-
-$screen-medium: (min-device-width $screen-small-max + 1) (max-device-width $screen-medium-max);
-// need to duplicate these since it seems a compound query can't be used as a variable to add to another query
-$screen-medium-portrait:  (min-device-width $screen-small-max + 1) (max-device-width $screen-medium-max) (orientation portrait);
-$screen-medium-landscape: (min-device-width $screen-small-max + 1) (max-device-width $screen-medium-max) (orientation landscape);
-
-$screen-large: (min-device-width $screen-medium-max + 1);
-$screen-large-portrait: $screen-large (orientation portrait);
-$screen-large-landscape: $screen-large (orientation landscape);
-
-$screen-portrait: (orientation portrait);
-$screen-landscape: (orientation landscape);
-$hidpi: min-resolution 1.5dppx;
-$lodpi: max-resolution 1dppx;
-
 /*  Libraries  */
 @import 'normalize'; // via Bower
 @import 'breakpoint'; // via Bower
@@ -29,6 +5,9 @@ $lodpi: max-resolution 1dppx;
 @import 'compass/support';
 @import 'compass/css3';
 @import 'compass/typography';
+
+/*  Variables  */
+@import 'variables/media-qualifiers';
 
 /*  Views  */
 @import 'base';
@@ -50,8 +29,3 @@ $lodpi: max-resolution 1dppx;
 @import 'components/metadata';
 @import 'components/edit-metadata';
 @import 'components/list';
-
-/*************************************************/
-// @import 'components/list-controls';
-// @import 'components/metadata';
-// @import 'components/edit-metadata';
