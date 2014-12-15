@@ -62,7 +62,7 @@ var EditMetadataComponent = Ember.Component.extend({
       this.set('newFieldErrors', newFieldErrors);
 
       // use defaults
-      if (val === null || typeof val === 'undefined') {
+      if (val === null || typeof val === 'undefined' || val === '') {
         if (type.bool) {
           val = document.getElementById('newFieldValue').checked;
         } else if (!type.date) {
