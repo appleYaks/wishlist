@@ -388,7 +388,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  data.buffer.push("<i class=\"fa fa-tasks\"></i><span class=\"link-text\">Groups</span>");
+  data.buffer.push("<i class=\"fa fa-close back-button\"></i><span class=\"link-text\">Groups</span>");
   }
 
 function program3(depth0,data) {
@@ -508,40 +508,53 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
-  var buffer = '', stack1, helper, options;
-  data.buffer.push("\n    <li>\n      ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
-    'class': ("list-item")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "items", "id", options) : helperMissing.call(depth0, "link-to", "items", "id", options));
+  var buffer = '', stack1;
+  data.buffer.push("\n  ");
+  stack1 = helpers.view.call(depth0, {hash:{
+    'tagName': ("li")
+  },hashTypes:{'tagName': "STRING"},hashContexts:{'tagName': depth0},inverse:self.noop,fn:self.program(4, program4, data),contexts:[],types:[],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n      <div class=\"controls\">\n        ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "group", "", options) : helperMissing.call(depth0, "link-to", "group", "", options));
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n        ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "group.edit", "", options) : helperMissing.call(depth0, "link-to", "group.edit", "", options));
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n        <button ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "delete", "", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
-  data.buffer.push("><i class=\"fa fa-trash\"></i></button>\n      </div>\n    </li>\n  ");
+  data.buffer.push("\n  ");
   return buffer;
   }
 function program4(depth0,data) {
   
-  var buffer = '', stack1;
+  var buffer = '', stack1, helper, options;
+  data.buffer.push("\n    ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
+    'class': ("list-item")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "items", "id", options) : helperMissing.call(depth0, "link-to", "items", "id", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n    <div class=\"controls\">\n      <div class=\"actionable-controls\">\n        ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "group", "", options) : helperMissing.call(depth0, "link-to", "group", "", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "group.edit", "", options) : helperMissing.call(depth0, "link-to", "group.edit", "", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        <button ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "delete", "", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push("><i class=\"fa fa-trash\"></i></button>\n      </div>\n      <button class=\"list-controls-toggle\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "toggleControls", "view", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push("><i class=\"fa fa-gear\"></i></button>\n    </div>\n  ");
+  return buffer;
+  }
+function program5(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n      ");
   stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n      ");
+  data.buffer.push("\n    ");
   return buffer;
   }
 
-function program6(depth0,data) {
+function program7(depth0,data) {
   
   
   data.buffer.push("<button><i class=\"fa fa-info-circle\"></i></button>");
   }
 
-function program8(depth0,data) {
+function program9(depth0,data) {
   
   
   data.buffer.push("<button><i class=\"fa fa-pencil\"></i></button>");
@@ -652,7 +665,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  data.buffer.push("<i class=\"fa fa-list-ul\"></i><span class=\"link-text\">Items</span>");
+  data.buffer.push("<i class=\"fa fa-close back-button\"></i><span class=\"link-text\">Items</span>");
   }
 
 function program3(depth0,data) {
@@ -780,7 +793,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  data.buffer.push("<i class=\"fa fa-tasks\"></i><span class=\"link-text\">Groups</span>");
+  data.buffer.push("<i class=\"fa fa-close back-button\"></i><span class=\"link-text\">Groups</span>");
   }
 
 function program3(depth0,data) {
@@ -791,8 +804,19 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
+  var buffer = '', stack1;
+  data.buffer.push("\n    ");
+  stack1 = helpers.view.call(depth0, {hash:{
+    'tagName': ("li")
+  },hashTypes:{'tagName': "STRING"},hashContexts:{'tagName': depth0},inverse:self.noop,fn:self.program(6, program6, data),contexts:[],types:[],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n    ");
+  return buffer;
+  }
+function program6(depth0,data) {
+  
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\n    <li>\n      <span class=\"list-checkbox\">\n        ");
+  data.buffer.push("\n      <span class=\"list-checkbox\">\n        ");
   data.buffer.push(escapeExpression((helper = helpers['action-checkbox'] || (depth0 && depth0['action-checkbox']),options={hash:{
     'type': ("checkbox"),
     'class': ("checkmark"),
@@ -803,17 +827,19 @@ function program5(depth0,data) {
   data.buffer.push("\n      </span>\n      ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("list-item")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "item", "", options) : helperMissing.call(depth0, "link-to", "item", "", options));
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "item", "", options) : helperMissing.call(depth0, "link-to", "item", "", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n      <div class=\"controls\">\n        ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "item.edit", "", options) : helperMissing.call(depth0, "link-to", "item.edit", "", options));
+  data.buffer.push("\n      <div class=\"controls\">\n        <div class=\"actionable-controls\">\n            ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "item.edit", "", options) : helperMissing.call(depth0, "link-to", "item.edit", "", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n        <button ");
+  data.buffer.push("\n            <button ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "delete", "", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
-  data.buffer.push("><i class=\"fa fa-trash\"></i></button>\n      </div>\n    </li>\n    ");
+  data.buffer.push("><i class=\"fa fa-trash\"></i></button>\n        </div>\n        <button class=\"list-controls-toggle\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "toggleControls", "view", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push("><i class=\"fa fa-gear\"></i></button>\n      </div>\n    ");
   return buffer;
   }
-function program6(depth0,data) {
+function program7(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\n        ");
@@ -823,7 +849,7 @@ function program6(depth0,data) {
   return buffer;
   }
 
-function program8(depth0,data) {
+function program9(depth0,data) {
   
   
   data.buffer.push("<button><i class=\"fa fa-pencil\"></i></button>");

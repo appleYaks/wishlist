@@ -1,4 +1,4 @@
-define("client/app",
+define("client/app", 
   ["ember/resolver","ember/load-initializers","client/utils/after-render","client/utils/fastclick","client/helpers/moment-calendar","client/helpers/de-dasherize","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __exports__) {
     "use strict";
@@ -17,6 +17,12 @@ define("client/app",
       /**
         * These are debugging flags, they are useful during development
         */
+      LOG_ACTIVE_GENERATION: true,
+      LOG_RESOLVER: true,
+      LOG_MODULE_RESOLVER: true,
+      LOG_TRANSITIONS: true,
+      LOG_TRANSITIONS_INTERNAL: true,
+      LOG_VIEW_LOOKUPS: true,
       modulePrefix: 'client',
       Resolver: Resolver['default']
     });
@@ -26,7 +32,7 @@ define("client/app",
 
     __exports__["default"] = App;
   });
-define("client/components/action-checkbox",
+define("client/components/action-checkbox", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -45,7 +51,7 @@ define("client/components/action-checkbox",
 
     __exports__["default"] = ActionCheckbox;
   });
-define("client/components/datetime-picker",
+define("client/components/datetime-picker", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -213,7 +219,7 @@ define("client/components/datetime-picker",
 
     __exports__["default"] = DateTimePicker;
   });
-define("client/components/edit-metadata",
+define("client/components/edit-metadata", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -238,6 +244,10 @@ define("client/components/edit-metadata",
 
       resetFieldValue: function () {
         this.set('newFieldValue', null);
+      }.observes('selectedKeyType'),
+
+      resetErrors: function () {
+        this.set('newFieldErrors', []);
       }.observes('selectedKeyType'),
 
       actions: {
@@ -340,7 +350,7 @@ define("client/components/edit-metadata",
 
     __exports__["default"] = EditMetadataComponent;
   });
-define("client/controllers/group/edit",
+define("client/controllers/group/edit", 
   ["client/mixins/activatable-controller","client/validators/group","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
@@ -385,7 +395,7 @@ define("client/controllers/group/edit",
 
     __exports__["default"] = GroupEditController;
   });
-define("client/controllers/group/index",
+define("client/controllers/group/index", 
   ["client/mixins/activatable-controller","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -393,14 +403,15 @@ define("client/controllers/group/index",
 
     __exports__["default"] = Ember.ObjectController.extend(ActivatableControllerMixin);
   });
-define("client/controllers/groups",
-  ["client/mixins/activatable-controller","client/mixins/sortable-controller","exports"],
-  function(__dependency1__, __dependency2__, __exports__) {
+define("client/controllers/groups", 
+  ["client/mixins/activatable-controller","client/mixins/sortable-controller","client/mixins/list-controls-controller","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
     "use strict";
     var ActivatableControllerMixin = __dependency1__["default"];
     var SortableControllerMixin = __dependency2__["default"];
+    var ListControlsControllerMixin = __dependency3__["default"];
 
-    var GroupsController = Em.ArrayController.extend(ActivatableControllerMixin, SortableControllerMixin, {
+    var GroupsController = Em.ArrayController.extend(ActivatableControllerMixin, SortableControllerMixin, ListControlsControllerMixin, {
       needs: ['application', 'group/index',  'group/edit', 'items'],
 
       // user-controlled sort order
@@ -451,7 +462,7 @@ define("client/controllers/groups",
 
     __exports__["default"] = GroupsController;
   });
-define("client/controllers/groups/new",
+define("client/controllers/groups/new", 
   ["client/mixins/activatable-controller","client/validators/group","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
@@ -493,7 +504,7 @@ define("client/controllers/groups/new",
 
     __exports__["default"] = GroupsNewController;
   });
-define("client/controllers/item/edit",
+define("client/controllers/item/edit", 
   ["client/mixins/activatable-controller","client/validators/item","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
@@ -555,7 +566,7 @@ define("client/controllers/item/edit",
 
     __exports__["default"] = ItemEditController;
   });
-define("client/controllers/item/index",
+define("client/controllers/item/index", 
   ["client/mixins/activatable-controller","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -563,14 +574,15 @@ define("client/controllers/item/index",
 
     __exports__["default"] = Ember.ObjectController.extend(ActivatableControllerMixin);
   });
-define("client/controllers/items",
-  ["client/mixins/activatable-controller","client/mixins/sortable-controller","exports"],
-  function(__dependency1__, __dependency2__, __exports__) {
+define("client/controllers/items", 
+  ["client/mixins/activatable-controller","client/mixins/sortable-controller","client/mixins/list-controls-controller","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
     "use strict";
     var ActivatableControllerMixin = __dependency1__["default"];
     var SortableControllerMixin = __dependency2__["default"];
+    var ListControlsControllerMixin = __dependency3__["default"];
 
-    var ItemsController = Em.ArrayController.extend(ActivatableControllerMixin, SortableControllerMixin, {
+    var ItemsController = Em.ArrayController.extend(ActivatableControllerMixin, SortableControllerMixin, ListControlsControllerMixin, {
       needs: ['application', 'item/index', 'item/edit'],
 
       // the route sets GroupId
@@ -645,7 +657,7 @@ define("client/controllers/items",
 
     __exports__["default"] = ItemsController;
   });
-define("client/controllers/items/new",
+define("client/controllers/items/new", 
   ["client/mixins/activatable-controller","client/validators/item","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
@@ -695,7 +707,7 @@ define("client/controllers/items/new",
 
     __exports__["default"] = ItemsNewController;
   });
-define("client/helpers/de-dasherize",
+define("client/helpers/de-dasherize", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -705,7 +717,7 @@ define("client/helpers/de-dasherize",
 
     __exports__["default"] = null;
   });
-define("client/helpers/moment-calendar",
+define("client/helpers/moment-calendar", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -715,7 +727,7 @@ define("client/helpers/moment-calendar",
 
     __exports__["default"] = null;
   });
-define("client/initializers/inject-api",
+define("client/initializers/inject-api", 
   ["client/utils/api","client/utils/sequelize-data-transform","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
@@ -735,11 +747,10 @@ define("client/initializers/inject-api",
           var api;
           api = container.lookup('api:main');
           api.set('keyTransforms.defalt', sequelizeTransform);
-          api.fakeIt();
       }
     };
   });
-define("client/initializers/inject-data-store",
+define("client/initializers/inject-data-store", 
   ["client/utils/data-store","client/models/group","client/models/item","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
     "use strict";
@@ -771,7 +782,7 @@ define("client/initializers/inject-data-store",
         }
     };
   });
-define("client/initializers/preload",
+define("client/initializers/preload", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -817,7 +828,7 @@ define("client/initializers/preload",
         }
       };
   });
-define("client/mixins/activatable-controller",
+define("client/mixins/activatable-controller", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -827,7 +838,7 @@ define("client/mixins/activatable-controller",
 
     __exports__["default"] = ActivatableControllerMixin;
   });
-define("client/mixins/active-route-base",
+define("client/mixins/active-route-base", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -864,7 +875,7 @@ define("client/mixins/active-route-base",
 
     __exports__["default"] = ActiveRouteBaseMixin;
   });
-define("client/mixins/group-view-route",
+define("client/mixins/group-view-route", 
   ["client/mixins/active-route-base","client/utils/get-transitionend-event-name","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
@@ -894,7 +905,6 @@ define("client/mixins/group-view-route",
             return;
           }
 
-          // TODO: skip transition abort + CSS transition if not on mobile
           transition.abort();
           this.setControllerInactive();
 
@@ -905,7 +915,7 @@ define("client/mixins/group-view-route",
 
     __exports__["default"] = GroupViewRouteMixin;
   });
-define("client/mixins/item-view-route",
+define("client/mixins/item-view-route", 
   ["client/mixins/active-route-base","client/utils/get-transitionend-event-name","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
@@ -935,7 +945,6 @@ define("client/mixins/item-view-route",
             return;
           }
 
-          // TODO: skip transition abort + CSS transition if not on mobile
           transition.abort();
           this.setControllerInactive();
 
@@ -946,7 +955,55 @@ define("client/mixins/item-view-route",
 
     __exports__["default"] = ItemViewRouteMixin;
   });
-define("client/mixins/sortable-controller",
+define("client/mixins/list-controls-controller", 
+  ["client/utils/get-transitionend-event-name","exports"],
+  function(__dependency1__, __exports__) {
+    "use strict";
+    var transitionEndName = __dependency1__["default"];
+
+    function widthTransitionEnded (event) {
+        event.data.$viewEl.removeClass('controls-toggling');
+    }
+
+    var ListControlsControllerMixin = Ember.Mixin.create({
+        actions: {
+            toggleControls: function (listItemView) {
+                var $el = listItemView.$();
+
+                var $controlsToggle = $el.find('.list-controls-toggle');
+                var controlsWidth = $controlsToggle.width();
+
+                var $actionableControls = $el.find('.actionable-controls');
+                var numControls = $actionableControls.children().length;
+
+                // set width of actionableControls element based on,
+                // how many children there are, which could be different for each view
+                var width = controlsWidth * numControls + 1;
+                $actionableControls.css('width', width);
+
+                // set controls-toggling class to allow any CSS animations to occur,
+                // then remove the class once the animation is over
+                $el.addClass('controls-toggling');
+                $actionableControls.one(transitionEndName, { $viewEl: $el }, widthTransitionEnded);
+
+                var isControlsOpen = $actionableControls.data('controls-open');
+
+                // set margin-left of actionablecontrols to trigger CSS transition
+                if (isControlsOpen) {
+                    $actionableControls.css('margin-left', 0);
+                    $actionableControls.data('controls-open', false);
+                } else {
+                    $actionableControls.css('margin-left', -1 * controlsWidth * numControls - 1);
+                    $actionableControls.data('controls-open', true);
+                }
+
+            }
+        }
+    });
+
+    __exports__["default"] = ListControlsControllerMixin;
+  });
+define("client/mixins/sortable-controller", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -964,7 +1021,7 @@ define("client/mixins/sortable-controller",
 
     __exports__["default"] = SortControllerMixin;
   });
-define("client/mixins/sortable-route",
+define("client/mixins/sortable-route", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -1003,7 +1060,7 @@ define("client/mixins/sortable-route",
 
     __exports__["default"] = SortableRouteMixin;
   });
-define("client/models/group",
+define("client/models/group", 
   ["client/utils/numberize-field","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -1035,7 +1092,7 @@ define("client/models/group",
 
     __exports__["default"] = Group;
   });
-define("client/models/item",
+define("client/models/item", 
   ["client/utils/numberize-field","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -1081,12 +1138,12 @@ define("client/models/item",
 
     __exports__["default"] = Item;
   });
-define("client/router",
+define("client/router", 
   ["exports"],
   function(__exports__) {
     "use strict";
     var Router = Em.Router.extend({
-      location: 'hash'
+      location: 'history'
     });
 
     Router.map(function () {
@@ -1111,7 +1168,7 @@ define("client/router",
 
     __exports__["default"] = Router;
   });
-define("client/routes/application",
+define("client/routes/application", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -1147,7 +1204,7 @@ define("client/routes/application",
 
     __exports__["default"] = ApplicationRoute;
   });
-define("client/routes/group",
+define("client/routes/group", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -1166,7 +1223,7 @@ define("client/routes/group",
 
     __exports__["default"] = GroupRoute;
   });
-define("client/routes/group/edit",
+define("client/routes/group/edit", 
   ["client/mixins/group-view-route","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -1202,7 +1259,7 @@ define("client/routes/group/edit",
 
     __exports__["default"] = GroupEditRoute;
   });
-define("client/routes/group/index",
+define("client/routes/group/index", 
   ["client/mixins/group-view-route","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -1219,7 +1276,7 @@ define("client/routes/group/index",
 
     __exports__["default"] = GroupIndexRoute;
   });
-define("client/routes/groups",
+define("client/routes/groups", 
   ["client/mixins/sortable-route","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -1253,7 +1310,7 @@ define("client/routes/groups",
 
     __exports__["default"] = GroupsRoute;
   });
-define("client/routes/groups/new",
+define("client/routes/groups/new", 
   ["client/mixins/group-view-route","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -1286,19 +1343,19 @@ define("client/routes/groups/new",
 
     __exports__["default"] = GroupsNewRoute;
   });
-define("client/routes/index",
+define("client/routes/index", 
   ["exports"],
   function(__exports__) {
     "use strict";
     var IndexRoute = Em.Route.extend({
       beforeModel: function () {
-        this.transitionTo('groups');
+        this.replaceWith('groups');
       },
     });
 
     __exports__["default"] = IndexRoute;
   });
-define("client/routes/item",
+define("client/routes/item", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -1317,7 +1374,7 @@ define("client/routes/item",
 
     __exports__["default"] = ItemRoute;
   });
-define("client/routes/item/edit",
+define("client/routes/item/edit", 
   ["client/mixins/item-view-route","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -1353,7 +1410,7 @@ define("client/routes/item/edit",
 
     __exports__["default"] = ItemEditRoute;
   });
-define("client/routes/item/index",
+define("client/routes/item/index", 
   ["client/mixins/item-view-route","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -1370,7 +1427,7 @@ define("client/routes/item/index",
 
     __exports__["default"] = ItemIndexRoute;
   });
-define("client/routes/items",
+define("client/routes/items", 
   ["client/mixins/active-route-base","client/mixins/sortable-route","client/utils/get-transitionend-event-name","client/utils/detect-form-factor","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
@@ -1432,7 +1489,7 @@ define("client/routes/items",
 
     __exports__["default"] = ItemsRoute;
   });
-define("client/routes/items/new",
+define("client/routes/items/new", 
   ["client/mixins/item-view-route","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -1468,7 +1525,7 @@ define("client/routes/items/new",
 
     __exports__["default"] = ItemsNewRoute;
   });
-define("client/utils/after-render",
+define("client/utils/after-render", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -1493,7 +1550,7 @@ define("client/utils/after-render",
 
     __exports__["default"] = null;
   });
-define("client/utils/api",
+define("client/utils/api", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -1673,7 +1730,7 @@ define("client/utils/api",
 
     __exports__["default"] = api;
   });
-define("client/utils/data-store",
+define("client/utils/data-store", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -2010,7 +2067,7 @@ define("client/utils/data-store",
 
     __exports__["default"] = DataStore;
   });
-define("client/utils/detect-form-factor",
+define("client/utils/detect-form-factor", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -2044,7 +2101,7 @@ define("client/utils/detect-form-factor",
       notSmall: notSmall,
     };
   });
-define("client/utils/fastclick",
+define("client/utils/fastclick", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -2058,7 +2115,7 @@ define("client/utils/fastclick",
 
     __exports__["default"] = FastClickInit;
   });
-define("client/utils/get-transitionend-event-name",
+define("client/utils/get-transitionend-event-name", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -2083,7 +2140,7 @@ define("client/utils/get-transitionend-event-name",
 
     __exports__["default"] = getTransitionEndName();
   });
-define("client/utils/numberize-field",
+define("client/utils/numberize-field", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -2104,7 +2161,7 @@ define("client/utils/numberize-field",
 
     __exports__["default"] = numberizeField;
   });
-define("client/utils/sequelize-data-transform",
+define("client/utils/sequelize-data-transform", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -2125,7 +2182,7 @@ define("client/utils/sequelize-data-transform",
 
     __exports__["default"] = sequelizeTransform;
   });
-define("client/validators/field",
+define("client/validators/field", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -2169,7 +2226,7 @@ define("client/validators/field",
 
     __exports__["default"] = validateField;
   });
-define("client/validators/group",
+define("client/validators/group", 
   ["client/validators/field","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -2202,7 +2259,7 @@ define("client/validators/group",
 
     __exports__["default"] = validateGroup;
   });
-define("client/validators/item",
+define("client/validators/item", 
   ["client/validators/field","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -2250,7 +2307,7 @@ define("client/validators/item",
 
     __exports__["default"] = validateItem;
   });
-define("client/views/application",
+define("client/views/application", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -2260,7 +2317,7 @@ define("client/views/application",
 
     __exports__["default"] = ApplicationView;
   });
-define("client/views/field",
+define("client/views/field", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -2284,3 +2341,4 @@ define("client/views/field",
 
     __exports__["default"] = FieldView;
   });
+//# sourceMappingURL=dev-ember.js.map

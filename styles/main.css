@@ -1,6 +1,4 @@
 @charset "UTF-8";
-/*  Base Breakpoint Variables  */
-/*  Media Queries  */
 /*  Libraries  */
 /* ==========================================================================
    Normalize.scss settings
@@ -2034,6 +2032,9 @@ th {
 .fa-meanpath:before {
   content: ""; }
 
+/*  Variables  */
+/*  Base Breakpoint Variables  */
+/*  Media Queries  */
 /*  Views  */
 html {
   font-size: 62.5%; }
@@ -2094,7 +2095,7 @@ html, body, .application, .content {
 .content > section {
   position: absolute;
   height: 100%;
-  background: url("../images/waves.png");
+  background: url("/images/waves.png");
   overflow: hidden;
   -moz-transition-duration: 0.25s;
   -o-transition-duration: 0.25s;
@@ -2304,7 +2305,8 @@ button {
   width: 3rem;
   height: 3rem;
   outline: none;
-  -webkit-appearance: none; }
+  -webkit-appearance: none;
+  -moz-transform: scale(1.5); }
   .checkmark:after {
     line-height: 2.4rem;
     font-size: 4.5rem;
@@ -2327,15 +2329,16 @@ button {
   padding: 10px; }
 
 .metadata {
-  margin: 10px 10px 1em;
-  padding: 5px 20px;
+  margin: 0 10px;
+  padding: 0 20px;
+  font-size: 2rem;
   color: rgba(255, 255, 255, 0.9);
   border-radius: 10px; }
   .metadata h1 {
-    font-size: 1.2em;
+    font-size: 2.5rem;
     margin-bottom: 5px; }
   .metadata p.description {
-    font-size: 0.9em;
+    font-size: 1.8rem;
     margin-top: 8px;
     text-indent: 1em; }
   .metadata li {
@@ -2347,16 +2350,9 @@ button {
     text-decoration: underline; }
   .metadata .meta-value, .metadata .field-value, .metadata .edit-metadata .new-field .add-field-key, .edit-metadata .new-field .metadata .add-field-key, .metadata .edit-metadata .new-field .add-field-value, .edit-metadata .new-field .metadata .add-field-value {
     margin-top: 5px; }
-  .metadata .checkmark {
-    margin-top: -5px;
-    padding: 0; }
 
-@media (min-device-width: 1025px) {
-  .fields, .edit-metadata .new-field {
-    padding: 20px; } }
-.fields h1, .edit-metadata .new-field h1 {
-  margin-top: 0;
-  font-size: 1.1em; }
+.fields, .edit-metadata .new-field {
+  padding: 0 20px 20px; }
 
 .edit-metadata h1 {
   text-align: center; }
@@ -2427,12 +2423,69 @@ button {
   border-bottom: 1px solid #AAA;
   border-radius: 10px;
   background: linear-gradient(#ffffff 0%, #eeeeee 100%);
-  color: #444; }
+  color: #444;
+  overflow: hidden; }
   .list li .list-checkbox {
     position: absolute;
     width: 6.4rem;
     height: 100%;
     border-right: 1px dashed black; }
+  .list li .controls,
+  .list li .controls button.list-controls-toggle,
+  .list li .actionable-controls {
+    position: absolute; }
+  .list li .controls {
+    right: 0; }
+    .list li .controls a {
+      color: inherit; }
+  .list li .controls,
+  .list li .controls a,
+  .list li .controls button {
+    width: 6.4rem;
+    height: 100%; }
+  .list li .controls button.list-controls-toggle {
+    background: linear-gradient(#ffffff 0%, #eeeeee 100%); }
+  .list li .controls button.list-controls-toggle i {
+    -moz-transition-property: -moz-transform;
+    -o-transition-property: -o-transform;
+    -webkit-transition-property: -webkit-transform;
+    transition-property: transform;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    -webkit-transition-timing-function: linear;
+    transition-timing-function: linear;
+    -moz-transition-duration: 0.1s;
+    -o-transition-duration: 0.1s;
+    -webkit-transition-duration: 0.1s;
+    transition-duration: 0.1s; }
+  .list li.controls-toggling .controls button.list-controls-toggle i {
+    -moz-transform: rotate(3600deg);
+    -ms-transform: rotate(3600deg);
+    -webkit-transform: rotate(3600deg);
+    transform: rotate(3600deg); }
+  .list li .actionable-controls {
+    height: 100%;
+    background: linear-gradient(#ffffff 0%, #eeeeee 100%);
+    border-left: 1px dashed black;
+    -moz-transition-property: margin-left;
+    -o-transition-property: margin-left;
+    -webkit-transition-property: margin-left;
+    transition-property: margin-left;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    -webkit-transition-timing-function: linear;
+    transition-timing-function: linear;
+    -moz-transition-duration: 0.1s;
+    -o-transition-duration: 0.1s;
+    -webkit-transition-duration: 0.1s;
+    transition-duration: 0.1s; }
+  .list li .actionable-controls > a,
+  .list li .actionable-controls > button {
+    float: right; }
+  .list li .controls button i {
+    width: 50%;
+    height: 50%;
+    font-size: 3.2rem; }
   .list li .checkmark {
     position: absolute;
     left: 50%;
@@ -2440,7 +2493,8 @@ button {
     -moz-transform: translate3d(-50%, -50%, 0);
     -ms-transform: translate3d(-50%, -50%, 0);
     -webkit-transform: translate3d(-50%, -50%, 0);
-    transform: translate3d(-50%, -50%, 0); }
+    transform: translate3d(-50%, -50%, 0);
+    -moz-transform: translate3d(-50%, -50%, 0) scale(1.5); }
   .list li > a {
     position: absolute;
     padding: 0 10px;
@@ -2456,12 +2510,8 @@ button {
     text-overflow: ellipsis;
     line-height: 6.4rem; }
   .list li .list-checkbox + a {
-    width: calc(100% - 6.4rem);
-    right: 0;
+    width: calc(100% - 6.4rem * 2);
+    right: 6.4rem;
     text-align: left; }
-  .list li .controls {
-    display: none; }
-
-/*************************************************/
 
 /*# sourceMappingURL=main.css.map */
