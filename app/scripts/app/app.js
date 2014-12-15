@@ -13,12 +13,12 @@ var App = Ember.Application.extend({
   /**
     * These are debugging flags, they are useful during development
     */
-  LOG_ACTIVE_GENERATION: true,
-  LOG_RESOLVER: true,
-  LOG_MODULE_RESOLVER: true,
-  LOG_TRANSITIONS: true,
-  LOG_TRANSITIONS_INTERNAL: true,
-  LOG_VIEW_LOOKUPS: true,
+  LOG_ACTIVE_GENERATION: false,
+  LOG_RESOLVER: false,
+  LOG_MODULE_RESOLVER: false,
+  LOG_TRANSITIONS: false,
+  LOG_TRANSITIONS_INTERNAL: false,
+  LOG_VIEW_LOOKUPS: false,
   modulePrefix: 'client',
   Resolver: Resolver['default']
 });
