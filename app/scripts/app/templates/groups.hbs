@@ -7,16 +7,19 @@
 
   <ul class="list groups-list">
   {{#each}}
-    <li>
-      {{#link-to 'items' id class='list-item'}}
-        {{title}}
-      {{/link-to}}
-      <div class="controls">
+  {{#view tagName="li"}}
+    {{#link-to 'items' id class='list-item'}}
+      {{title}}
+    {{/link-to}}
+    <div class="controls">
+      <div class="actionable-controls">
         {{#link-to 'group' this}}<button><i class="fa fa-info-circle"></i></button>{{/link-to}}
         {{#link-to 'group.edit' this}}<button><i class="fa fa-pencil"></i></button>{{/link-to}}
         <button {{action 'delete' this}}><i class="fa fa-trash"></i></button>
       </div>
-    </li>
+      <button class="list-controls-toggle" {{action 'toggleControls' view}}><i class="fa fa-gear"></i></button>
+    </div>
+  {{/view}}
   {{/each}}
   </ul>
 

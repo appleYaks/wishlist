@@ -4,21 +4,78 @@
 }
 
 .list li {
+  $controlbox-size: 6.4rem;
+  $list-border-radius-size: 10px;
+  $list-gradient: linear-gradient(#FFF 0%, #EEE 100%);
+  $controls-slideout-timing: .1s;
+
   position: relative;
-  height: 6.4rem;
-  max-height: 6.4rem;
+  height: $controlbox-size;
+  max-height: $controlbox-size;
   margin: 10px;
   border: 1px solid #EEE;
   border-bottom: 1px solid #AAA;
-  border-radius: 10px;
-  background: linear-gradient(#FFF 0%, #EEE 100%);
+  border-radius: $list-border-radius-size;
+  background: $list-gradient;
   color: #444;
+  overflow: hidden;
 
   .list-checkbox {
     position: absolute;
-    width: 6.4rem;
+    width: $controlbox-size;
     height: 100%;
     border-right: 1px dashed black;
+  }
+
+  .controls,
+  .controls button.list-controls-toggle,
+  .actionable-controls {
+    position: absolute;
+  }
+
+  .controls {
+    right: 0;
+    a { color: inherit; }
+  }
+
+  .controls,
+  .controls a,
+  .controls button {
+    width: $controlbox-size;
+    height: 100%;
+  }
+
+  .controls button.list-controls-toggle {
+    background: $list-gradient;
+  }
+
+  .controls button.list-controls-toggle i {
+    @include transition-property(transform);
+    @include transition-timing-function(linear);
+    @include transition-duration($controls-slideout-timing);
+  }
+  &.controls-toggling .controls button.list-controls-toggle i {
+    @include transform(rotate(3600deg));
+  }
+
+  .actionable-controls {
+    height: 100%;
+    background: $list-gradient;
+    border-left: 1px dashed black;
+    @include transition-property(margin-left);
+    @include transition-timing-function(linear);
+    @include transition-duration($controls-slideout-timing);
+  }
+
+  .actionable-controls > a,
+  .actionable-controls > button {
+    float: right;
+  }
+
+  .controls button i {
+    width: 50%;
+    height: 50%;
+    font-size: $controlbox-size * 0.5;
   }
 
   .checkmark {
@@ -47,14 +104,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
     // center text vertically
-    line-height: 6.4rem;
+    line-height: $controlbox-size;
   }
 
   .list-checkbox + a {
-    width: calc(100% - 6.4rem);
-    right: 0;
+    width: calc(100% - #{$controlbox-size} * 2);
+    right: $controlbox-size;
     text-align: left;
   }
-
-  .controls { display: none; }
 }

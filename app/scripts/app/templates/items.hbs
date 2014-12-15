@@ -7,7 +7,7 @@
 
   <ul class="list items-list">
     {{#each}}
-    <li>
+    {{#view tagName="li"}}
       <span class="list-checkbox">
         {{action-checkbox type="checkbox" class="checkmark" checked=complete action="patchChecked" model=this}}
       </span>
@@ -15,10 +15,13 @@
         {{title}}
       {{/link-to}}
       <div class="controls">
-        {{#link-to 'item.edit' this}}<button><i class="fa fa-pencil"></i></button>{{/link-to}}
-        <button {{action 'delete' this}}><i class="fa fa-trash"></i></button>
+        <div class="actionable-controls">
+            {{#link-to 'item.edit' this}}<button><i class="fa fa-pencil"></i></button>{{/link-to}}
+            <button {{action 'delete' this}}><i class="fa fa-trash"></i></button>
+        </div>
+        <button class="list-controls-toggle" {{action 'toggleControls' view}}><i class="fa fa-gear"></i></button>
       </div>
-    </li>
+    {{/view}}
     {{/each}}
   </ul>
 
