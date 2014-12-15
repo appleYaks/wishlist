@@ -2095,7 +2095,7 @@ html, body, .application, .content {
 .content > section {
   position: absolute;
   height: 100%;
-  background: url("/images/waves.png");
+  background: url("../images/waves.png");
   overflow: hidden;
   -moz-transition-duration: 0.25s;
   -o-transition-duration: 0.25s;
