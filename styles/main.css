@@ -2367,19 +2367,16 @@ button {
   border: 0;
   width: 100%;
   color: black;
+  background-color: white;
   border-radius: 5px; }
 .edit-metadata select {
   background-image: none;
-  background-color: white;
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
 .edit-metadata .datetime-picker select {
   width: auto; }
 
-@media (min-device-width: 1025px) {
-  .edit-metadata .metadata {
-    border: 3px dashed black; } }
 .edit-metadata .metadata .edit-field {
   position: relative; }
   .edit-metadata .metadata .edit-field button {
