@@ -17,12 +17,12 @@ define("client/app",
       /**
         * These are debugging flags, they are useful during development
         */
-      LOG_ACTIVE_GENERATION: true,
-      LOG_RESOLVER: true,
-      LOG_MODULE_RESOLVER: true,
-      LOG_TRANSITIONS: true,
-      LOG_TRANSITIONS_INTERNAL: true,
-      LOG_VIEW_LOOKUPS: true,
+      LOG_ACTIVE_GENERATION: false,
+      LOG_RESOLVER: false,
+      LOG_MODULE_RESOLVER: false,
+      LOG_TRANSITIONS: false,
+      LOG_TRANSITIONS_INTERNAL: false,
+      LOG_VIEW_LOOKUPS: false,
       modulePrefix: 'client',
       Resolver: Resolver['default']
     });
@@ -287,7 +287,7 @@ define("client/components/edit-metadata",
           this.set('newFieldErrors', newFieldErrors);
 
           // use defaults
-          if (val === null || typeof val === 'undefined') {
+          if (val === null || typeof val === 'undefined' || val === '') {
             if (type.bool) {
               val = document.getElementById('newFieldValue').checked;
             } else if (!type.date) {
@@ -450,9 +450,6 @@ define("client/controllers/groups",
 
             self.store.deleteModels('groups', group);
             self.store.seekAndDestroy('items', 'GroupId', id);
-            // refresh the `groups` route to remove the model from the list.
-            // even if we're on a sub-route, the action will bubble up.
-            self.send('refresh');
           }).catch(function () {
             alert('Sorry, something went wrong deleting your group! Please try again later.');
           });
@@ -491,9 +488,6 @@ define("client/controllers/groups/new",
 
           this.api.add('groups', group).then(function (data) {
             self.store.load('groups', data);
-            // allow GroupsRoute model to show the new group
-            self.send('refresh');
-
             self.transitionToRoute('groups');
           }).catch(function () {
             alert('Sorry, saving your group failed! Please try again later.');
@@ -645,9 +639,6 @@ define("client/controllers/items",
 
             self.store.deleteModels('items', item);
             self.get('model').removeObject(item);
-            // refresh the `items` route to remove the model from the list.
-            // even if we're on a sub-route, the action will bubble up.
-            self.send('refresh');
           }).catch(function () {
             alert('Sorry, something went wrong deleting your item! Please try again later.');
           });
@@ -681,7 +672,8 @@ define("client/controllers/items/new",
           var self = this,
               // needed because Ember.TextField does not convert input to numbers
               item = this.get('model').numberize(),
-              GroupId = this.get('controllers.items.GroupId'),
+              itemsController = this.get('controllers.items'),
+              GroupId = itemsController.get('GroupId'),
               validationErrors = validateItem(item);
 
           this.set('validationErrors', validationErrors);
@@ -695,7 +687,8 @@ define("client/controllers/items/new",
           this.api.add('items', item).then(function (data) {
             self.store.load('items', data);
             // allow ItemsRoute model to show the new item
-            self.send('refresh');
+            var item = self.store.find('items', data.id);
+            itemsController.get('model').addObject(item);
 
             self.transitionToRoute('items');
           }).catch(function () {
