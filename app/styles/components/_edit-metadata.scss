@@ -9,12 +9,12 @@
     border: 0;
     width: 100%;
     color: black;
+    background-color: white;
     border-radius: 5px;
   }
 
   select {
     background-image: none;
-    background-color: white;
     @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
   }
 
@@ -24,10 +24,6 @@
 }
 
 .edit-metadata .metadata {
-  @include breakpoint($screen-large) {
-    border: 3px dashed black;
-  }
-
   .edit-field {
     position: relative;
     button { position: absolute; top: 0; right: 0; }
