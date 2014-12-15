@@ -18,7 +18,8 @@ var ItemsNewController = Em.ObjectController.extend(ActivatableControllerMixin, 
       var self = this,
           // needed because Ember.TextField does not convert input to numbers
           item = this.get('model').numberize(),
-          GroupId = this.get('controllers.items.GroupId'),
+          itemsController = this.get('controllers.items'),
+          GroupId = itemsController.get('GroupId'),
           validationErrors = validateItem(item);
 
       this.set('validationErrors', validationErrors);
@@ -32,7 +33,8 @@ var ItemsNewController = Em.ObjectController.extend(ActivatableControllerMixin, 
       this.api.add('items', item).then(function (data) {
         self.store.load('items', data);
         // allow ItemsRoute model to show the new item
-        self.send('refresh');
+        var item = self.store.find('items', data.id);
+        itemsController.get('model').addObject(item);
 
         self.transitionToRoute('items');
       }).catch(function () {

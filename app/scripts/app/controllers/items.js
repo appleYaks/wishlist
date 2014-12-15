@@ -65,9 +65,6 @@ var ItemsController = Em.ArrayController.extend(ActivatableControllerMixin, Sort
 
         self.store.deleteModels('items', item);
         self.get('model').removeObject(item);
-        // refresh the `items` route to remove the model from the list.
-        // even if we're on a sub-route, the action will bubble up.
-        self.send('refresh');
       }).catch(function () {
         alert('Sorry, something went wrong deleting your item! Please try again later.');
       });

@@ -41,9 +41,6 @@ var GroupsController = Em.ArrayController.extend(ActivatableControllerMixin, Sor
 
         self.store.deleteModels('groups', group);
         self.store.seekAndDestroy('items', 'GroupId', id);
-        // refresh the `groups` route to remove the model from the list.
-        // even if we're on a sub-route, the action will bubble up.
-        self.send('refresh');
       }).catch(function () {
         alert('Sorry, something went wrong deleting your group! Please try again later.');
       });
