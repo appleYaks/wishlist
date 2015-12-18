@@ -116,7 +116,7 @@ module.exports = function (grunt) {
         },
 
         // ### grunt-express-server
-        // Start a Ghost expess server for use in development and testing
+        // Start an expess server for use in development and testing
         express: {
             options: {
             },
