@@ -191,8 +191,6 @@ module.exports = function (grunt) {
         //     ]
         // },
 
-        // Uglify task does concat,
-        // but still available if needed
         concat: {
             'dev-ember': {
                 files: {
@@ -237,20 +235,24 @@ module.exports = function (grunt) {
                     expand: true,
                     dot: true,
                     cwd: '<%= yeoman.app %>',
-                    dest: '<%= yeoman.dist %>/<%= yeoman.app %>',
+                    dest: '<%= yeoman.dist %>',
                     src: [
                         '*.{ico,png,txt}',
                         '.htaccess',
                         'images/**/*.{webp,gif}',
                         'styles/fonts/{,*/}*.*',
                     ]
-                }, {
-                    // express server jade views
+                },
+                {
                     expand: true,
                     dot: true,
-                    cwd: 'views',
-                    dest: '<%= yeoman.dist %>/views/',
-                    src: '**/*.jade',
+                    cwd: '.tmp',
+                    dest: '<%= yeoman.dist %>',
+                    src: [
+                        'scripts/vendor.js',
+                        'scripts/templates-ember.js',
+                        'scripts/dev-ember.js',
+                    ]
                 }]
             },
         },
@@ -267,9 +269,8 @@ module.exports = function (grunt) {
             dist: [
                 'transpile',
                 'emberTemplates:app',
-                'compass:dist',
-                'svgmin',
-                'htmlmin',
+                'concat:dev-ember',
+                'concat_sourcemap:client',
                 'sass:dist',
             ]
         },
@@ -356,11 +357,10 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
+        'transpile',
         'concurrent:dist',
         'concat',
-        'uglify',
         'copy:dist',
-        'sass:dist',
     ]);
 
     grunt.registerTask('default', [
